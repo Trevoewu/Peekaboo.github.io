@@ -112,3 +112,53 @@ document.addEventListener('DOMContentLoaded', () => {
   NexT.boot.refresh();
   NexT.boot.motion();
 });
+// img 路径替换脚本 来源:
+//  http://songpengpeng.com/2022/05/09/%E6%97%A5%E5%B8%B8%E8%BE%93%E5%87%BA/07-Hexo%E7%9A%84%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/
+var images = document.getElementsByTagName("img");
+var loHref = window.location.href
+let baseHref = loHref.substring(0,loHref.lastIndexOf("/")+1)
+for (let i = 0; i <images.length; i++) {
+    let executeNum = 0;
+    let src = images[i]['src']
+    let img = new Image();
+    img.src = src
+    img.onload= ()=> {
+    }
+    img.onerror= ()=> {
+        executeNum ++ ;
+        handAMark(src)
+        if(executeNum>3){
+            return;
+        }
+        let fileName = src.substring(src.lastIndexOf("/")+1);
+        images[i].src= baseHref+fileName
+    }
+}
+
+
+
+function  handAMark(src){
+    var as = document.getElementsByClassName("fancybox");
+    for (let i = 0; i <as.length; i++) {
+        let executeNum = 0;
+        let href = as[i]['href']
+        if(href==src){
+            let img = new Image();
+            img.src = src
+
+            img.onload= ()=> {
+            }
+            img.onerror= ()=> {
+                executeNum ++ ;
+                if(executeNum>3){
+                    return;
+                }
+                let fileName = src.substring(src.lastIndexOf("/")+1);
+                as[i].href= baseHref+fileName
+            }
+        }
+
+    }
+
+}
+

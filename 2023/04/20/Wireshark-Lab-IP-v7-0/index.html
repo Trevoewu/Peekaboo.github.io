@@ -27,9 +27,8 @@
 <meta property="og:site_name" content="楼兰">
 <meta property="og:description" content="在本实验中, 我们将研究 IP 协议,重点关注IP datagram. 我们将通过分析在执行 traceroute 程序发送和接收的一系列 IP 数据报的过程来完成这个实验,我们将研究IP datagram 中的各个字段(fields)，并详细研究 IP fragmentation 的方法">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://trevoewu.github.io/assets/image-20230421104418434.png">
-<meta property="og:image" content="https://trevoewu.github.io/resource/image/image-20230420093818329.png">
-<meta property="og:image" content="https://trevoewu.github.io/resource/image/image-20230420111451697.png">
+<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-IP-v7-0/image-20230421113757555.png">
+<meta property="og:image" content="https://trevoewu.github.io/image-20230421111939462.png">
 <meta property="og:image" content="https://trevoewu.github.io/resource/image/image-20230420114943829.png">
 <meta property="og:image" content="https://trevoewu.github.io/resource/image/image-20230420115146814.png">
 <meta property="og:image" content="https://trevoewu.github.io/resource/image/image-20230420115238727.png">
@@ -45,12 +44,12 @@
 <meta property="og:image" content="https://trevoewu.github.io/resource/image/image-20230420123758680.png">
 <meta property="og:image" content="https://trevoewu.github.io/resource/image/image-20230420123437083.png">
 <meta property="article:published_time" content="2023-04-20T10:22:06.000Z">
-<meta property="article:modified_time" content="2023-04-21T02:50:54.501Z">
+<meta property="article:modified_time" content="2023-04-21T03:38:06.624Z">
 <meta property="article:author" content="楼兰">
 <meta property="article:tag" content="computer network">
 <meta property="article:tag" content="lab">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://trevoewu.github.io/assets/image-20230421104418434.png">
+<meta name="twitter:image" content="https://trevoewu.github.io/Wireshark-Lab-IP-v7-0/image-20230421113757555.png">
 
 <link rel="canonical" href="https://trevoewu.github.io/2023/04/20/Wireshark-Lab-IP-v7-0/">
 
@@ -205,7 +204,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-04-21 10:50:54" itemprop="dateModified" datetime="2023-04-21T10:50:54+08:00">2023-04-21</time>
+                <time title="Modified: 2023-04-21 11:38:06" itemprop="dateModified" datetime="2023-04-21T11:38:06+08:00">2023-04-21</time>
               </span>
 
           
@@ -235,8 +234,7 @@
 </li>
 <li><p>在 IP header 中，上层协议字段的值是多少?</p>
 <p>我的IP地址: 10.51.172.226 </p>
-<p><img src="/assets/image-20230421104418434.png" alt="image-20230421104418434"></p>
-<p><img src="/resource/image/image-20230420093818329.png" alt="image-20230420093818329"></p>
+<p><img src="/Wireshark-Lab-IP-v7-0/image-20230421113757555.png" alt="image-20230421113757555"></p>
 <p>这是traceroute发送的第一个数据报, 可以得到以下信息: </p>
 <ul>
 <li>该数据报是IP数据报, 上层协议为UDP</li>
@@ -248,7 +246,7 @@
 <li><p>IP datagram 的有效负载中有多少 bytes? 说明如何 确定 payload bytes 的数。</p>
 </li>
 </ul>
-<p><img src="/resource/image/image-20230420111451697.png" alt="image-20230420111451697"></p>
+<p><img src="/image-20230421111939462.png" alt="image-20230421111939462"></p>
 <p>payload &#x3D; Total Len - header Len &#x3D; 1500 - 20 &#x3D; 1480, 是的, 我直接发送了2000byte的报文</p>
 <ul>
 <li><p>此 IP 数据报是否已被分段(fragmented)?解释您如何确定数据报是否已被分段(fragmented)</p>

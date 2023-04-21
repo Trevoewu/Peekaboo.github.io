@@ -144,6 +144,16 @@
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
@@ -210,7 +220,21 @@
                 <time title="Modified: 2023-04-21 11:44:49" itemprop="dateModified" datetime="2023-04-21T11:44:49+08:00">2023-04-21</time>
               </span>
 
-          
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>5 mins.</span>
+            </span>
             <div class="post-description">在本实验中, 我们将研究 IP 协议,重点关注IP datagram. 我们将通过分析在执行 traceroute 程序发送和接收的一系列 IP 数据报的过程来完成这个实验,我们将研究IP datagram 中的各个字段(fields)，并详细研究 IP fragmentation 的方法</div>
 
         </div>
@@ -227,10 +251,10 @@
 结果是因为我在过滤了ICMP, 而<strong>traceroute默认使用UDP而不是ICMP</strong>, 所以只能收到路由器发给我的ICMP time to live exceeded 报文,告诉我的数据包被干掉了.</li>
 </ul>
 <p>tracert 默认使用 ICMP 包探测，traceroute 使用 UDP 包，也可以使用 ICMP 和 TCP 包探测, 带上参数-T即可.</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token parameter variable">-I</span>      Use ICMP ECHO instead of UDP datagrams.  <span class="token punctuation">(</span>A synonym <span class="token keyword">for</span> <span class="token string">"-P icmp"</span><span class="token punctuation">)</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">-I      Use ICMP ECHO instead of UDP datagrams.  (A synonym for &quot;-P icmp&quot;).<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">traceroute</span> baidu.com <span class="token number">2000</span>  
-<span class="token comment"># 使用baidu测试, 默认使用UDP, 数据报大小为2000byte</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">traceroute baidu.com 2000  
+# 使用baidu测试, 默认使用UDP, 数据报大小为2000byte<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <ul>
 <li><p>What is the IP address of your computer?</p>
@@ -262,12 +286,12 @@
 <ul>
 <li><p>在您的计算器发送的这一系列 ICMP 消息中，IP 数据报中的哪些字段总有改变</p>
 <p>使用</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">traceroute</span> <span class="token parameter variable">-I</span> gaia.cs.umass.edu <span class="token parameter variable">-80</span>
-<span class="token comment"># 用作者给的网站测试, -I表示使用ICMP</span>
-<span class="token comment"># The default probe datagram length is 40 bytes[traceroute manual]</span>
-<span class="token comment"># 但是我使用作者提议用56作为数据报(ip datagrame)大小时, 收到以下警告: </span>
-<span class="token comment"># traceroute: packet length must be > 71</span>
-<span class="token comment"># 所以这里数据报大小设为80, 实际上, 我使用不带数据报大小参数的命令时, 默认数据报大小为1380</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">traceroute -I gaia.cs.umass.edu -80
+# 用作者给的网站测试, -I表示使用ICMP
+# The default probe datagram length is 40 bytes[traceroute manual]
+# 但是我使用作者提议用56作为数据报(ip datagrame)大小时, 收到以下警告: 
+# traceroute: packet length must be &gt; 71
+# 所以这里数据报大小设为80, 实际上, 我使用不带数据报大小参数的命令时, 默认数据报大小为1380<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>再次抓包, 由于traceroute实际上会发送三个ICMP的数据报, 所以三个为一组.  所以可发现每一组的ID值差3, 当然是因为一组发了三个ICMP数据报啊..</p>
 </li>
@@ -466,13 +490,21 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">4</span>
-        <span class="site-state-item-name">tags</span>
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -514,6 +546,16 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">楼兰</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="Symbols count total">20k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">33 mins.</span>
 </div>
 
         

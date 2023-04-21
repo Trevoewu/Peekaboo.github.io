@@ -131,6 +131,16 @@
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
@@ -191,7 +201,21 @@
               <time title="Created: 2023-04-21 11:46:44 / Modified: 12:47:56" itemprop="dateCreated datePublished" datetime="2023-04-21T11:46:44+08:00">2023-04-21</time>
             </span>
 
-          
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>4 mins.</span>
+            </span>
 
         </div>
       </header>
@@ -209,13 +233,13 @@
 <p>这次用hexo搭建也遇到了同样的问题, 按照老方法, 我能想到的就只有把图片全部拉过来了, 我直接把全部图片<code>mv</code>到了public目录的imag目录下, 部署到github上的时候, 由于图片太多了, 进度条老是卡住, 我只好放弃了. 我直接<code>ctl+c</code>, <code>hexo clean</code>,<code>hexo s</code>.这时候我还不知道<code>hexo clean</code>意味这什么, 只是看教程大家都是这样做的, 结果, 结果hexo把我pubilc目录下的文件全部删了…, 我的图片, 也全没了. </p>
 <p>今天发现一个绝好的解决方案, 将Typora和hexo完美结合起来. </p>
 <h3 id="第一步-修改hexo的站点配置文件-config-yml"><a href="#第一步-修改hexo的站点配置文件-config-yml" class="headerlink" title="第一步 修改hexo的站点配置文件_config.yml"></a>第一步 修改hexo的站点配置文件_config.yml</h3><p>首先安装插件:</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">npm</span> <span class="token function">install</span> hexo-renderer-marked<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">npm install hexo-renderer-marked<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>在_config.yml搜索<code>post_asset_folder</code>改为true 如下:</p>
-<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">post_asset_folder</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-<span class="token key atrule">marked</span><span class="token punctuation">:</span>
-  <span class="token key atrule">prependRoot</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-  <span class="token key atrule">postAsset</span><span class="token punctuation">:</span> <span class="token boolean important">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-yaml" data-language="yaml"><code class="language-yaml">post_asset_folder: true
+marked:
+  prependRoot: true
+  postAsset: true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>修改之后会开启 Hexo 的文章资源文件管理功能。Hexo 将会在我们每一次通过 <code>hexo new &lt;title&gt;</code> 命令创建新文章时自动创建一个同名文件夹，并在执行<code>hexo g</code>的时候连同图片以前复制到public目录下(网站的根目录).于是我们便可以将文章所引用的相关资源放到这个同名文件夹下，然后通过相对路径引用。例如，你把一个 <code>example.jpg</code> 图片放在了这个同名文件夹中，使用相对路径的常规 markdown 语法 <code>![](example/example.jpg)</code>即可访问 。</p>
 <p>  也就是这样</p>
@@ -223,11 +247,11 @@
 <p>但是呢, 执行<code>hexo g</code>生成的时候, hexo会把sourec目录下的_posts文件的转化为成html, 并保存在pubilc对应日期的路径中,<img src="/hexo%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98/image-20230421121112744.png" alt="image-20230421121112744"></p>
 <p>可以看到, 此时index中的图片路径和markdown的图片路径是冲突的. </p>
 <pre class="line-numbers language-markdown" data-language="markdown"><code class="language-markdown">typora的路径使用: 
-![](./example/example.jpg)
+![](.&#x2F;example&#x2F;example.jpg)
 这样页面上的img路径就会是:
-/你的文章标题/example/example.jpg
+&#x2F;你的文章标题&#x2F;example&#x2F;example.jpg
 正确的图片地址: 
-/example/example.jpg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+&#x2F;example&#x2F;example.jpg<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这是因为<code>hexo g</code>把文件夹里面图片复制过来了, 但并没有复制整个图片的文件夹. </p>
 <p>所以我只需要拿到当前博客的路径，直接加上图片名字就行.</p>
@@ -297,6 +321,12 @@
     
     
       
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2023/04/21/纪念拥有了自己的博客/" rel="bookmark">纪念拥有了自己的博客</a></div>
+    </li>
+  </ul>
 
         
 
@@ -332,7 +362,10 @@
     <a href="/2023/04/21/%E4%BD%BF%E7%94%A8hexo%E9%87%8D%E6%96%B0%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" rel="prev" title="使用hexo重新搭建博客">
       <i class="fa fa-chevron-left"></i> 使用hexo重新搭建博客
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/21/%E7%BA%AA%E5%BF%B5%E6%8B%A5%E6%9C%89%E4%BA%86%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/" rel="next" title="纪念拥有了自己的博客">
+      纪念拥有了自己的博客 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -407,13 +440,21 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">4</span>
-        <span class="site-state-item-name">tags</span>
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -455,6 +496,16 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">楼兰</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="Symbols count total">20k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">33 mins.</span>
 </div>
 
         

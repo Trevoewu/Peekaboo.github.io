@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon/avatar.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon/avatar.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icon/avatar.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ysabeau:300,300italic,400,400italic,700,700italic|Liu Jian Mao Cao:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"trevoewu.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在本实验中，我们将研究 802.11 无线协议。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wireshark Lab 802.11">
+<meta property="og:url" content="https://trevoewu.github.io/2023/05/08/Wireshark-Lab-802-11/index.html">
+<meta property="og:site_name" content="楼兰">
+<meta property="og:description" content="在本实验中，我们将研究 802.11 无线协议。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-802-11/image-20230508184630447.png">
+<meta property="article:published_time" content="2023-05-08T10:36:45.000Z">
+<meta property="article:modified_time" content="2023-05-08T11:01:19.094Z">
+<meta property="article:author" content="楼兰">
+<meta property="article:tag" content="computer network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://trevoewu.github.io/Wireshark-Lab-802-11/image-20230508184630447.png">
+
+<link rel="canonical" href="https://trevoewu.github.io/2023/05/08/Wireshark-Lab-802-11/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Wireshark Lab 802.11 | 楼兰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="楼兰" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">楼兰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://trevoewu.github.io/2023/05/08/Wireshark-Lab-802-11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/icon/avatar.png">
+      <meta itemprop="name" content="楼兰">
+      <meta itemprop="description" content="楼兰的Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楼兰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Wireshark Lab 802.11
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-05-08 18:36:45 / Modified: 19:01:19" itemprop="dateCreated datePublished" datetime="2023-05-08T18:36:45+08:00">2023-05-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">学习记录</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>3.9k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>6 mins.</span>
+            </span>
+            <div class="post-description">在本实验中，我们将研究 802.11 无线协议。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <hr>
+<h2 id="Wireshark-实验-802-11"><a href="#Wireshark-实验-802-11" class="headerlink" title="Wireshark 实验:  802.11"></a>Wireshark 实验:  802.11</h2><p><strong>《计算机网络：自顶向下方法（第6版）》补充材料，J.F. Kurose and K.W. Ross</strong></p>
+<p>“不闻不若闻之，闻之不若见之，见之不若知之，知之不若行之。” ——中国谚语 </p>
+<p>© 2005-2012, J.F Kurose and K.W. Ross, All Rights Reserved</p>
+<hr>
+<p>在本实验中，我们将研究 802.11 无线协议。在开始本实验之前，建议您重新阅读课本的中第 7.3 节。因为我们将比课本深入研究 802.11 协议内容，因此您可能需要查看 Pablo Brenner (Breezecom Communications)写的《802.11 协议技术指南》<a target="_blank" rel="noopener" href="http://www.sss-mag.com/pdf/802_11tut.pdf">ATechnical Tutorial on the 802.11Protocol </a> 以及 Jim Geier 写的《了解 802.11 帧类型》<a target="_blank" rel="noopener" href="http://www.wi-fiplanet.com/tutorials/article.php/1447501">Understanding 802.11 Frame Types</a> 。当然，您还需要查阅 802.11 的圣经-它的标准书<a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu/wireshark-labs/802.11-1999.pdf">《ANSI &#x2F; IEEE 标准 802.11,1999 版(R2003)》(ANSI&#x2F;IEEE Std 802.11, 1999 Edition (R2003)</a>。您可能会发现标准书第 36 页的表 1 在分析无线跟踪特别有用. </p>
+<p>在除本次实验以外其它的 Wireshark 实验中，我们都是在有线以太网连接进行抓包(捕获帧)。在本实验中，因为 802.11 是无线链路层协议，我们将在“空中”捕获帧。不幸的是，带有 802.11 协议的无线网卡(NIC)设备驱动无法提供钩子将捕获&#x2F;接收的 802.11 帧用于 Wireshark 实验分析。因此，在本实验中，您可能会使用作 者捕获的 802.11 帧(抓包结果)进行分析。如果您有能力自己捕获，欢迎您自己动手。如果您乐意自己跟踪，或许你可以买一个小的 <a href="www.cacetech.com">USB 网卡 AirPcap 用以捕获 802.1 帧</a></p>
+<h2 id="Getting-Started-开始实验"><a href="#Getting-Started-开始实验" class="headerlink" title="Getting Started 开始实验"></a>Getting Started 开始实验</h2><p>从 <a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu/wireshark-labs/wireshark-traces.zip">http://gaia.cs.umass.edu/wireshark-labs/wireshark-traces.zip</a> 下载压缩包并且得到 Wireshark_802_11.pcap。本结果由团队的一个作者在家庭网络使用 AirPcap 以及运行 Wireshark 的计算机得到，结果其中包括 Linksys 802.11g 的组合接入点(路由器)，该接入点为两台有线 PC 和一台无线 PC 提供服务。作者幸运邻居也使用无线接入点。在此跟踪文件中，我们能看到在通道 6 上捕获的帧。由于我们需要分析主机和接入点不是使用通道 6 的唯一组合，我们也会看到其他例如邻居接入点使用通道6被作者收集到。跟踪文件中采用的无线主机活动包括:</p>
+<ul>
+<li><p>跟踪开始时，主机已经与 30 Munroe St 接入点关联(associated)。</p>
+</li>
+<li><p>在时间 24.82 时刻，主机向 IP 地址 128.119.245.12 的服务器发送 HTTP 请</p>
+<p>求，请求内容是 <a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu/wireshark-labs/alice.txt">http://gaia.cs.umass.edu/wireshark-labs/alice.txt</a> 。</p>
+</li>
+<li><p>在时间 32.82 时刻，主机向 IP 地址 128.119.240.19.的服务器发送 HTTP 请求，请求内容是 <a target="_blank" rel="noopener" href="http://www.cs.umass.edu./">http://www.cs.umass.edu。</a></p>
+</li>
+<li><p>在时间 49.58 的时刻，主机断开了与 30 Munroe St 接入点的关联，并且尝试</p>
+</li>
+</ul>
+<p>  连接到 linksys_ses_24086 接入点。该接入点不是开放的接入点，因此主机始终没有成功与该接入点关联成功。</p>
+<ul>
+<li>在时间 63.0 时刻，主机放弃尝试关联 linksys_ses_24086 接入点，并且再次连接30 Munroe St 接入点关联。</li>
+</ul>
+<ol>
+<li><p>下载作者的抓包结果后，使用 Wireshark 的 File 菜单打开该文件</p>
+<p>Wireshark_802_11.pcap，您应该看到与图 1 显示相同的结果</p>
+<p><img src="/Wireshark-Lab-802-11/image-20230508184630447.png" alt="image-20230508184630447"></p>
+</li>
+</ol>
+<h2 id="Beacon-Frames-信标帧"><a href="#Beacon-Frames-信标帧" class="headerlink" title="Beacon Frames 信标帧"></a>Beacon Frames 信标帧</h2><p>回想一下，802.11 接入点使用信标帧表示其存在。要回答下面的问题，您或许应该 展开 IEEE 802.11 帧并在 Wireshark 中间窗口看到它的字段详细信息。请尽量清晰 的展示您的答案，必要时您可以在图中用标记辅以说明。您的答案应该简单可读。</p>
+<ul>
+<li><p>发送最多信标帧的两个接入点的服务集标识符是多少(SSID)?</p>
+</li>
+<li><p>inksys_ses_24086 接入点和 30 Munroe St.接入点的信标帧传输时间是多少?(提示:此时间间隔包含在信标帧本身之中。)</p>
+</li>
+<li><p>请以十六进制表示法找到 30 Munroe St 接入点的源 MAC 地址。回想课本中 图 7-13，并说明源地址，目的地址，基本服务集(BSS)的地址是什么。有 关 802.11 帧结构的详细讨论说明，请参阅 IEEE 802.11 标准文档(上文所 提)中的第 7 节。</p>
+</li>
+<li><p>30 Munroe St 接入点的信标帧目的地址十六进制表示是什么?</p>
+</li>
+<li><p>30 Munroe St 接入点的 BSS ID 地址是什么?</p>
+</li>
+<li><p>来自 30 Munroe St 接入点的信标帧宣告接入点可以支持四种数据速率和八种</p>
+<p>额外的“扩展支持速率”。这些速率是多少?</p>
+</li>
+</ul>
+<h2 id="Data-Transfer-数据传输"><a href="#Data-Transfer-数据传输" class="headerlink" title="Data Transfer 数据传输"></a>Data Transfer 数据传输</h2><p>由于作者抓包开始时，主机已经与 AP 关联，因此在做下面 AP 关联&#x2F;解除关联之 前，我们首先研究已经主机与关联 802.11 AP 的数据传输。回想一下，在作者抓包 结果中，在时间 24.82 的时刻，主机向 <a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu/wireshark-">http://gaia.cs.umass.edu/wireshark-</a> labs&#x2F;alice.txt 发出 HTTP 请求。 gaia.cs.umass.edu 的 IP 地址是 128.119.245.12。然 后，在 32.82 时刻，主机向 <a target="_blank" rel="noopener" href="http://www.cs.umass.edu/">http://www.cs.umass.edu</a> 发出 HTTP 请求。</p>
+<ul>
+<li>找到包含第一个 TCP SYN TCP 报文(下载 alice.txt 会话)的 802.11 帧。 802.11 帧中三个 MAC 地址字段分别是什么?此帧中那个 MAC 地址对应十 六进制的无线主机的 MAC 地址?那个对应接入点 MAC 地址，第一跳路由 器的 MAC 地址?发送此 TCP 报文的无线主机 IP 是什么?目的地 IP 地址是 什么?此目的地是否与主机地址，接入点地址，第一跳路由器地址或者某些 其他网络设备相对应，解释并且说明。</li>
+<li>找到包含此 TCP 会话 SYN ACK 报文的 802.11 帧。该帧中三个 MAC 地址 字段是什么?那个 MAC 地址对应十六进制的无线主机的 MAC 地址?那个 对应接入点 MAC 地址，第一跳路由器的 MAC 地址?帧中的发送方 MAC 地址是否与发送此 TCP 报文的设备的 IP 地址相对应?</li>
+</ul>
+<h2 id="Association-x2F-Disassociation-关联-x2F-解除关联"><a href="#Association-x2F-Disassociation-关联-x2F-解除关联" class="headerlink" title="Association&#x2F;Disassociation 关联&#x2F;解除关联"></a>Association&#x2F;Disassociation 关联&#x2F;解除关联</h2><p>回想一下课本的第 7.3.1 节，主机在发送数据之前必须与接入点关联。802.11 中的关联使用 ASSOCIATE REQUEST 帧(从主机发送到 AP，帧类型 0 和子类型 0，参 见本文中的第 7.3.3 节)和 ASSOCIATE RESPONSE 帧(由 AP 发送给具有主机， 帧类型 0 和子类型 1，响应于接收到的 ASSOCIATE REQUEST)。有关 802.11 帧 中每个字段的详细说明，请参阅 <a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu/wireshark-labs/802.11-">http://gaia.cs.umass.edu/wireshark-labs/802.11-</a> 1999.pdf 中 802.11 规范的第 34 页(第 7 节)。</p>
+<ul>
+<li><p>在时间 49 的时刻，主机在跟踪中使用那两个动作(例如:发送帧)解除在 跟踪开始之前就已经连接的 30 Munroe St AP 的关联。(提示:一个是 IP 层 多宗，一个是 802.11 层动作)。在查看 802.11 规范之后，请找出抓包结果 中未显示一个动作帧。</p>
+</li>
+<li><p>在抓包结果中，找到主机发送给无线 AP 的 AUTHENICATION 帧，同时也</p>
+<p>找无线 AP 的回复响应帧。在时间 49 时刻之后，无线主机向 linksys_ses_24086 AP(MAC 地址包括 Cisco_Li_f5:ba:bb)发送了多少 AUTHENTICATION 消息?</p>
+</li>
+<li><p>主机是否希望身份认证和关联 AP?</p>
+</li>
+<li><p>您是否在跟踪中看到来自 linksys_ses_24086 AP 回的 AUTHENTICATION?</p>
+</li>
+<li><p>现在让我们来分析当主机放弃尝试与 linksys_ses_24086 AP 关联并且现在尝</p>
+<p>试与 30 Munroe St AP 关联发生什么。查找从主机发送到 AP 的 AUTHENICATION 帧，同时也找无线 AP 的回复响应帧。在什么时间有一 个主机到 30 Munroe St AP 的帧，在什么时间无线 AP 回主机该帧的回复。 (注意:您可以使用“ wlan.fc.subtype &#x3D;&#x3D; 11and wlan.fc.type &#x3D;&#x3D; 0 and wlan.addr &#x3D;&#x3D; IntelCor_d1:b6:4f ”(不含引号)在此跟踪中仅显示无线主机的 AUTHENTICATION 帧)</p>
+</li>
+<li><p>从主机到 AP 的关联请求，以及相应的 AP 对主机关联请求的响应。在什么 时候有来自主机到 AP 关联请求，什么时候 AP 对主机关联请求响应。(注 意:你可以使用过滤表达式“wlan.fc.subtype &lt; 2 and wlan.fc.type &#x3D;&#x3D; 0 and wlan.addr &#x3D;&#x3D; IntelCor_d1:b6:4f”来仅显示 ASSOCIATE REQUEST 和 ASSOCIATE RESPONSE 帧。</p>
+</li>
+<li><p>主机和 AP 愿意使用什么传输速率?要回答此问题，您或许要查看 802.11 无</p>
+<p>线管理帧的字段。</p>
+</li>
+</ul>
+<h2 id="Other-Frame-types-其他帧类型"><a href="#Other-Frame-types-其他帧类型" class="headerlink" title="Other Frame types 其他帧类型"></a>Other Frame types 其他帧类型</h2><p>作者的抓包结果中含许多 PROBE REQUEST 和 PROBE RESPONSE 帧。</p>
+<ul>
+<li>这些帧中的发送方，接收方和 BSS ID MAC 地址是什么? 这两种帧的目的是什么? (要回答最后一个问题，您需要深入研究本实验前面引用说明的 在线参考资料)。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">Related Posts</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2023/04/20/Wireshark-Lab-IP-v7-0/" rel="bookmark">Wireshark Lab: IP v7.0</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2023/04/20/Wireshark-lab-HTTP/" rel="bookmark">Wireshark lab HTTP</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2023/04/21/Wireshark-Lab-TCP/" rel="bookmark">Wireshark Lab: TCP</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2023/05/05/Wireshark-Lab-ICMP/" rel="bookmark">Wireshark Lab: ICMP</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2023/05/08/Wireshark-Lab-Ethernet-and-ARP/" rel="bookmark">Wireshark Lab: Ethernet and ARP</a></div>
+    </li>
+  </ul>
+
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/computer-network/" rel="tag"># computer network</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/05/Wireshark-Lab-ICMP/" rel="prev" title="Wireshark Lab: ICMP">
+      <i class="fa fa-chevron-left"></i> Wireshark Lab: ICMP
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/08/Wireshark-Lab-Ethernet-and-ARP/" rel="next" title="Wireshark Lab: Ethernet and ARP">
+      Wireshark Lab: Ethernet and ARP <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Wireshark-%E5%AE%9E%E9%AA%8C-802-11"><span class="nav-number">1.</span> <span class="nav-text">Wireshark 实验:  802.11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getting-Started-%E5%BC%80%E5%A7%8B%E5%AE%9E%E9%AA%8C"><span class="nav-number">2.</span> <span class="nav-text">Getting Started 开始实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Beacon-Frames-%E4%BF%A1%E6%A0%87%E5%B8%A7"><span class="nav-number">3.</span> <span class="nav-text">Beacon Frames 信标帧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Transfer-%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="nav-number">4.</span> <span class="nav-text">Data Transfer 数据传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Association-x2F-Disassociation-%E5%85%B3%E8%81%94-x2F-%E8%A7%A3%E9%99%A4%E5%85%B3%E8%81%94"><span class="nav-number">5.</span> <span class="nav-text">Association&#x2F;Disassociation 关联&#x2F;解除关联</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Other-Frame-types-%E5%85%B6%E4%BB%96%E5%B8%A7%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text">Other Frame types 其他帧类型</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="楼兰"
+      src="/icon/avatar.png">
+  <p class="site-author-name" itemprop="name">楼兰</p>
+  <div class="site-description" itemprop="description">楼兰的Blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Trevoewu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Trevoewu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:littletrevorwu@gmail.com" title="E-Mail → mailto:littletrevorwu@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCUq2pPd5uGDITzu2GP7CqRA" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCUq2pPd5uGDITzu2GP7CqRA" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楼兰</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="Symbols count total">51k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">1:25</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

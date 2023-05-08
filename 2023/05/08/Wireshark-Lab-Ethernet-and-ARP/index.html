@@ -50,7 +50,7 @@
 <meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-Ethernet-and-ARP/image-20230508205742976.png">
 <meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-Ethernet-and-ARP/image-20230508211728737.png">
 <meta property="article:published_time" content="2023-05-08T11:02:02.000Z">
-<meta property="article:modified_time" content="2023-05-08T13:18:54.773Z">
+<meta property="article:modified_time" content="2023-05-08T13:26:30.036Z">
 <meta property="article:author" content="楼兰">
 <meta property="article:tag" content="computer network">
 <meta name="twitter:card" content="summary">
@@ -214,7 +214,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2023-05-08 19:02:02 / Modified: 21:18:54" itemprop="dateCreated datePublished" datetime="2023-05-08T19:02:02+08:00">2023-05-08</time>
+              <time title="Created: 2023-05-08 19:02:02 / Modified: 21:26:30" itemprop="dateCreated datePublished" datetime="2023-05-08T19:02:02+08:00">2023-05-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -232,7 +232,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>4.1k</span>
+              <span>4.2k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -273,8 +273,7 @@
 </ul>
 <p><img src="/Wireshark-Lab-Ethernet-and-ARP/image-20230508193529270.png" alt="image-20230508193529270"></p>
 <ul>
-<li><p>由于本实验是关于以太网和 ARP 的，我们对 IP 或更高层协议不感兴趣。 因</p>
-<p>此，让我们更改 Wireshark 的“捕获数据包列表”窗口，以便它仅显示有关 IP 以下协议的信息。 要让 Wireshark 执行此操作，请选择 Analyze-&gt; Enabled Protocols(分析-启用的协议)。 然后取消选中 IP 框(译者注:这里指的 IPV4 协议，下面有搜索)并选择确定。 您现在 Wireshark 窗口应该如下所示:</p>
+<li><p>由于本实验是关于以太网和 ARP 的，我们对 IP 或更高层协议不感兴趣。 因此，让我们更改 Wireshark 的“捕获数据包列表”窗口，以便它仅显示有关 IP 以下协议的信息。 要让 Wireshark 执行此操作，请选择 Analyze-&gt; Enabled Protocols(分析-启用的协议)。 然后取消选中 IP 框(译者注:这里指的 IPV4 协议，下面有搜索)并选择确定。 您现在 Wireshark 窗口应该如下所示:</p>
 <p><img src="/Wireshark-Lab-Ethernet-and-ARP/image-20230508190619603.png" alt="image-20230508190619603"></p>
 </li>
 <li><p>为了回答以下问题，您需要查看数据包详细信息和数据包内容窗口(Wireshark 中 的中间和下部显示窗口，译者注: 若您看到的不是如此-建议您重置布局(视图-重 置布局))。</p>
@@ -306,24 +305,23 @@
 </ol>
 <p>接下来，根据包含 HTTP 响应消息的第一个字节的以太网帧的内容，回答以下问题</p>
 <ol start="5">
-<li><p>这个以太网帧中，以太网源地址的值是多少?这是你的计算机的地址，还是gaia.cs.umass.edu 的地址(提示:答案是否定的)。拥有这个以太网地址的</p>
-<p>设备是什么?</p>
-<p>是最后一跳路由器网卡的MAC地址</p>
+<li><p>这个以太网帧中，以太网源地址的值是多少?这是你的计算机的地址，还是gaia.cs.umass.edu 的地址(提示:答案是否定的)。拥有这个以太网地址的设备是什么?</p>
+<p>ANS: 是最后一跳路由器网卡的MAC地址</p>
 <p><img src="/Wireshark-Lab-Ethernet-and-ARP/image-20230508195637736.png" alt="image-20230508195637736"></p>
 </li>
 <li><p>以太网帧中的目的地址是什么?这是您的计算机的以太网地址吗? </p>
-<p>是的</p>
+<p>ANS: 是的</p>
 </li>
 </ol>
 <p><img src="/Wireshark-Lab-Ethernet-and-ARP/image-20230508195734432.png" alt="image-20230508195734432"></p>
 <ol start="5">
 <li>以太网帧上层协议 16 进制值是什么?这对应的上层协议是什么?</li>
 </ol>
-<p>0x0800, IPv4</p>
+<p>ANS: 0x0800, IPv4</p>
 <ol start="5">
 <li>从以太帧的开始，一直到“OK”中的 ASCII“O”出现在以太网帧中为止，有多少字节?</li>
 </ol>
-<p>0x4f Byte, 79Byte</p>
+<p>ANS: 0x4f Byte, 79Byte</p>
 <p><img src="/Wireshark-Lab-Ethernet-and-ARP/image-20230508200014667.png" alt="image-20230508200014667"></p>
 <h2 id="The-Address-Resolution-Protocol-地址解析协议"><a href="#The-Address-Resolution-Protocol-地址解析协议" class="headerlink" title="The Address Resolution Protocol 地址解析协议"></a>The Address Resolution Protocol 地址解析协议</h2><p>在本节中，我们将观察 ARP 协议的作用。我们强烈建议您在继续实验之前重读课文 6.4.1 节</p>
 <h3 id="ARP-Caching-ARP-缓存"><a href="#ARP-Caching-ARP-缓存" class="headerlink" title="ARP Caching(ARP 缓存)"></a>ARP Caching(ARP 缓存)</h3><p>回想一下，ARP 协议通常在您的计算机上维护 IP 到以太网地址转换对的缓存.arp 命令(在 MSDOS 和 Linux &#x2F; Unix 中)用于查看和操作此缓存的内容。由于 arp 命 令和 ARP 协议具有相同的名称，因此很容易混淆它们。但请记住，它们是不同的: arp 命令用于查看和操作 ARP 缓存内容，而 ARP 协议定义了发送和接收的消息的 格式和含义，并定义了对消息传输和接收所采取的操作。</p>
@@ -361,7 +359,7 @@
 <h3 id="Observing-ARP-in-action-抓取-ARP-消息"><a href="#Observing-ARP-in-action-抓取-ARP-消息" class="headerlink" title="Observing ARP in action 抓取 ARP 消息"></a>Observing ARP in action 抓取 ARP 消息</h3><p>请进行以下操作: </p>
 <ul>
 <li><p>清除你的 ARP 缓存，如上所述。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo arp -a -d<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">sudo arp -a -d &#x2F;&#x2F;clear arp cahce in mac os<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p><img src="/Wireshark-Lab-Ethernet-and-ARP/image-20230508201938321.png" alt="image-20230508201938321"></p>
 </li>

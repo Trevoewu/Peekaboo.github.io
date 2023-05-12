@@ -21,7 +21,6 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"trevoewu.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
-<%- css('css/prettify.css', 'css/tomorrow-night.min') %>
   <meta name="description" content="在本实验中，我们将研究以太网协议和ARP协议">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Wireshark Lab: Ethernet and ARP">
@@ -232,14 +231,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>4.1k</span>
+              <span>3.9k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>7 mins.</span>
+              <span>6 mins.</span>
             </span>
             <div class="post-description">在本实验中，我们将研究以太网协议和ARP协议</div>
 
@@ -355,16 +354,7 @@
 <ol start="9">
 <li>写下计算机 ARP 缓存的内容。每个列值的含义是什么?</li>
 </ol>
-<pre><code class="language-shell">// mac/linux arp commend by tldr 
-- Show the current ARP table:
-    arp -a
-
-- Delete a specific entry:
-    arp -d address
-
-- Create an entry in the ARP table:
-    arp -s address mac_address
-</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// mac/linux arp commend by tldr </span><br><span class="line">- Show the current ARP table:</span><br><span class="line">    arp -a</span><br><span class="line"></span><br><span class="line">- Delete a specific entry:</span><br><span class="line">    arp -d address</span><br><span class="line"></span><br><span class="line">- Create an entry in the ARP table:</span><br><span class="line">    arp -s address mac_address</span><br></pre></td></tr></table></figure>
 <p>IP地址, MAC地址</p>
 <p><img src="Wireshark-Lab-Ethernet-and-ARP/image-20230508200844492.png" alt="image-20230508200844492"></p>
 <p>为了观察您的计算机发送和接收 ARP 消息，我们需要清除 ARP 缓存，否则您的计算机很可能在其缓存中找到所需的 IP-Ethernet 地址转换关系，因此不会发送 ARP 消息。</p>
@@ -378,8 +368,7 @@
 <ul>
 <li>
 <p>清除你的 ARP 缓存，如上所述。</p>
-<pre><code class="language-shell">sudo arp -a -d //clear arp cahce in mac os
-</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo arp -a -d //clear arp cahce in mac os</span><br></pre></td></tr></table></figure>
 <p><img src="Wireshark-Lab-Ethernet-and-ARP/image-20230508201938321.png" alt="image-20230508201938321"></p>
 </li>
 <li>
@@ -452,8 +441,7 @@
 <p>请求ARP的目标MAC地址48位全1, 是广播地址, 所以局域网设备都能收到, 而响应ARP是单播地址, 目标MAC为请求目标的MAC地址, 故只有发起对该IP请求对电脑能收到.</p>
 <h3 id="Extra-Credit-额外实验">Extra Credit 额外实验</h3>
 <p>EX-1. The arp command: arp 命令:</p>
-<pre><code class="language-shell">arp -s InetAddr EtherAddr
-</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arp -s InetAddr EtherAddr</span><br></pre></td></tr></table></figure>
 <p>这个命令允许你手动添加 arp 记录到缓存表中。它会把您输入的 IP 地址 (InetAddr)解析为物理地址(EtherAddr)，请问您输入正确 IP 地址但是物理地 址错误会发生什么。</p>
 <p>成功写入了, 类型为permanent, 没有发生什么, 而且可以在ARP table中看到两条同一IP地址的不同MAC地址条目.</p>
 <p><img src="Wireshark-Lab-Ethernet-and-ARP/image-20230508211728737.png" alt="image-20230508211728737"></p>
@@ -468,16 +456,16 @@
   <div class="popular-posts-header">Related Posts</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2023/05/08/Wireshark-Lab-802-11/" rel="bookmark">Wireshark Lab 802.11</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2023/05/05/Wireshark-Lab-ICMP/" rel="bookmark">Wireshark Lab: ICMP</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2023/04/20/Wireshark-Lab-IP-v7-0/" rel="bookmark">Wireshark Lab: IP v7.0</a></div>
+      <div class="popular-posts-title"><a href="/2023/05/08/Wireshark-Lab-802-11/" rel="bookmark">Wireshark Lab 802.11</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2023/04/21/Wireshark-Lab-TCP/" rel="bookmark">Wireshark Lab: TCP</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2023/04/20/Wireshark-Lab-IP-v7-0/" rel="bookmark">Wireshark Lab: IP v7.0</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2023/04/20/Wireshark-lab-HTTP/" rel="bookmark">Wireshark lab HTTP</a></div>
@@ -656,23 +644,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">81k</span>
+    <span title="Symbols count total">57k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:15</span>
+    <span title="Reading time total">1:35</span>
 </div>
-<script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
-<%- js('js/prettify.js') %>
-
-# 高亮设置
-<script type="text/javascript">
-$(window).on('load', function(){ 
-  $('pre').addClass('prettyprint linenums');
-  prettyPrint();
-});
-</script>
         
 
 

@@ -21,7 +21,6 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"trevoewu.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
-<%- css('css/prettify.css', 'css/tomorrow-night.min') %>
   <meta name="description" content="In this lab, we’ll explore several aspects of the ICMP protocol: 在本实验中，我们将探讨 ICMP 协议的几个方面:">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Wireshark Lab: ICMP">
@@ -297,8 +296,7 @@ of the text1. We present this lab in the context of the Microsoft Windows operat
 <p>You should hand in a screen shot of the Command Prompt window similar to Figure 1 above. Whenever possible, when answering a question below, you should hand in a printout of the packet(s) within the trace that you used to answer the question asked. Annotate the printout to explain your answer. To print a packet, use File-&gt;Print, choose Selected packet only, choose Packet summary line, and select the minimum amount of packet detail that you need to answer the question.</p>
 <p>请尽量清晰的展示您的答案，必要时您可以在图中用标记辅以说明。您的答案应该<br>
 简单可读。</p>
-<pre><code class="language-sh">ping -c 10 bing.com // [-c count] 
-</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping -c 10 bing.com // [-c count] </span><br></pre></td></tr></table></figure>
 <p>You should answer the following questions: 请回答以下问题:</p>
 <ol>
 <li>What is the IP address of your host? What is the IP address of the destination host? 您的主机的 IP 地址是多少? 目标主机的 IP 地址是多少?</li>
@@ -413,10 +411,10 @@ tracert 程序在 c:\windows\system32 目录中，所以您在命令提示符中
       <div class="popular-posts-title"><a href="/2023/04/20/Wireshark-Lab-IP-v7-0/" rel="bookmark">Wireshark Lab: IP v7.0</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2023/05/08/Wireshark-Lab-802-11/" rel="bookmark">Wireshark Lab 802.11</a></div>
+      <div class="popular-posts-title"><a href="/2023/05/08/Wireshark-Lab-Ethernet-and-ARP/" rel="bookmark">Wireshark Lab: Ethernet and ARP</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2023/05/08/Wireshark-Lab-Ethernet-and-ARP/" rel="bookmark">Wireshark Lab: Ethernet and ARP</a></div>
+      <div class="popular-posts-title"><a href="/2023/05/08/Wireshark-Lab-802-11/" rel="bookmark">Wireshark Lab 802.11</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2023/04/21/Wireshark-Lab-TCP/" rel="bookmark">Wireshark Lab: TCP</a></div>
@@ -599,23 +597,13 @@ tracert 程序在 c:\windows\system32 目录中，所以您在命令提示符中
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">81k</span>
+    <span title="Symbols count total">57k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:15</span>
+    <span title="Reading time total">1:35</span>
 </div>
-<script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
-<%- js('js/prettify.js') %>
-
-# 高亮设置
-<script type="text/javascript">
-$(window).on('load', function(){ 
-  $('pre').addClass('prettyprint linenums');
-  prettyPrint();
-});
-</script>
         
 
 

@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/icon/avatar.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon/avatar.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icon/avatar.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ysabeau:300,300italic,400,400italic,700,700italic|Liu Jian Mao Cao:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"trevoewu.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="狂神说JavaWeb快速入门笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Web 快速入门">
+<meta property="og:url" content="https://trevoewu.github.io/2023/05/12/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="楼兰">
+<meta property="og:description" content="狂神说JavaWeb快速入门笔记">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512175355319.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512175943702.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512180405774.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512180642215.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512182111384.png">
+<meta property="og:image" content="https://cdn4.iconfinder.com/data/icons/web-hosting-pack-vol-1/512/HTTP_Cookie-512.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image1.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512202849320.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/05/12/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512203239731.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2MTUzOTQ5,size_16,color_FFFFFF,t_70.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2MTUzOTQ5,size_16,color_FFFFFF,t_70-20230512204121432.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512204634669.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2MTUzOTQ5,size_16,color_FFFFFF,t_70-20230512210458691.png">
+<meta property="og:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2MTUzOTQ5,size_16,color_FFFFFF,t_70-20230512210458822.png">
+<meta property="article:published_time" content="2023-05-12T09:45:29.000Z">
+<meta property="article:modified_time" content="2023-05-12T13:12:24.727Z">
+<meta property="article:author" content="楼兰">
+<meta property="article:tag" content="JavaWeb">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://trevoewu.github.io/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512175355319.png">
+
+<link rel="canonical" href="https://trevoewu.github.io/2023/05/12/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Java Web 快速入门 | 楼兰</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="楼兰" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">楼兰</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://trevoewu.github.io/2023/05/12/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/icon/avatar.png">
+      <meta itemprop="name" content="楼兰">
+      <meta itemprop="description" content="楼兰的Blog">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="楼兰">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java Web 快速入门
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2023-05-12 17:45:29 / Modified: 21:12:24" itemprop="dateCreated datePublished" datetime="2023-05-12T17:45:29+08:00">2023-05-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-web/" itemprop="url" rel="index"><span itemprop="name">Java web</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>31k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>52 mins.</span>
+            </span>
+            <div class="post-description">狂神说JavaWeb快速入门笔记</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="静态web和动态web"><a href="#静态web和动态web" class="headerlink" title="静态web和动态web"></a>静态web和动态web</h2><p>静态Web和动态Web都是Web应用程序的不同类型，它们的主要区别在于页面内容是如何生成和呈现的。</p>
+<p>静态Web是由静态网页组成的Web应用程序，网页的内容在页面请求时已经存在，并且不会随着用户的请求而发生变化。网页内容通常是由HTML、CSS、JavaScript等静态文件组成的，这些文件都是在服务器端预先生成的，当用户访问这些网页时，服务器只需将这些文件发送给用户的浏览器，浏览器将文件解析并显示给用户即可。静态Web通常包含少量的网页，内容不会发生频繁变化，适合于展示企业宣传网站、个人博客等简单的网站。</p>
+<p>动态Web是由动态网页组成的Web应用程序，网页内容是在用户请求时根据请求参数和服务器端的处理生成的。网页内容可以根据用户的不同请求参数、数据库查询结果等实时生成。动态Web需要使用服务器端脚本语言（如Java、PHP、Python Servlet&#x2F;JSP等）来生成HTML页面内容，通常使用数据库来存储和管理数据。动态Web可以实现更复杂的功能，例如在线商城、社交网络、新闻门户等。</p>
+<p>总的来说，静态Web适合于内容不会频繁变化，网站规模较小的场景，可以使用简单的HTML、CSS、JavaScript等前端技术来实现；而动态Web适合于内容需要频繁变化、网站规模较大的场景，需要使用服务器端脚本语言和数据库来实现。</p>
+<h2 id="web服务器"><a href="#web服务器" class="headerlink" title="web服务器"></a>web服务器</h2><h3 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h3><p>Web服务器是一种软件程序，主要用于处理客户端和服务器之间的HTTP请求和响应。它可以接收来自客户端（通常是Web浏览器）的HTTP请求，并返回处理后的HTTP响应。Web服务器通常运行在互联网上，提供各种各样的服务，例如Web网站、电子邮件服务、文件传输等。</p>
+<p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512175355319.png" alt="image-20230512175355319"></p>
+<p><a target="_blank" rel="noopener" href="https://tomcat.apache.org/">Tomcat</a>是一种流行的开源Web服务器，它实现了Java Servlet和JavaServer Pages (JSP) 规范。Tomcat支持多种操作系统，包括Windows、Linux和Mac OS等，它提供了一个简单的、易于使用的管理界面，允许管理员对服务器进行配置和管理。</p>
+<p>Tomcat的主要特点包括：</p>
+<ol>
+<li><p>支持Java Servlet和JSP规范：Tomcat可以运行和处理Java Web应用程序，例如Java Servlet、JSP和JavaServer Faces (JSF) 等。</p>
+</li>
+<li><p>可扩展性：Tomcat支持各种插件和扩展，可以根据需要添加新功能或修改现有功能。</p>
+</li>
+<li><p>易于配置和管理：Tomcat提供了一个简单的管理界面，允许管理员轻松地配置和管理Web服务器，包括添加或删除Web应用程序、配置访问权限等。</p>
+</li>
+<li><p>开源免费：Tomcat是一个开源项目，可以免费使用和修改。这意味着用户可以根据自己的需要进行定制和修改，而不需要支付高昂的授权费用。</p>
+</li>
+</ol>
+<p>总的来说，Tomcat是一种功能强大的Web服务器，非常适合运行Java Web应用程序。它具有可扩展性、易于配置和管理、开源免费等优点，因此在企业和个人用户中非常受欢迎。</p>
+<h4 id="Tomcat文件结构"><a href="#Tomcat文件结构" class="headerlink" title="Tomcat文件结构"></a>Tomcat文件结构</h4><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cd ~&#x2F;tomcat &#x2F;&#x2F;tomcart 安装目录<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512175943702.png" alt="image-20230512175943702"></p>
+<p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512180405774.png" alt="image-20230512180405774"></p>
+<p>访问测试：<a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a></p>
+<p>默认端口8080</p>
+<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512180642215.png" alt="image-20230512180642215"></p>
+<ul>
+<li>可以修改配置的启动端口号, 默认为8080</li>
+</ul>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Connector</span> <span class="token attr-name">port</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>8080<span class="token punctuation">"</span></span> <span class="token attr-name">protocol</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>HTTP/1.1<span class="token punctuation">"</span></span>
+           <span class="token attr-name">connectionTimeout</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20000<span class="token punctuation">"</span></span>
+           <span class="token attr-name">redirectPort</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>8443<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p>可以配置主机的名称, 默认网站的存放位置</p>
+<ul>
+<li>name&#x3D;”locahost” 默认主机名对于的ip地址 127.0.0.1</li>
+<li>默认网站存放地址: webapps</li>
+</ul>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Host</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>localhost<span class="token punctuation">"</span></span>  <span class="token attr-name">appBase</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>webapps<span class="token punctuation">"</span></span>
+           <span class="token attr-name">unpackWARs</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span> <span class="token attr-name">autoDeploy</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+</ul>
+<h4 id="发布一个网站"><a href="#发布一个网站" class="headerlink" title="发布一个网站"></a>发布一个网站</h4><ul>
+<li>将自己写的网站，放到服务器(Tomcat)中指定的web应用的文件夹（webapps）下，就可以访问了。</li>
+</ul>
+<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><h5 id="HTPP-请求"><a href="#HTPP-请求" class="headerlink" title="HTPP 请求"></a>HTPP 请求</h5><pre class="line-numbers language-json" data-language="json"><code class="language-json">Request URL:https:&#x2F;&#x2F;www.baidu.com&#x2F;   请求地址
+Request Method:GET    get方法&#x2F;post方法
+Status Code:200 OK    状态码：200
+Remote（远程） Address:14.215.177.39:443
+Accept:text&#x2F;html  客户端可以接受的语言
+Accept-Encoding:gzip, deflate, br 编码
+Accept-Language:zh-CN,zh;q&#x3D;0.9    语言
+Cache-Control:max-age&#x3D;0 是否设置缓存
+Connection:keep-alive 是否为持续性链接<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>Servlet就是sun公司开发动态web的一门技术。</li>
+<li>Sun在这些API中提供一个接口叫做：Servlet，如果你想开发一个Servlet程序，只需要完成两个小步骤：<ul>
+<li>编写一个类，实现Servlet接口。</li>
+<li>把开发好的Java类部署到web服务器中。</li>
+</ul>
+</li>
+<li><strong>把实现了Servlet接口的Java程序叫做，Servlet</strong>。</li>
+</ul>
+<h3 id="第一个Servlet程序-HelloServlet"><a href="#第一个Servlet程序-HelloServlet" class="headerlink" title="第一个Servlet程序 HelloServlet"></a>第一个Servlet程序 HelloServlet</h3><ol>
+<li>修改web.xml为最新的</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>web-app</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://xmlns.jcp.org/xml/ns/javaee<span class="token punctuation">"</span></span>
+         <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>
+         <span class="token attr-name"><span class="token namespace">xsi:</span>schemaLocation</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd<span class="token punctuation">"</span></span>
+         <span class="token attr-name">version</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>4.0<span class="token punctuation">"</span></span>
+         <span class="token attr-name">metadata-complete</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>true<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>web-app</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="2">
+<li>编写一个Servlet程序。</li>
+</ol>
+<p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512182111384.png" alt="image-20230512182111384"></p>
+<ol start="3">
+<li><p>编写一个普通类Bean</p>
+</li>
+<li><p>实现servlet接口, 这里我们直接继承HttpServlet</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class HelloServlet extends HttpServlet &#123;
+    &#x2F;&#x2F; 由于get或post只是请求实现的不同的方式，可以相互调用，业务逻辑都是一样；
+  &#x2F;&#x2F;HttpServletRequest代表客户端的请求，用户通过Http协议访问服务器，
+&#x2F;&#x2F;HTTP请求中的所有信息会被封装到HttpServletRequest，
+&#x2F;&#x2F;通过这个HttpServletRequest的方法，获得客户端的所有信息；
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
+        PrintWriter writer &#x3D; resp.getWriter();  &#x2F;&#x2F; 响应流
+        writer.print(&quot;Hello,Serlvet&quot;);
+	      writer.flush()
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h4 id="write-和println"><a href="#write-和println" class="headerlink" title="write( )和println( )"></a>write( )和println( )</h4><p><code>servletResponse.getWriter().write()``servletResponse.getWriter().println()</code>都是用于将字符串写入到HTTP响应中的方法，但是它们之间有一些关键的区别。</p>
+<p><code>servletResponse.getWriter().write()</code>方法是将指定的字符串写入到HTTP响应输出流中，它不会在字符串末尾添加任何换行符或其他字符。如果需要在输出的字符串后面添加换行符或其他字符，就需要在字符串后面显式添加这些字符。</p>
+<p><code>servletResponse.getWriter().println()</code>方法也是将指定的字符串写入到HTTP响应输出流中，但是它会在字符串末尾自动添加一个换行符。这个换行符的样式和操作系统相关，通常是<code>\n</code>或<code>\r\n</code>。使用<code>println()</code>方法可以让每个输出的字符串都独占一行，使得输出更易于阅读和处理。</p>
+<p>因此，<code>write()</code>方法适合于需要将多个字符串写入到同一行的情况，例如输出CSV格式的数据或者HTML代码的片段。而<code>println()</code>方法适合于需要输出多行字符串的情况，例如输出日志信息或HTML代码的整个页面。</p>
+<p>需要注意的是，无论使用哪种方法，都需要在使用完之后调用<code>servletResponse.getWriter().flush()</code>方法将输出流刷新并将数据发送到客户端。如果不调用<code>flush()</code>方法，可能会导致响应数据无法正常发送到客户端。</p>
+<ol start="5">
+<li><p>编写Servlet的映射</p>
+<ul>
+<li>为什么需要映射：我们写的是JAVA程序，但是要通过浏览器访问，而浏览器需要连接web服务器，所以我们需要再web服务中注册我们写的Servlet，还需给他一个浏览器能够访问的路径；</li>
+</ul>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--注册Servlet--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-class</span><span class="token punctuation">></span></span>cn.loulan.servlet.HelloServlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-class</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!--Servlet的请求路径--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ol>
+<h4 id="Servlet-Mapping"><a href="#Servlet-Mapping" class="headerlink" title="Servlet Mapping"></a>Servlet Mapping</h4><ol>
+<li><p>一个Servlet可以指定一个映射路径。</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>一个Servlet可以指定多个映射路径。</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/hello2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/hello3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/hello4<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/hello5<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>一个Servlet可以指定通用映射路径。</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/hello/*<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>默认请求路径。</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--默认请求路径--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/*<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>指定一些后缀或者前缀等等….</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 可以自定义后缀实现请求映射
+     注意点，*前面不能加项目映射的路径
+     hello/subei.github
+    --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>hello<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>*.github<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>优先级问题。</p>
+<ul>
+<li>指定了固有的映射路径优先级最高，如果找不到就会走默认的处理请求；</li>
+</ul>
+</li>
+</ol>
+<h3 id="Servlet-Context"><a href="#Servlet-Context" class="headerlink" title="Servlet Context"></a>Servlet Context</h3><ul>
+<li>web容器在启动的时候，它会为每个web程序都创建一个对应的ServletContext对象，它代表了当前的web应用(Application)；</li>
+</ul>
+<p>ServletContext是Java Web应用程序的一个接口，它提供了一个Web应用程序的运行环境，可以访问应用程序的配置信息、资源、请求和会话等。每个Web应用程序都有一个ServletContext实例，可以通过getServletContext()方法获取。</p>
+<p>ServletContext提供了以下功能：</p>
+<ol>
+<li><p>应用程序作用域：ServletContext对象是一个应用程序级别的对象，可以在整个应用程序范围内共享数据。</p>
+</li>
+<li><p>应用程序配置信息：ServletContext对象提供了访问Web应用程序的配置信息的方法，例如Web.xml中配置的上下文参数，初始化参数等。</p>
+</li>
+<li><p>资源访问：ServletContext对象提供了一些方法，例如getRealPath()和getResourceAsStream()，可以访问Web应用程序中的资源文件。</p>
+</li>
+<li><p>请求转发：ServletContext对象提供了getRequestDispatcher()方法，可以将请求转发到其他Web组件，例如Servlet或JSP。</p>
+</li>
+<li><p>会话管理：ServletContext对象提供了创建和管理会话的方法，例如getSession()和getSessionCookieConfig()。</p>
+</li>
+</ol>
+<p>ServletContex为Java Web应用程序提供了一个环境，使开发人员可以访问应用程序的配置信息、资源、请求和会话等，并且可以将请求转发到其他Web组件。这使得Java Web应用程序开发变得更加容易和灵活。</p>
+<h4 id="利用servletContext实现不同Servlet之前的数据共享"><a href="#利用servletContext实现不同Servlet之前的数据共享" class="headerlink" title="利用servletContext实现不同Servlet之前的数据共享"></a>利用servletContext实现不同Servlet之前的数据共享</h4><ul>
+<li>在这个Servlet中保存的数据，可以在另外一个servlet中拿到；</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class HelloServlet extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
+        ServletContext context &#x3D; this.getServletContext();
+        String name &#x3D; &quot;学习超好&quot;;   &#x2F;&#x2F; 数据
+        context.setAttribute(&quot;name&quot;,name);
+    &#125;
+&#125;
+public class GetServlet extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
+        ServletContext context &#x3D; this.getServletContext();
+        String name &#x3D; (String)context.getAttribute(&quot;name&quot;);
+        resp.setContentType(&quot;text&#x2F;html&quot;);
+        resp.setCharacterEncoding(&quot;utf-8&quot;);
+        resp.getWriter().print(&quot;名字:&quot;+name);
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="利用Servlet获取初始化参数"><a href="#利用Servlet获取初始化参数" class="headerlink" title="利用Servlet获取初始化参数"></a>利用Servlet获取初始化参数</h4><pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!-- 配置一些Web应用初始化参数 --></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>context-param</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param-name</span><span class="token punctuation">></span></span>url<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param-name</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>param-value</span><span class="token punctuation">></span></span>jdbc:mysql://localhost:3306/mybatis<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>param-value</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>context-param</span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>gp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-class</span><span class="token punctuation">></span></span>com.github.servlet.ServletDemo03<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-class</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-mapping</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>servlet-name</span><span class="token punctuation">></span></span>gp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-name</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/gp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>servlet-mapping</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class ServletDemo03 extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
+        ServletContext context &#x3D; this.getServletContext();
+        String url &#x3D; context.getInitParameter(&quot;url&quot;);
+        resp.getWriter().print(url);
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="实现请求的转发"><a href="#实现请求的转发" class="headerlink" title="实现请求的转发"></a>实现请求的转发</h4><ol start="2">
+<li>利用ServletContext实现请求的转发</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class ServletDemo04 extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
+        ServletContext context &#x3D; this.getServletContext();
+&#x2F;&#x2F;        调用forward实现请求转发;
+&#x2F;&#x2F;        requestDispatcher.forward(req,resp);
+      context.getRequestDispatcher(&quot;url&quot;).forward(req,resp);
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="用来读取资源文件"><a href="#用来读取资源文件" class="headerlink" title="用来读取资源文件"></a>用来读取资源文件</h4><ul>
+<li><p>在resources目录下新建properties</p>
+</li>
+<li><p>思路：需要一个文件流；</p>
+</li>
+</ul>
+<pre class="line-numbers language-properties" data-language="properties"><code class="language-properties">username&#x3D;&quot;楼兰&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class ServletDemo05 extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException &#123;
+       InputStream stream &#x3D; this.getServletContext().getResourceAsStream(&quot;WEB-INF&#x2F;classes&#x2F;db.properties&quot;);
+        Properties prop &#x3D; new Properties();
+        prop.load(is);
+				 String user &#x3D; prop.getProperty(&quot;username&quot;);
+&#x2F;&#x2F;        但是如果配置文件中如果包含中文，就会出现乱码，所以可以通过中转的形式优化一下：
+        prop.load(new InputStreamReader(stream,&quot;UTF-8&quot;));
+        resp.getWriter().print(user);
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="HttpServletResponse"><a href="#HttpServletResponse" class="headerlink" title="HttpServletResponse"></a>HttpServletResponse</h3><ul>
+<li>web服务器接收到客户端的http请求，针对这个请求，分别创建一个代表请求的HttpServletRequest对象，代表响应的一个HttpServletResponse；<ul>
+<li>如果要获取客户端请求过来的参数：找HttpServletRequest；</li>
+<li>如果要给客户端响应一些信息：找HttpServletResponse。</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-简单分类"><a href="#1-简单分类" class="headerlink" title="1.简单分类"></a>1.简单分类</h4><ul>
+<li>负责向浏览器发送数据的方法。</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">ServletOutputStream getOutputStream();
+PrintWriter getWriter();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>负责向浏览器发送响应头的方法。</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">void setCharacterEncoding(String var1);
+void setContentType(String var1);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>响应的状态码。</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">int SC_OK &#x3D; 200;
+int SC_MOVED_PERMANENTLY &#x3D; 301;
+int SC_NOT_FOUND &#x3D; 404;
+int SC_INTERNAL_SERVER_ERROR &#x3D; 500;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>200 - 请求成功</li>
+<li>301 - 资源（网页等）被永久转移到其它URL</li>
+<li>404 - 请求的资源（网页等）不存在</li>
+<li>500 - 内部服务器错误</li>
+</ul>
+<h4 id="2-下载文件"><a href="#2-下载文件" class="headerlink" title="2.下载文件"></a>2.下载文件</h4><ol>
+<li>向浏览器输出消息；</li>
+<li>下载文件：<ol>
+<li>要获取下载文件的路径；</li>
+<li>下载的文件名是啥？</li>
+<li>设置想办法让浏览器能够支持下载我们需要的东西；</li>
+<li>获取下载文件的输入流；</li>
+<li>创建缓冲区；</li>
+<li>获取OutputStream对象；</li>
+<li>将FileOutputStream流写入到buffer缓冲区；</li>
+<li>使用OutputStream将缓冲区中的数据输出到客户端！</li>
+</ol>
+</li>
+</ol>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class FIleServlet extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
+&#x2F;&#x2F;        1. 获取下载文件的路径；
+    String url &#x3D; &quot;&#x2F;Users&#x2F;trevorwu&#x2F;Maven_03&#x2F;HelloServlet&#x2F;src&#x2F;main&#x2F;resources&#x2F;Peekaboo.png&quot;;
+&#x2F;&#x2F;        2. 获取文件名
+        String fileName &#x3D; &quot;downFile.png&quot;;
+&#x2F;&#x2F;        3. 让浏览器能够支持下载我们需要的东西；
+&#x2F;&#x2F;        这段代码是用来设置 HTTP 响应头，将服务器返回的内容作为文件附件（attachment）下载，而非直接在浏览器中打开。
+&#x2F;&#x2F;        具体地，&#96;resp.setHeader()&#96; 方法设置了一个名为 &quot;Content-Disposition&quot; 的响应头，
+&#x2F;&#x2F;        其值为 &quot;attachment;filename&#x3D;xxxxx&quot;，其中 &quot;xxxxx&quot; 是要下载的文件名。
+&#x2F;&#x2F;        这个文件名可以是服务器上的文件名，也可以是通过代码生成的文件名。
+&#x2F;&#x2F;        这个文件名决定了用户下载得到的文件名， 而非服务器上的文件名， 服务器的文件名在下载文件的地址中指定
+        resp.setHeader(&quot;Content-Disposition&quot;,&quot;attachment;filename&#x3D;&quot;
+                + URLEncoder.encode(fileName,&quot;UTF-8&quot;));
+&#x2F;&#x2F;        4. 获取下载文件的输入流；
+        FileInputStream in &#x3D; new FileInputStream(url);
+&#x2F;&#x2F;        5. 创建缓冲区；
+        int len &#x3D; 0;
+        byte buffer[] &#x3D; new byte[1024];
+&#x2F;&#x2F;        6. 获取OutputStream对象；
+        ServletOutputStream out &#x3D; resp.getOutputStream();
+&#x2F;&#x2F;        7. 将FileOutputStream流写入到buffer缓冲区；
+&#x2F;&#x2F;        这段代码是将输入流 &#96;in&#96; 中的数据读取到缓冲区 &#96;buffer&#96; 中，再通过输出流 &#96;out&#96; 输出到目标位置。
+&#x2F;&#x2F;        具体地，循环读取操作会在输入流中读取数据，并将数据写入到缓冲区中，
+&#x2F;&#x2F;        当读取到的数据长度为0时，说明已经读取完毕，退出循环。
+&#x2F;&#x2F;在每次循环中，通过调用 &#96;out.write(buffer, 0, len)&#96; 方法，将缓冲区中的数据写入输出流中。
+&#x2F;&#x2F; 这里的 &#96;buffer&#96; 是一个字节数组，&#96;len&#96; 是每次读取的字节数。
+&#x2F;&#x2F; 第二个参数 &#96;0&#96; 表示从缓冲区的第一个字节开始写入，而不是从数组的第一个元素开始写入。
+&#x2F;&#x2F;通过这段代码，我们可以实现从输入流中读取数据，然后将数据输出到目标位置的操作，通常用于文件下载或数据传输等场景。
+        while ((len&#x3D;in.read(buffer)) &gt; 0)&#123;
+            out.write(buffer,0,len);
+        &#125;
+&#x2F;&#x2F;        close input output stream
+        in.close();
+        out.close();
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="3-验证码功能"><a href="#3-验证码功能" class="headerlink" title="3.验证码功能*"></a>3.验证码功能*</h4><ul>
+<li>验证怎么来的？<ul>
+<li>前端实现；</li>
+<li>后端实现，需要用到 Java 的图片类，生产一个图片。</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class ImageServlet extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException &#123;
+&#x2F;&#x2F;        如何让浏览器3秒自动刷新一次;
+        resp.setHeader(&quot;refresh&quot;,&quot;3&quot;);
+&#x2F;&#x2F;        在内存中创建一个图片
+        BufferedImage image &#x3D; new BufferedImage(90,40,BufferedImage.TYPE_INT_RGB);
+&#x2F;&#x2F;        得到图片,笔
+        Graphics2D g &#x3D; (Graphics2D) image.getGraphics();
+&#x2F;&#x2F;        设置图片的背景颜色
+        g.setColor(Color.white);
+        g.fillRect(0,0,90,40);
+&#x2F;&#x2F;        给图片写数据
+        g.setColor(Color.RED);
+        g.setFont(new Font(null,Font.BOLD,20));
+        g.drawString(makeNum(),8,30);
+
+&#x2F;&#x2F;        告诉浏览器，这个请求用图片的方式打开
+        resp.setContentType(&quot;image&#x2F;jpeg&quot;);
+&#x2F;&#x2F;        网站存在缓存，不让浏览器缓存
+        resp.setDateHeader(&quot;expires&quot;,-1);
+        resp.setHeader(&quot;Cache-Control&quot;,&quot;no-cache&quot;);
+        resp.setHeader(&quot;Pragma&quot;,&quot;no-cache&quot;);
+
+&#x2F;&#x2F;        把图片写给浏览器
+        ImageIO.write(image,&quot;jpg&quot;, resp.getOutputStream());
+
+    &#125;
+
+&#x2F;&#x2F;    生成随机数
+    private String makeNum()&#123;
+        Random random &#x3D; new Random();
+        String num &#x3D; random.nextInt(9999999) + &quot;&quot;;
+        StringBuffer sb &#x3D; new StringBuffer();
+        for (int i &#x3D; 0; i &lt; 7-num.length() ; i++) &#123;
+            sb.append(&quot;0&quot;);
+        &#125;
+        num &#x3D; sb.toString() + num;
+        return num;
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="4-实现重定向"><a href="#4-实现重定向" class="headerlink" title="4.实现重定向"></a>4.实现重定向</h4><p>之前我们学过利用Servlet实现请求的转发, 这里我们利用response来实现请求重定向</p>
+<ol>
+<li>重定向和转发的区别</li>
+</ol>
+<p>重定向和转发是在Java Servlet编程中常用的两种将请求从一个Servlet转发到另一个Servlet或JSP的方式，它们有一些关键的区别。</p>
+<p>重定向（Redirect）是指当一个Servlet收到一个请求时，它会发送一个HTTP响应告诉浏览器发送一个新的请求到指定的URL。这个URL可以是一个Servlet、JSP、HTML页面或其他任何类型的资源。因此，重定向会导致浏览器向指定的URL发起一个全新的请求，而这个新请求的路径是由浏览器在重定向时自动发送的，不再是原始请求的路径。在重定向中，所有请求参数都会丢失，因此需要通过查询字符串或Session等方式传递参数。重定向可以用于将用户重定向到一个新的页面，或者将用户从一个应用程序重定向到另一个应用程序。</p>
+<p>转发（Forward）是指当一个Servlet收到一个请求时，它会将请求转发到另一个Servlet或JSP来处理。在转发中，请求和响应对象是同一个，只是Servlet容器将请求转发给了另一个资源来生成响应。因此，在转发中，所有请求参数都会保留，并且可以在目标Servlet或JSP中访问。转发通常用于将请求从一个Servlet传递到另一个Servlet或JSP来生成响应，以便可以在请求和响应之间共享数据。</p>
+<p>因此，重定向和转发都可以将请求从一个Servlet转发到另一个Servlet或JSP来生成响应，但它们的区别在于重定向会发送一个新的请求到指定的URL，而转发则将请求转发到另一个Servlet或JSP来处理，响应由目标Servlet或JSP生成。重定向导致的性能开销比转发更高，因为它需要向浏览器发送一个新的请求，而转发则在服务器内部进行，无需向浏览器发送任何内容。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class RedirectServlet extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
+        resp.sendRedirect(&quot;&#x2F;response&#x2F;img&quot;);    &#x2F;&#x2F; 重定向
+    &#125;
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="5-简单实现登录重定向"><a href="#5-简单实现登录重定向" class="headerlink" title="5.简单实现登录重定向"></a>5.简单实现登录重定向</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Log extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
+ this.getServletContext().getRequestDispatcher(&quot;&#x2F;hello&quot;).forward(req, resp);
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这段代码用于Java Servlet编程中，将一个请求从一个Servlet转发到同一Web应用程序中的另一个Servlet或JSP（Java服务器页面）。</p>
+<p><code>getRequestDispatcher()</code>方法的参数是请求转发到的资源的相对或绝对路径。在本例中，路径为“&#x2F;hello”，这是另一个Servlet.</p>
+<p>然后调用<code>RequestDispatcher</code>对象的<code>forward()</code>方法，传递<code>req</code>和<code>resp</code>参数。这些是传递到原始Servlet的<code>doGet()</code>或<code>doPost()</code>方法中的<code>HttpServletRequest</code>和<code>HttpServletResponse</code>对象。<code>forward()</code>方法将这些对象发送到指定的资源，并允许该资源生成要发送回客户端的响应。</p>
+<p>总之，这段代码将一个请求从当前Servlet转发到同一Web应用程序中的另一个Servlet或JSP，同时传递<code>HttpServletRequest</code>和<code>HttpServletResponse</code>对象。目标资源将生成要发送回客户端的响应。</p>
+<h3 id="HttpServletRequest"><a href="#HttpServletRequest" class="headerlink" title="HttpServletRequest"></a>HttpServletRequest</h3><ul>
+<li>HttpServletRequest代表客户端的请求，用户通过Http协议访问服务器，HTTP请求中的所有信息会被封装到HttpServletRequest，通过这个HttpServletRequest的方法，获得客户端的所有信息；</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;&#x2F;        HttpServletRequest代表客户端的请求，用户通过Http协议访问服务器，
+&#x2F;&#x2F;        HTTP请求中的所有信息会被封装到HttpServletRequest，
+&#x2F;&#x2F;        通过这个HttpServletRequest的方法，获得客户端的所有信息；
+        String username &#x3D; req.getParameter(&quot;username&quot;);
+        String password &#x3D; req.getParameter(&quot;password&quot;);
+        String host &#x3D; req.getHeader(&quot;Host&quot;);
+        resp.getWriter().println(&quot;username:&quot;+username+&quot; password:&quot;+password+&quot; host:&quot;+host);
+&#x2F;&#x2F;        &#96;req.getContextPath()&#96; 是一个 Java Servlet API 中的方法，它返回当前 Servlet 的上下文路径。
+&#x2F;&#x2F;        上下文路径是指 Web 应用程序的 URL 中，主机名和端口号后的第一个路径。
+&#x2F;&#x2F;例如，如果 Web 应用程序的 URL 是 &#96;http:&#x2F;&#x2F;example.com:8080&#x2F;myapp&#x2F;index.jsp&#96;，
+&#x2F;&#x2F; 那么上下文路径就是 &#96;&#x2F;myapp&#96;。
+        resp.getWriter().println(&quot;Context path&quot;+req.getContextPath());
+       <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="保存会话的两种技术"><a href="#保存会话的两种技术" class="headerlink" title="保存会话的两种技术"></a>保存会话的两种技术</h3><h4 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies"></a>Cookies</h4><img src="https://cdn4.iconfinder.com/data/icons/web-hosting-pack-vol-1/512/HTTP_Cookie-512.png" alt="Cookie, http, cookies, internet cookies, web cookies icon - Download on  Iconfinder" style="zoom:25%;" />
+
+<p><strong>HTTP cookie</strong>，简称<strong>cookie</strong>，又称“<strong>网站／浏览＋魔饼／魔片</strong>”等，是浏览<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%AB%99">网站</a>时由<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1%E5%99%A8">网络服务器</a>创建并由<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BD%91%E9%A1%B5%E6%B5%8F%E8%A7%88%E5%99%A8">网页浏览器</a>存放在用户计算机或其他设备的小文本文件。</p>
+<p>Cookie使Web服务器能在用户的设备存储状态信息（如添加到在线商店购物车中的商品）或跟踪用户的浏览活动（如点击特定按钮、登录或记录历史.</p>
+<p>cookie 是服务器在 HTTP 响应中发送的一段数据。客户端（可选）存储 cookie 并在后续请求中返回它。这允许客户端和服务器共享状态。要设置 cookie，服务器会在响应中包含一个 Set-Cookie 标头。cookie 的格式是名称-值对，带有可选属性。例如：</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">Set-Cookie: session-id&#x3D;1234567<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>这是一个带有属性的示例：</p>
+<pre class="line-numbers language-powershell" data-language="powershell"><code class="language-powershell">Set-Cookie: session-id&#x3D;1234567; max-age&#x3D;86400; domain&#x3D;example.com; path&#x3D;&#x2F;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>为了向服务器返回 cookie，客户端在以后的请求中包含一个 Cookie 标头。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Cookie: session-id&#x3D;1234567<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image1.png" alt="HTTP Cookies in ASP.NET Web API - ASP.NET 4.x | Microsoft Learn"></p>
+<h4 id="利用Cookies记录用户上一次登录时间"><a href="#利用Cookies记录用户上一次登录时间" class="headerlink" title="利用Cookies记录用户上一次登录时间"></a>利用Cookies记录用户上一次登录时间</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Cookie extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
+				&#x2F;&#x2F;get all cookies
+        javax.servlet.http.Cookie[] cookies &#x3D; req.getCookies();
+        for (javax.servlet.http.Cookie cookie : cookies) &#123;
+            String name &#x3D; cookie.getName();
+            if(name.equals(&quot;lastLoginTime&quot;))&#123;
+                String value &#x3D; cookie.getValue();
+                long parseLong &#x3D; Long.parseLong(cookie.getValue());
+                Date date &#x3D; new Date(parseLong);
+                resp.getWriter().println(&quot;lastLoginTime: &quot;+date.toLocaleString());
+            &#125;
+        &#125;
+        javax.servlet.http.Cookie cookie &#x3D; new javax.servlet.http.Cookie(&quot;lastLoginTime&quot;, System.currentTimeMillis() + &quot;&quot;);
+        resp.addCookie(cookie);
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h4 id="session"><a href="#session" class="headerlink" title="session"></a><strong>session</strong></h4><p>在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6">计算机科学</a>领域来说，尤其是在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C">网络</a>领域，<strong>会话</strong>（英语：session，<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Microsoft_Windows">Microsoft Windows</a>译作<strong>工作阶段</strong>、<strong>连线阶段</strong>）是一种持久网络协议，在用户（或用户代理）端和服务器端之间创建关联，从而起到交换数据包的作用机制，session在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE">网络协议</a>（例如<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Telnet">telnet</a>或<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/FTP">FTP</a>）中是非常重要的部分。</p>
+<p>在不包含<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E4%BC%9A%E8%AF%9D%E5%B1%82">会话层</a>（例如<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%8A%A5%E5%8D%8F%E8%AE%AE">UDP</a>）或者是无法长时间驻留会话层（例如<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/HTTP">HTTP</a>）的传输协议中，会话的维持需要依靠在传输数据中的高级别程序。例如，在浏览器和远程主机之间的HTTP传输中，HTTP cookie就会被用来包含一些相关的信息，例如session ID，参数和权限信息等。</p>
+<ul>
+<li><p>服务器技术，利用这个技术，可以保存用户的会话信息？ 我们可以把信息或者数据放在Session中！</p>
+</li>
+<li><p>服务器会给每一个用户（浏览器）创建一个Seesion对象；</p>
+</li>
+<li><p>一个Seesion独占一个浏览器，只要浏览器没有关闭，这个Session就存在；</p>
+</li>
+<li><p>用户登录之后，整个网站它都可以访问！–&gt; 保存用户的信息；保存购物车的信息……</p>
+</li>
+</ul>
+<h4 id="Session和cookie的区别："><a href="#Session和cookie的区别：" class="headerlink" title="Session和cookie的区别："></a>Session和cookie的区别：</h4><p>Cookie和Session是Web应用程序中常用的两种用于保存用户状态信息的机制。</p>
+<p>相同点：</p>
+<ol>
+<li><p>都是用于在Web应用程序中保存用户状态信息的机制。</p>
+</li>
+<li><p>都可以在多个请求之间保持用户的状态信息，使用户在浏览网站时能够保持状态的连续性。</p>
+</li>
+<li><p>都可以在一定程度上提高Web应用程序的性能，减少对服务器的负载。</p>
+</li>
+</ol>
+<p>不同点：</p>
+<ol>
+<li><p>存储位置不同：Cookie保存在客户端的浏览器中，而Session保存在服务器端的内存或者硬盘中。</p>
+</li>
+<li><p>存储容量不同：Cookie的存储容量比Session小。</p>
+</li>
+<li><p>安全性不同：由于Session数据存储在服务器端，因此相对于Cookie更加安全，Cookie数据容易被篡改或盗用。</p>
+</li>
+<li><p>过期时间不同：Session的过期时间可以由开发人员在代码中设置，而Cookie的过期时间可以在创建Cookie时设置，也可以在浏览器中手动删除。</p>
+</li>
+<li><p>使用场景不同：Cookie适用于需要长期保存用户状态信息的场景，例如保存用户的登录状态、偏好设置等；而Session适用于需要在短时间内保存用户状态信息的场景，例如购物车、会话信息等。</p>
+</li>
+</ol>
+<h4 id="利用Session返回客户端一个Person对象-并在浏览器上打印"><a href="#利用Session返回客户端一个Person对象-并在浏览器上打印" class="headerlink" title="利用Session返回客户端一个Person对象, 并在浏览器上打印"></a>利用Session返回客户端一个Person对象, 并在浏览器上打印</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Session extends HttpServlet &#123;
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException &#123;
+        HttpSession session &#x3D; req.getSession();
+        session.setAttribute(&quot;person&quot;,new Person(&quot;Alice&quot;, &quot;Alice@gmail.com&quot;));
+        resp.getWriter().write(&quot;Session id&quot;+session.getId());
+        Person person &#x3D; (Person) session.getAttribute(&quot;person&quot;);
+        resp.getWriter().write(&quot;name&quot;+person.toString());
+    &#125;
+          &#x2F;&#x2F;client 每次访问服务器都会在服务器端维护一个Session, 并向用户以Cookie的方式，发送Session id,
+&#x2F;&#x2F;        但是对于client而言， 这个Session id 是以Cookie的形式存储在浏览器上的， 所以更换浏览器访问后Cookie改变了
+&#x2F;&#x2F;        所以，服务器会认为这是一个新的Session.
+&#x2F;&#x2F;        下一次用户再次访问的时候就会拿着这个Session id 访问Serve， Server就知道这个客户的信息
+&#x2F;&#x2F;        1. 拿到Session， 这个Cookie是由客户端发送给服务器的
+
+&#x2F;&#x2F;        Session 可以使用setAttribute方法来保存信息
+&#x2F;&#x2F;        不同于Cookie，Session 可以保存一个对象(Object)， 而不是仅仅是一个String<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>会话自动过期：web.xml配置</strong>！</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--设置Session默认的失效时间--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>session-config</span><span class="token punctuation">></span></span>
+    <span class="token comment">&lt;!--15分钟后Session自动失效，以分钟为单位--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>session-timeout</span><span class="token punctuation">></span></span>15<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>session-timeout</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>session-config</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="JSP-Java-Server-Pages"><a href="#JSP-Java-Server-Pages" class="headerlink" title="JSP (Java Server Pages)"></a>JSP (Java Server Pages)</h3><p><strong>JSP</strong>（全称<strong>J</strong>akarta <strong>S</strong>erver <strong>P</strong>ages，曾称为<strong>J</strong>ava<strong>S</strong>erver <strong>P</strong>ages）是由<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Sun_Microsystems">Sun Microsystems</a>公司主导创建的一种动态网页技术标准。</p>
+<p><strong>Java Server Pages ： Java服务器端页面，也和Servlet一样，用于动态Web技术！</strong></p>
+<ul>
+<li>最大的特点：<ul>
+<li>写JSP就像在写HTML；</li>
+<li>区别：<ul>
+<li>HTML只给用户提供静态的数据；</li>
+<li>JSP页面中可以嵌入JAVA代码，为用户提供动态数据；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="JSP原理"><a href="#JSP原理" class="headerlink" title="JSP原理"></a>JSP原理</h4><p>思路：JSP到底怎么执行的！</p>
+<ul>
+<li><p>服务器内部工作：</p>
+<ul>
+<li>tomcat中有一个work目录；</li>
+</ul>
+</li>
+<li><p>IDEA中使用Tomcat的会在IDEA的tomcat中生产一个work目录；</p>
+<p>IDEA会为每个Tomcat Webapps创建一个文件夹,用来存放这个APP的配置文件, 工作路径, 在我的MAC路径<code>/Users/trevorwu/Library/Caches/JetBrains/IntelliJIdea2022.3/tomcat/47ad80c0-0fbd-41b1-a4ae-e036ca41705b</code></p>
+<p>我们进入这个路径的最深处</p>
+<p>&#96;cd Catalina&#x2F;localhost&#x2F;ROOT&#x2F;org&#x2F;apache&#x2F;jsp </p>
+<p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512202849320.png" alt="image-20230512202849320"></p>
+<p>可以看到这里面有两个文件, 一个是<code>index_jsp.class</code> 另一个是<code>index_jsp.java` 很明显, `index_jsp.class`就是</code>index_jsp.java&#96; 编译生成的class文件. </p>
+<p>这是只有一个这样的class, 也就是我们的主页index.jsp</p>
+<img src="Java-Web-快速入门/image-20230512203239731.png" alt="image-20230512203239731" style="zoom:33%;" /></li>
+</ul>
+<p>也就是说, 如果我们访问index.jsp, 相当于访问根目录<code>localhost:8080/</code> 服务器就会生成对应的.java文件, 以及.class文件用来处理请求. 这个.java文件本质上就是Servlet. 如果这时候我们访问别的页面, 就会生成新的Servlet. </p>
+<ul>
+<li><strong>浏览器向服务器发送请求，不管访问什么资源，其实都是在访问Servlet！</strong></li>
+<li>JSP最终也会被转换成为一个Java类！</li>
+<li><strong>JSP 本质上就是一个Servlet</strong>！</li>
+</ul>
+<p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2MTUzOTQ5,size_16,color_FFFFFF,t_70.png" alt="在这里插入图片描述"></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&#x2F;&#x2F; 初始化
+  public void _jspInit() &#123;
+  &#125;
+&#x2F;&#x2F; 销毁
+  public void _jspDestroy() &#123;
+  &#125;
+&#x2F;&#x2F; JSPService
+  public void _jspService(final javax.servlet.http.HttpServletRequest request, final javax.servlet.http.HttpServletResponse response)
+      throws java.io.IOException, javax.servlet.ServletException &#123;   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol>
+<li><p>内置一些对象；</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">final javax.servlet.jsp.PageContext pageContext;  &#x2F;&#x2F; 页面上下文
+javax.servlet.http.HttpSession session &#x3D; null;    &#x2F;&#x2F; session
+final javax.servlet.ServletContext application;   &#x2F;&#x2F; applicationContext
+final javax.servlet.ServletConfig config;         &#x2F;&#x2F; config
+javax.servlet.jsp.JspWriter out &#x3D; null;           &#x2F;&#x2F; out
+final java.lang.Object page &#x3D; this;               &#x2F;&#x2F; page：当前
+HttpServletRequest request                        &#x2F;&#x2F; 请求
+HttpServletResponse response                      &#x2F;&#x2F; 响应<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>输出页面前增加的代码；</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">response.setContentType(&quot;text&#x2F;html&quot;);       &#x2F;&#x2F; 设置响应的页面类型
+pageContext &#x3D; _jspxFactory.getPageContext(this, request, response,
+                                          null, true, 8192, true);
+_jspx_page_context &#x3D; pageContext;
+application &#x3D; pageContext.getServletContext();
+config &#x3D; pageContext.getServletConfig();
+session &#x3D; pageContext.getSession();
+out &#x3D; pageContext.getOut();
+_jspx_out &#x3D; out;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>以上的这些个对象我们可以在JSP页面中直接使用！</p>
+</li>
+</ol>
+<ul>
+<li>在JSP页面中：<ul>
+<li>只要是 JAVA代码就会原封不动的输出；</li>
+<li>如果是HTML代码，就会被转换为：</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">out.write(&quot;&lt;html&gt;\n&quot;);
+out.write(&quot;  &lt;head&gt;\n&quot;);
+out.write(&quot;    &lt;title&gt;$Title$&lt;&#x2F;title&gt;\n&quot;);
+out.write(&quot;  &lt;&#x2F;head&gt;\n&quot;);
+out.write(&quot;  &lt;body&gt;\n&quot;);
+out.write(&quot;  $END$\n&quot;);
+out.write(&quot;  &lt;&#x2F;body&gt;\n&quot;);
+out.write(&quot;&lt;&#x2F;html&gt;\n&quot;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>这样的格式，输出到前端！</li>
+</ul>
+<h4 id="JSP语法"><a href="#JSP语法" class="headerlink" title="JSP语法"></a>JSP语法</h4><ul>
+<li>任何语言都有自己的语法，JAVA中有，JSP 作为java技术的一种应用，它拥有一些自己扩充的语法（了解，知道即可！），Java所有语法都支持！</li>
+<li>配置必需的maven环境：</li>
+</ul>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--        JSP 依赖   --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>javax.servlet.jsp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>javax.servlet.jsp-api<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.3.3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!--        JSTL表达式的依赖--></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>javax.servlet.jsp.jstl<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>jstl-api<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!--        standard标签库--></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>taglibs<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>standard<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.1.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="JSP表达式"><a href="#JSP表达式" class="headerlink" title="JSP表达式"></a>JSP表达式</h5><pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;body&gt;
+&lt;%--JSP表达式
+            作用：用来将程序的输出，输出到客户端
+            &lt;%&#x3D; 变量或者表达式%&gt;
+--%&gt;
+&lt;%&#x3D; new java.util.Date()%&gt;
+&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h5 id="jsp脚本片段"><a href="#jsp脚本片段" class="headerlink" title="jsp脚本片段"></a>jsp脚本片段</h5><pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;body&gt;
+&lt;%--jsp脚本片段--%&gt;
+&lt;%
+  int sum &#x3D; 0;
+  for (int i &#x3D; 1; i &lt;&#x3D;100 ; i++) &#123;
+    sum+&#x3D;i;
+  &#125;
+  out.println(&quot;&lt;h1&gt;Sum&#x3D;&quot;+sum+&quot;&lt;&#x2F;h1&gt;&quot;);
+%&gt;
+&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>JSP声明</li>
+<li>&lt;%! code %&gt;</li>
+</ul>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;body&gt;
+&lt;%!
+  static &#123;
+    System.out.println(&quot;Loading Servlet!&quot;);
+  &#125;
+  private int globalVar &#x3D; 0;
+  public void guo()&#123;
+    System.out.println(&quot;进入了方法guo！&quot;);
+  &#125;
+%&gt;
+&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>JSP声明：会被编译到JSP生成Java的类中！其他的，就会被生成到_jspService方法中！</li>
+</ul>
+<p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2MTUzOTQ5,size_16,color_FFFFFF,t_70-20230512204121432.png" alt="在这里插入图片描述"></p>
+<h5 id="JSP指令-404与500页面实现"><a href="#JSP指令-404与500页面实现" class="headerlink" title="JSP指令: 404与500页面实现"></a>JSP指令: 404与500页面实现</h5><p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/image-20230512204634669.png" alt="image-20230512204634669"></p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--    自定义错误页面--></span>
+<span class="token comment">&lt;!--    配置之后记得重启Tomcat服务， 修改tomcat配置文件web.xml热部署不生效--></span>
+<span class="token comment">&lt;!--    自由修改jsp文件才能热部署--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>error-page</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>error-code</span><span class="token punctuation">></span></span>404<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>error-code</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>location</span><span class="token punctuation">></span></span>/error/404.jsp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>location</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>error-page</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>error-page</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>error-code</span><span class="token punctuation">></span></span>500<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>error-code</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>location</span><span class="token punctuation">></span></span>/error/500.jsp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>location</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>error-page</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h6 id="头部和尾部页面拼接"><a href="#头部和尾部页面拼接" class="headerlink" title="头部和尾部页面拼接"></a>头部和尾部页面拼接</h6><pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;body&gt;
+    &lt;%-- @include会将两个页面合二为一 --%&gt;
+
+    &lt;%@include file&#x3D;&quot;common&#x2F;header.jsp&quot;%&gt;
+    &lt;h1&gt;网页主体&lt;&#x2F;h1&gt;
+    &lt;%@include file&#x3D;&quot;common&#x2F;footer.jsp&quot;%&gt;
+
+    &lt;hr&gt;
+
+    &lt;%--
+        jsp标签
+        jsp:include：拼接页面，本质还是三个
+    --%&gt;
+    &lt;jsp:include page&#x3D;&quot;&#x2F;common&#x2F;header.jsp&quot;&#x2F;&gt;
+    &lt;h1&gt;网页主体&lt;&#x2F;h1&gt;
+    &lt;jsp:include page&#x3D;&quot;&#x2F;common&#x2F;footer.jsp&quot;&#x2F;&gt;
+
+&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="内置对象"><a href="#内置对象" class="headerlink" title="内置对象"></a>内置对象</h4><ul>
+<li>PageContext 存东西</li>
+<li>Request 存东西</li>
+<li>Response</li>
+<li>Session 存东西</li>
+<li>Application 【SerlvetContext】 存东西</li>
+<li>config 【SerlvetConfig】</li>
+<li>out</li>
+<li>page ，不用了解</li>
+<li>exception</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">&lt;body&gt;
+&lt;%--内置对象--%&gt;
+&lt;%
+    pageContext.setAttribute(&quot;name1&quot;,&quot;天启1号&quot;); &#x2F;&#x2F; 保存的数据只在一个页面中有效
+    request.setAttribute(&quot;name2&quot;,&quot;天启2号&quot;); &#x2F;&#x2F; 保存的数据只在一次请求中有效，请求转发会携带这个数据
+    session.setAttribute(&quot;name3&quot;,&quot;天启3号&quot;); &#x2F;&#x2F; 保存的数据只在一次会话中有效，从打开浏览器到关闭浏览器
+    application.setAttribute(&quot;name4&quot;,&quot;天启4号&quot;);  &#x2F;&#x2F; 保存的数据只在服务器中有效，从打开服务器到关闭服务器
+%&gt;
+
+&lt;%--
+    脚本片段中的代码，会被原封不动生成到.jsp.java
+    要求：这里面的代码，必须保证Java语法的正确性
+--%&gt;
+
+&lt;%
+    &#x2F;&#x2F; 从pageContent取出，我们通过寻找的方式来
+    &#x2F;&#x2F; 从底层到高层（作用域）:
+    String name1 &#x3D; (String) pageContext.findAttribute(&quot;name1&quot;);
+    String name2 &#x3D; (String) pageContext.findAttribute(&quot;name2&quot;);
+    String name3 &#x3D; (String) pageContext.findAttribute(&quot;name3&quot;);
+    String name4 &#x3D; (String) pageContext.findAttribute(&quot;name4&quot;);
+    String name5 &#x3D; (String) pageContext.findAttribute(&quot;name5&quot;); &#x2F;&#x2F; 作用域
+
+%&gt;
+
+&lt;%--使用EL表达式输出 $&#123;&#125; --%&gt;
+&lt;h1&gt;取出的值:&lt;&#x2F;h1&gt;
+&lt;h3&gt;$&#123;name1&#125;&lt;&#x2F;h3&gt;
+&lt;h3&gt;$&#123;name2&#125;&lt;&#x2F;h3&gt;
+&lt;h3&gt;$&#123;name3&#125;&lt;&#x2F;h3&gt;
+&lt;h3&gt;$&#123;name4&#125;&lt;&#x2F;h3&gt;
+&lt;h3&gt; &lt;%&#x3D;name5%&gt; &lt;&#x2F;h3&gt;
+
+&lt;&#x2F;body&gt;
+&lt;&#x2F;html&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>request：客户端向服务器发送请求，产生的数据，用户看完就没用了，比如：新闻，用户看完没用的！</li>
+<li>session：客户端向服务器发送请求，产生的数据，用户用完一会还有用，比如：购物车；</li>
+<li>application：客户端向服务器发送请求，产生的数据，一个用户用完了，其他用户还可能使用，比如：聊天数据；</li>
+</ul>
+<h4 id="JSP标签-JSTL标签-EL表达式"><a href="#JSP标签-JSTL标签-EL表达式" class="headerlink" title="JSP标签.JSTL标签.EL表达式"></a>JSP标签.JSTL标签.EL表达式</h4><ul>
+<li>EL表达式： ${ }<ul>
+<li><strong>获取数据</strong></li>
+<li><strong>执行运算</strong></li>
+<li><strong>获取web开发的常用对象</strong></li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;!-- JSTL表达式的依赖 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;javax.servlet.jsp.jstl&lt;&#x2F;groupId&gt;
+    &lt;artifactId&gt;jstl-api&lt;&#x2F;artifactId&gt;
+    &lt;version&gt;1.2&lt;&#x2F;version&gt;
+&lt;&#x2F;dependency&gt;
+&lt;!-- standard标签库 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;taglibs&lt;&#x2F;groupId&gt;
+    &lt;artifactId&gt;standard&lt;&#x2F;artifactId&gt;
+    &lt;version&gt;1.1.2&lt;&#x2F;version&gt;
+&lt;&#x2F;dependency&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p><strong>JSP标签</strong></p>
+</li>
+<li><p>利用JSP标签实现请求转发, 并设置参数</p>
+<p>&lt;jsp:forward page&#x3D;”url”&gt;</p>
+</li>
+</ul>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;body&gt;
+&lt;%--jsp:include--%&gt;
+&lt;jsp:forward page&#x3D;&quot;&#x2F;jspTag2.jsp&quot;&gt;
+    &lt;jsp:param name&#x3D;&quot;name&quot; value&#x3D;&quot;subeiLY&quot;&#x2F;&gt;
+    &lt;jsp:param name&#x3D;&quot;age&quot; value&#x3D;&quot;18&quot;&#x2F;&gt;
+&lt;&#x2F;jsp:forward&gt;
+&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>再转发的目标Servlet取参数</li>
+</ul>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;body&gt;
+&lt;%--取出参数--%&gt;
+名字:&lt;%&#x3D;request.getParameter(&quot;name&quot;)%&gt;
+年龄:&lt;%&#x3D;request.getParameter(&quot;age&quot;)%&gt;
+&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li><p><strong>JSTL表达式</strong></p>
+<ul>
+<li>JSTL标签库的使用就是为了弥补HTML标签的不足；它自定义许多标签，可以供我们使用，标签的功能和Java代码一样！</li>
+</ul>
+</li>
+<li><p><strong>格式化标签</strong></p>
+</li>
+<li><p><strong>SQL标签</strong></p>
+</li>
+<li><p><strong>XML 标签</strong></p>
+</li>
+<li><p><em><strong>核心标签</strong> （掌握部分）</em></p>
+</li>
+<li><p><strong>JSTL标签库使用步骤</strong>：</p>
+<ul>
+<li>引入对应的 taglib；</li>
+<li>使用其中的方法；</li>
+<li><strong>在Tomcat 的lib目录下也需要引入 jstl-api-1.2.jar、standard-1.1.2.jar的包，否则会报错：JSTL解析错误</strong>；</li>
+</ul>
+</li>
+<li><p>c：if标签 EL表达式获取表单中的数据</p>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;body&gt;
+&lt;form action&#x3D;&quot;core-if.jsp&quot; method&#x3D;&quot;get&quot;&gt;
+    &lt;%--
+        EL表达式获取表单中的数据
+        $&#123;param.参数名&#125;
+    --%&gt;
+    &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot; value&#x3D;&quot;$&#123;param.username&#125;&quot;&gt;
+    &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;登录&quot;&gt;
+&lt;&#x2F;form&gt;
+
+&lt;%--判断如果提交的用户名是管理员，则登录成功--%&gt;
+&lt;c:if test&#x3D;&quot;$&#123;param.username&#x3D;&#x3D;&#39;admin&#39;&#125;&quot; var&#x3D;&quot;isAdmin&quot;&gt;
+    &lt;c:out value&#x3D;&quot;管理员欢迎您！&quot;&#x2F;&gt;
+&lt;&#x2F;c:if&gt;
+  
+&lt;c:out value&#x3D;&quot;$&#123;isAdmin&#125;&quot;&#x2F;&gt;
+&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<ul>
+<li>c:choose c:when 实现成绩判断(Switch case)</li>
+</ul>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;body&gt;
+
+&lt;%--定义一个变量score，值为85--%&gt;
+&lt;c:set var&#x3D;&quot;score&quot; value&#x3D;&quot;65&quot;&#x2F;&gt;
+
+&lt;c:choose&gt;
+    &lt;c:when test&#x3D;&quot;$&#123;score&gt;&#x3D;90&#125;&quot;&gt;
+        你的成绩为优秀
+    &lt;&#x2F;c:when&gt;
+    &lt;c:when test&#x3D;&quot;$&#123;score&gt;&#x3D;80&#125;&quot;&gt;
+        你的成绩为一般
+    &lt;&#x2F;c:when&gt;
+    &lt;c:when test&#x3D;&quot;$&#123;score&gt;&#x3D;70&#125;&quot;&gt;
+        你的成绩为良好
+    &lt;&#x2F;c:when&gt;
+    &lt;c:when test&#x3D;&quot;$&#123;score&lt;&#x3D;60&#125;&quot;&gt;
+        你的成绩为不及格
+    &lt;&#x2F;c:when&gt;
+&lt;&#x2F;c:choose&gt;
+&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>c:forEach</li>
+</ul>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;body&gt;
+&lt;%
+
+    ArrayList&lt;String&gt; people &#x3D; new ArrayList&lt;&gt;();
+    people.add(0,&quot;Alice&quot;);
+    people.add(1,&quot;Bob&quot;);
+    people.add(2,&quot;楼兰&quot;);
+    people.add(3,&quot;Goobus&quot;);
+    people.add(4,&quot;Kris&quot;);
+    request.setAttribute(&quot;list&quot;,people);
+%&gt;
+
+&lt;%--
+var , 每一次遍历出来的变量
+items, 要遍历的对象
+begin,   哪里开始
+end,     到哪里
+step,   步长 (i++)
+--%&gt;
+&lt;c:forEach var&#x3D;&quot;people&quot; items&#x3D;&quot;$&#123;list&#125;&quot;&gt;
+    &lt;c:out value&#x3D;&quot;$&#123;people&#125;&quot;&#x2F;&gt; &lt;br&gt;
+&lt;&#x2F;c:forEach&gt;
+
+&lt;hr&gt;
+
+&lt;c:forEach var&#x3D;&quot;people&quot; items&#x3D;&quot;$&#123;list&#125;&quot; begin&#x3D;&quot;1&quot; end&#x3D;&quot;3&quot; step&#x3D;&quot;1&quot; &gt;
+    &lt;c:out value&#x3D;&quot;$&#123;people&#125;&quot;&#x2F;&gt; &lt;br&gt;
+&lt;&#x2F;c:forEach&gt;
+
+&lt;&#x2F;body&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+<h2 id="JavaBean"><a href="#JavaBean" class="headerlink" title="JavaBean"></a>JavaBean</h2><p>实体类，JavaBean有特定的写法：</p>
+<ul>
+<li>必须要有一个无参构造</li>
+<li>属性必须私有化</li>
+<li>必须有对应的get&#x2F;set方法；</li>
+</ul>
+<p>一般用来和数据库的字段做映射 ORM；</p>
+<p>ORM ：对象关系映射</p>
+<ul>
+<li>表—&gt;类</li>
+<li>字段–&gt;属性</li>
+<li>行记录—-&gt;对象</li>
+</ul>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;jsp:useBean id&#x3D;&quot;people&quot; class&#x3D;&quot;cn.loulan.Bean.People&quot; &#x2F;&gt;
+
+&lt;jsp:setProperty name&#x3D;&quot;people&quot; property&#x3D;&quot;address&quot; value&#x3D;&quot;成都&quot;&#x2F;&gt;
+&lt;jsp:setProperty name&#x3D;&quot;people&quot; property&#x3D;&quot;id&quot; value&#x3D;&quot;1&quot;&#x2F;&gt;
+&lt;jsp:setProperty name&#x3D;&quot;people&quot; property&#x3D;&quot;age&quot; value&#x3D;&quot;2&quot;&#x2F;&gt;
+&lt;jsp:setProperty name&#x3D;&quot;people&quot; property&#x3D;&quot;name&quot; value&#x3D;&quot;哇哈哈AD钙&quot;&#x2F;&gt;
+
+姓名:&lt;jsp:getProperty name&#x3D;&quot;people&quot; property&#x3D;&quot;name&quot;&#x2F;&gt;
+ ID:&lt;jsp:getProperty name&#x3D;&quot;people&quot; property&#x3D;&quot;id&quot;&#x2F;&gt;
+年龄:&lt;jsp:getProperty name&#x3D;&quot;people&quot; property&#x3D;&quot;age&quot;&#x2F;&gt;
+地址:&lt;jsp:getProperty name&#x3D;&quot;people&quot; property&#x3D;&quot;address&quot;&#x2F;&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="MVC三层架构"><a href="#MVC三层架构" class="headerlink" title="MVC三层架构"></a>MVC三层架构</h2><ul>
+<li>什么是MVC： Model view Controller 模型.视图.控制器</li>
+</ul>
+<h3 id="1-早些年"><a href="#1-早些年" class="headerlink" title="1.早些年"></a>1.早些年</h3><p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2MTUzOTQ5,size_16,color_FFFFFF,t_70-20230512210458691.png" alt="在这里插入图片描述"></p>
+<ul>
+<li>用户直接访问控制层，控制层就可以直接操作数据库；</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">servlet--CRUD--&gt;数据库
+弊端：程序十分臃肿，不利于维护  
+servlet的代码中：处理请求.响应.视图跳转.处理JDBC.处理业务代码.处理逻辑代码
+
+架构：没有什么是加一层解决不了的！
+程序猿调用
+|
+JDBC
+|
+Mysql Oracle SqlServer ....<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2-MVC三层架构"><a href="#2-MVC三层架构" class="headerlink" title="2.MVC三层架构"></a>2.MVC三层架构</h3><p><img src="/Java-Web-%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzQ2MTUzOTQ5,size_16,color_FFFFFF,t_70-20230512210458822.png" alt="在这里插入图片描述"></p>
+<p>Model</p>
+<ul>
+<li>业务处理 ：业务逻辑（Service）</li>
+<li>数据持久层：CRUD （Dao）</li>
+</ul>
+<p>View</p>
+<ul>
+<li>展示数据</li>
+<li>提供链接发起Servlet请求 （a，form，img…）</li>
+</ul>
+<p>Controller （Servlet）</p>
+<ul>
+<li><p>接收用户的请求 ：（req：请求参数.Session信息….）</p>
+</li>
+<li><p>交给业务层处理对应的代码</p>
+</li>
+<li><p>控制视图的跳转</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">登录---&gt;接收用户的登录请求---&gt;处理用户的请求（获取用户登录的参数，username，password）----&gt;交给业务层处理登录业务（判断用户名密码是否正确：事务）---&gt;Dao层查询用户名和密码是否正确--&gt;数据库<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+</ul>
+<h2 id="Filter-重点"><a href="#Filter-重点" class="headerlink" title="Filter(重点)"></a>Filter(重点)</h2><p>Filter：过滤器 ，用来过滤网站的数据；</p>
+<ul>
+<li>处理中文乱码</li>
+<li>登录验证….</li>
+</ul>
+<p>Filter开发步骤：</p>
+<ol>
+<li>导包</li>
+<li>编写过滤器</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--   Servlet 依赖   --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>javax.servlet<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>servlet-api<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.5<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!--        JSP 依赖   --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>javax.servlet.jsp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>javax.servlet.jsp-api<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.3.3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!--        JSTL表达式的依赖--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>javax.servlet.jsp.jstl<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>jstl-api<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!--        standard标签库--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>taglibs<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>standard<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.1.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+<span class="token comment">&lt;!--    连接数据库--></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>mysql<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>mysql-connector-java<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>5.1.47<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ol start="3">
+<li>实现Filter接口，重写对应的方法即可；</li>
+</ol>
+<p>使用Filter设置编码, 防止乱码</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">public class Filter implements javax.servlet.Filter &#123;
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException &#123;
+        &#x2F;&#x2F;项目启动的时候被调用
+        System.out.println(&quot;init filter&quot;);
+    &#125;
+    @Override
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException &#123;
+        servletRequest.setCharacterEncoding(&quot;UTF-8&quot;);
+        servletResponse.setCharacterEncoding(&quot;UTF-8&quot;);
+        filterChain.doFilter(servletRequest,servletResponse);
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这段代码是Java Servlet中用于实现Filter的接口方法<code>doFilter()</code>的签名。</p>
+<p>Filter是一种用于在Servlet容器中对请求和响应进行预处理和后处理的组件。Filter可以截取请求和响应，修改请求参数或响应内容，或者根据某些条件决定是否允许请求继续处理。</p>
+<p><code>doFilter()</code>方法接受三个参数：</p>
+<p><code>ServletRequest servletRequest</code>、<br><code>ServletResponse servletResponse</code><br><code>FilterChain filterChain</code></p>
+<p><code>ServletRequest</code>表示接收到的HTTP请求，<code>ServletResponse</code>表示将要发送的HTTP响应，<code>FilterChain</code>表示Filter链。</p>
+<p>在<code>doFilter()</code>方法中，Filter可以对请求和响应进行任何必要的操作。</p>
+<p>例如，可以检查请求参数、修改请求头、记录请求日志等。</p>
+<p>然后，Filter必须调用<code>filterChain.doFilter()</code>方法，将请求传递给下一个Filter或目标Servlet来进行处理。</p>
+<p>如果不调用<code>filterChain.doFilter()</code>方法，请求将不会传递到下一个组件，也不会生成响应。在最后一个Filter或目标Servlet中，必须生成响应并将其发送回客户端。</p>
+<p>在Filter链中的每个Filter都必须调用<code>filterChain.doFilter()</code>方法，否则请求将停止在当前Filter，不会传递到后续的Filter或目标Servlet。</p>
+<p>如果在Filter链中的某个Filter中调用了<code>filterChain.doFilter()</code>方法之前或之后生成了响应，或者没有调用<code>filterChain.doFilter()</code>方法，都会导致请求失败或无法正常响应。</p>
+<ol start="4">
+<li>在web.xml中配置 Filter；</li>
+</ol>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token comment">&lt;!--mapping filter--></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-name</span><span class="token punctuation">></span></span>encode<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-name</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-class</span><span class="token punctuation">></span></span>cn.loulan.servlet.Filter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-class</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-mapping</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>filter-name</span><span class="token punctuation">></span></span>encode<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-name</span><span class="token punctuation">></span></span>
+       <span class="token comment">&lt;!--只要是 /filter的任何请求，会经过这个过滤器--></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url-pattern</span><span class="token punctuation">></span></span>/filter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url-pattern</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>filter-mapping</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+    </div>
+
+    
+    
+    
+      
+
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaWeb/" rel="tag"># JavaWeb</a>
+              <a href="/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 学习笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/05/11/%E5%AD%A6%E4%B9%A0%E5%BF%83%E5%BE%97/" rel="prev" title="大学生就业指导课程心得体会">
+      <i class="fa fa-chevron-left"></i> 大学生就业指导课程心得体会
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81web%E5%92%8C%E5%8A%A8%E6%80%81web"><span class="nav-number">1.</span> <span class="nav-text">静态web和动态web</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#web%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">web服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat"><span class="nav-number">2.1.</span> <span class="nav-text">Tomcat</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Tomcat%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.1.</span> <span class="nav-text">Tomcat文件结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.2.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E4%B8%80%E4%B8%AA%E7%BD%91%E7%AB%99"><span class="nav-number">2.1.3.</span> <span class="nav-text">发布一个网站</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP"><span class="nav-number">2.2.</span> <span class="nav-text">HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#HTPP-%E8%AF%B7%E6%B1%82"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">HTPP 请求</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet"><span class="nav-number">3.</span> <span class="nav-text">Servlet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">3.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AAServlet%E7%A8%8B%E5%BA%8F-HelloServlet"><span class="nav-number">3.2.</span> <span class="nav-text">第一个Servlet程序 HelloServlet</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#write-%E5%92%8Cprintln"><span class="nav-number">3.2.1.</span> <span class="nav-text">write( )和println( )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Servlet-Mapping"><span class="nav-number">3.2.2.</span> <span class="nav-text">Servlet Mapping</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Servlet-Context"><span class="nav-number">3.3.</span> <span class="nav-text">Servlet Context</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A9%E7%94%A8servletContext%E5%AE%9E%E7%8E%B0%E4%B8%8D%E5%90%8CServlet%E4%B9%8B%E5%89%8D%E7%9A%84%E6%95%B0%E6%8D%AE%E5%85%B1%E4%BA%AB"><span class="nav-number">3.3.1.</span> <span class="nav-text">利用servletContext实现不同Servlet之前的数据共享</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A9%E7%94%A8Servlet%E8%8E%B7%E5%8F%96%E5%88%9D%E5%A7%8B%E5%8C%96%E5%8F%82%E6%95%B0"><span class="nav-number">3.3.2.</span> <span class="nav-text">利用Servlet获取初始化参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E8%AF%B7%E6%B1%82%E7%9A%84%E8%BD%AC%E5%8F%91"><span class="nav-number">3.3.3.</span> <span class="nav-text">实现请求的转发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%9D%A5%E8%AF%BB%E5%8F%96%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6"><span class="nav-number">3.3.4.</span> <span class="nav-text">用来读取资源文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpServletResponse"><span class="nav-number">3.4.</span> <span class="nav-text">HttpServletResponse</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%AE%80%E5%8D%95%E5%88%86%E7%B1%BB"><span class="nav-number">3.4.1.</span> <span class="nav-text">1.简单分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6"><span class="nav-number">3.4.2.</span> <span class="nav-text">2.下载文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E9%AA%8C%E8%AF%81%E7%A0%81%E5%8A%9F%E8%83%BD"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.验证码功能*</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%AE%9E%E7%8E%B0%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">3.4.4.</span> <span class="nav-text">4.实现重定向</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E7%AE%80%E5%8D%95%E5%AE%9E%E7%8E%B0%E7%99%BB%E5%BD%95%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-number">3.4.5.</span> <span class="nav-text">5.简单实现登录重定向</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HttpServletRequest"><span class="nav-number">3.5.</span> <span class="nav-text">HttpServletRequest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E4%BC%9A%E8%AF%9D%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%8A%80%E6%9C%AF"><span class="nav-number">3.6.</span> <span class="nav-text">保存会话的两种技术</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cookies"><span class="nav-number">3.6.1.</span> <span class="nav-text">Cookies</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A9%E7%94%A8Cookies%E8%AE%B0%E5%BD%95%E7%94%A8%E6%88%B7%E4%B8%8A%E4%B8%80%E6%AC%A1%E7%99%BB%E5%BD%95%E6%97%B6%E9%97%B4"><span class="nav-number">3.6.2.</span> <span class="nav-text">利用Cookies记录用户上一次登录时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#session"><span class="nav-number">3.6.3.</span> <span class="nav-text">session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Session%E5%92%8Ccookie%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="nav-number">3.6.4.</span> <span class="nav-text">Session和cookie的区别：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A9%E7%94%A8Session%E8%BF%94%E5%9B%9E%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%80%E4%B8%AAPerson%E5%AF%B9%E8%B1%A1-%E5%B9%B6%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8A%E6%89%93%E5%8D%B0"><span class="nav-number">3.6.5.</span> <span class="nav-text">利用Session返回客户端一个Person对象, 并在浏览器上打印</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JSP-Java-Server-Pages"><span class="nav-number">3.7.</span> <span class="nav-text">JSP (Java Server Pages)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JSP%E5%8E%9F%E7%90%86"><span class="nav-number">3.7.1.</span> <span class="nav-text">JSP原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSP%E8%AF%AD%E6%B3%95"><span class="nav-number">3.7.2.</span> <span class="nav-text">JSP语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#JSP%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.7.2.1.</span> <span class="nav-text">JSP表达式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#jsp%E8%84%9A%E6%9C%AC%E7%89%87%E6%AE%B5"><span class="nav-number">3.7.2.2.</span> <span class="nav-text">jsp脚本片段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#JSP%E6%8C%87%E4%BB%A4-404%E4%B8%8E500%E9%A1%B5%E9%9D%A2%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.7.2.3.</span> <span class="nav-text">JSP指令: 404与500页面实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E5%A4%B4%E9%83%A8%E5%92%8C%E5%B0%BE%E9%83%A8%E9%A1%B5%E9%9D%A2%E6%8B%BC%E6%8E%A5"><span class="nav-number">3.7.2.3.1.</span> <span class="nav-text">头部和尾部页面拼接</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.7.3.</span> <span class="nav-text">内置对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSP%E6%A0%87%E7%AD%BE-JSTL%E6%A0%87%E7%AD%BE-EL%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">3.7.4.</span> <span class="nav-text">JSP标签.JSTL标签.EL表达式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaBean"><span class="nav-number">4.</span> <span class="nav-text">JavaBean</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVC%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">MVC三层架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%97%A9%E4%BA%9B%E5%B9%B4"><span class="nav-number">5.1.</span> <span class="nav-text">1.早些年</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-MVC%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84"><span class="nav-number">5.2.</span> <span class="nav-text">2.MVC三层架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Filter-%E9%87%8D%E7%82%B9"><span class="nav-number">6.</span> <span class="nav-text">Filter(重点)</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="楼兰"
+      src="/icon/avatar.png">
+  <p class="site-author-name" itemprop="name">楼兰</p>
+  <div class="site-description" itemprop="description">楼兰的Blog</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Trevoewu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Trevoewu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:littletrevorwu@gmail.com" title="E-Mail → mailto:littletrevorwu@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.youtube.com/channel/UCUq2pPd5uGDITzu2GP7CqRA" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCUq2pPd5uGDITzu2GP7CqRA" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">楼兰</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="Symbols count total">83k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">2:19</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

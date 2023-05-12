@@ -21,7 +21,7 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"trevoewu.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
-
+<%- css('css/prettify.css', 'css/tomorrow-night.min') %>
   <meta name="description" content="当一个由你亲手塑造的东西第一次呈现在你面前的时候, 那种兴奋感以及成就感是难以比拟的.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="纪念拥有了自己的博客">
@@ -231,15 +231,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>当一个由你亲手塑造的东西第一次呈现在你面前的时候, 那种兴奋感以及成就感是难以比拟的. </p>
+        <p>当一个由你亲手塑造的东西第一次呈现在你面前的时候, 那种兴奋感以及成就感是难以比拟的.</p>
 <span id="more"></span>
-<p>比如当我第一次用自己的废旧的电脑组装成一台显示器, 当看到显示器作为switch副屏被点亮的时候. 比如自己照着教程给路由器刷插件来破解校园网, 看见Wi-Fi信号出现, 设备连接后, 绕过认证连接上互联网的时候. </p>
-<p>那时候, 我好高兴好高兴, 我很想分享我的成果, 告诉宿舍的每一个人让他们连我的Wi-Fi, 从此实现Wi-Fi自由. 平时沉默不语的我在这时候犹豫了. 我只能强迫自己去做一些别的事来抑制这份心情. </p>
-<p>而用于自己的博客带来的悸动是更胜过这两件事的. </p>
-<p>我很开心当我告诉我的两位异性朋友时, 虽然她们对此并不了解, 仅仅是看见她们好奇和称赞我就好开心. </p>
-<p>第一次听到博客这个词是在初二的时候, 老师给我们发了一份调查问卷, 其中一个问题便是有没有自己的博客, 那时候我还不知道博客是什么, 便以为是微博, 于是填上了是. 想必那时候拿到数据的人会不会惊讶于一个初二学生会拥有自己的博客呢. </p>
-<p>上大学后, 靠搜索学习也让我遇见了很多优秀的博客, 有着精致的页面, 充满个人特色的UI, 以及那些学习和生活的记录, 每次翻阅, 我都觉得他们好优秀. </p>
-<p>好像成为他们那样优秀的人. </p>
+<p>比如当我第一次用自己的废旧的电脑组装成一台显示器, 当看到显示器作为switch副屏被点亮的时候. 比如自己照着教程给路由器刷插件来破解校园网, 看见Wi-Fi信号出现, 设备连接后, 绕过认证连接上互联网的时候.</p>
+<p>那时候, 我好高兴好高兴, 我很想分享我的成果, 告诉宿舍的每一个人让他们连我的Wi-Fi, 从此实现Wi-Fi自由. 平时沉默不语的我在这时候犹豫了. 我只能强迫自己去做一些别的事来抑制这份心情.</p>
+<p>而用于自己的博客带来的悸动是更胜过这两件事的.</p>
+<p>我很开心当我告诉我的两位异性朋友时, 虽然她们对此并不了解, 仅仅是看见她们好奇和称赞我就好开心.</p>
+<p>第一次听到博客这个词是在初二的时候, 老师给我们发了一份调查问卷, 其中一个问题便是有没有自己的博客, 那时候我还不知道博客是什么, 便以为是微博, 于是填上了是. 想必那时候拿到数据的人会不会惊讶于一个初二学生会拥有自己的博客呢.</p>
+<p>上大学后, 靠搜索学习也让我遇见了很多优秀的博客, 有着精致的页面, 充满个人特色的UI, 以及那些学习和生活的记录, 每次翻阅, 我都觉得他们好优秀.</p>
+<p>好像成为他们那样优秀的人.</p>
 
     </div>
 
@@ -426,14 +426,23 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">83k</span>
+    <span title="Symbols count total">81k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:19</span>
+    <span title="Reading time total">2:15</span>
 </div>
+<script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+<%- js('js/prettify.js') %>
 
+# 高亮设置
+<script type="text/javascript">
+$(window).on('load', function(){ 
+  $('pre').addClass('prettyprint linenums');
+  prettyPrint();
+});
+</script>
         
 
 

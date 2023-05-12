@@ -21,7 +21,7 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"trevoewu.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
-
+<%- css('css/prettify.css', 'css/tomorrow-night.min') %>
   <meta name="description" content="域名系统(DNS)将主机名转换为IP地址，在互联网基础架构中发挥关键作用。在本实验中，我们将仔细查看DNS在客户端的细节。回想一下，客户端在DNS中的角色相对简单——客户端向其本地DNS服务器发送*请求*，并接收一个*响应*。如书中的图2.21和2.22所示，由于DNS分层服务器之间相互通信，可以递归地或迭代地解析客户端的DNS查询请求，而大多数操作是不可见的。然而，从DNS客户端的角度来看，协议">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Wireshark Lab: DNS">
@@ -29,47 +29,47 @@
 <meta property="og:site_name" content="楼兰">
 <meta property="og:description" content="域名系统(DNS)将主机名转换为IP地址，在互联网基础架构中发挥关键作用。在本实验中，我们将仔细查看DNS在客户端的细节。回想一下，客户端在DNS中的角色相对简单——客户端向其本地DNS服务器发送*请求*，并接收一个*响应*。如书中的图2.21和2.22所示，由于DNS分层服务器之间相互通信，可以递归地或迭代地解析客户端的DNS查询请求，而大多数操作是不可见的。然而，从DNS客户端的角度来看，协议">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421210837297.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421210846142.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421210900650.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421210910755.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421210921960.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211212041.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421210930573.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211245869.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211255078.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211313407.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211321920.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211341608.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211351099.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211359997.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211409785.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211422241.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211431684.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211445058.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211456062.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211504325.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211516046.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211522148.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211532903.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211545749.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211557865.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211610171.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211621477.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211639835.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211649155.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211656347.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211702635.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211713117.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211730365.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211748643.png">
-<meta property="og:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421211757311.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421210837297.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421210846142.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421210900650.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421210910755.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421210921960.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211212041.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421210930573.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211245869.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211255078.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211313407.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211321920.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211341608.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211351099.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211359997.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211409785.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211422241.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211431684.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211445058.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211456062.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211504325.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211516046.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211522148.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211532903.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211545749.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211557865.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211610171.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211621477.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211639835.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211649155.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211656347.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211702635.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211713117.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211730365.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211748643.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421211757311.png">
 <meta property="article:published_time" content="2023-04-21T13:05:21.000Z">
 <meta property="article:modified_time" content="2023-04-21T13:18:17.607Z">
 <meta property="article:author" content="楼兰">
 <meta property="article:tag" content="computer cetwork">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://trevoewu.github.io/Wireshark-Lab-DNS/image-20230421210837297.png">
+<meta name="twitter:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/Wireshark-Lab-DNS/image-20230421210837297.png">
 
 <link rel="canonical" href="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-DNS/">
 
@@ -267,148 +267,166 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><strong>官方英文文档：<a href="Wireshark_Intro_v6.01.pdf">Wireshark_Intro_v6.01.pdf</a></strong>  </p>
+        <p><strong>官方英文文档：<a href="Wireshark_Intro_v6.01.pdf">Wireshark_Intro_v6.01.pdf</a></strong></p>
 <p><strong>以下内容为笔者翻译：</strong></p>
 <hr>
-<h2 id="Wireshark-实验-DNS-v6-01"><a href="#Wireshark-实验-DNS-v6-01" class="headerlink" title="Wireshark 实验:  DNS v6.01"></a>Wireshark 实验:  DNS v6.01</h2><p><strong>《计算机网络：自顶向下方法（第6版）》补充材料，J.F. Kurose and K.W. Ross</strong></p>
-<p>“不闻不若闻之，闻之不若见之，见之不若知之，知之不若行之。” ——中国谚语 </p>
+<h2 id="Wireshark-实验-DNS-v6-01">Wireshark 实验:  DNS v6.01</h2>
+<p><strong>《计算机网络：自顶向下方法（第6版）》补充材料，J.F. Kurose and K.W. Ross</strong></p>
+<p>“不闻不若闻之，闻之不若见之，见之不若知之，知之不若行之。” ——中国谚语</p>
 <p>© 2005-2012, J.F Kurose and K.W. Ross, All Rights Reserved</p>
 <hr>
 <p>如书中第2.5节所述，域名系统(DNS)将主机名转换为IP地址，在互联网基础架构中发挥关键作用。在本实验中，我们将仔细查看DNS在客户端的细节。回想一下，客户端在DNS中的角色相对简单——客户端向其本地DNS服务器发送<em>请求</em>，并接收一个<em>响应</em>。如书中的图2.21和2.22所示，由于DNS分层服务器之间相互通信，可以递归地或迭代地解析客户端的DNS查询请求，而大多数操作是不可见的。然而，从DNS客户端的角度来看，协议非常简 ——将查询指向为本地DNS服务器，并从该服务器接收到响应。</p>
 <p>在开始本实验之前，您可能需要阅读书中的第2.5节来了解DNS。另外，您可能需要查看关于<strong>本地DNS服务器，DNS缓存，DNS记录和消息，以及DNS记录中的TYPE字段</strong>的资料。</p>
-<h3 id="1-nslookup"><a href="#1-nslookup" class="headerlink" title="1. nslookup"></a>1. nslookup</h3><p>在本实验中，我们将大量使用<em>nslookup</em>工具，这个工具在现在的大多数Linux&#x2F;Unix和Microsoft平台中都有。要在Linux&#x2F;Unix中运行<em>nslookup</em>，您只需在命令行中键入<em>nslookup</em>命令即可。要在Windows中运行，请打开命令提示符并在命令行上运行<em>nslookup</em>。</p>
+<h3 id="1-nslookup">1. nslookup</h3>
+<p>在本实验中，我们将大量使用<em>nslookup</em>工具，这个工具在现在的大多数Linux/Unix和Microsoft平台中都有。要在Linux/Unix中运行<em>nslookup</em>，您只需在命令行中键入<em>nslookup</em>命令即可。要在Windows中运行，请打开命令提示符并在命令行上运行<em>nslookup</em>。</p>
 <p>在这是最基本的操作，<em>nslookup</em>工具允许主机查询任何指定的DNS服务器的DNS记录。DNS服务器可以是根DNS服务器，顶级域DNS服务器，权威DNS服务器或中间DNS服务器（有关这些术语的定义，请参阅书本）。要完成此任务，<em>nslookup</em>将DNS查询发送到指定的DNS服务器，然后接收DNS回复，并显示结果。</p>
-<p>上面的屏幕截图显示了三个不同<em>nslookup</em>命令的结果（显示在Windows命令提示符中）。在此示例中，客户端主机位于布鲁克林理工大学校园，默认本地DNS服务器为dns-prime.poly.edu。运行nslookup时，如果没有指定DNS服务器，则<em>nslookup</em>会将查询发送到默认的DNS服务器（在这种情况下为dnsprime.poly.edu）。来看第一个命令：</p>
+<p>上面的屏幕截图显示了三个不同<em>nslookup</em>命令的结果（显示在Windows命令提示符中）。在此示例中，客户端主机位于布鲁克林理工大学校园，<a target="_blank" rel="noopener" href="http://xn--DNSdns-prime-1f5s760cplnk5cu61h2pa6538cej6c.poly.edu">默认本地DNS服务器为dns-prime.poly.edu</a>。运行nslookup时，如果没有指定DNS服务器，则<em>nslookup</em>会将查询发送到默认的DNS服务器（<a target="_blank" rel="noopener" href="http://xn--dnsprime-t39lfp892aj4qdp3agi7e3d7c.poly.edu">在这种情况下为dnsprime.poly.edu</a>）。来看第一个命令：</p>
 <p><code>nslookup www.mit.edu</code></p>
-<p>说这个命令是说，请告诉我主机 <a target="_blank" rel="noopener" href="http://www.mit.edu/">www.mit.edu</a> 的IP地址。如屏幕截图所示，此命令的响应提供两条信息：（1）提供响应的DNS服务器的名称和IP地址；（2）响应本身，即 <a target="_blank" rel="noopener" href="http://www.mit.edu/">www.mit.edu</a> 的主机名和IP地址。虽然响应来自理工大学的本地DNS服务器，但本地DNS服务器很可能会迭代地联系其他几个DNS服务器来获得结果，如书中第2.4节所述。</p>
+<p>说这个命令是说，请告诉我主机 <a target="_blank" rel="noopener" href="http://www.mit.edu">www.mit.edu</a> 的IP地址。如屏幕截图所示，此命令的响应提供两条信息：（1）提供响应的DNS服务器的名称和IP地址；（2）响应本身，即 <a target="_blank" rel="noopener" href="http://www.mit.edu">www.mit.edu</a> 的主机名和IP地址。虽然响应来自理工大学的本地DNS服务器，但本地DNS服务器很可能会迭代地联系其他几个DNS服务器来获得结果，如书中第2.4节所述。</p>
 <p>现在来看第二个命令：</p>
 <p><code>nslookup -type=NS mit.edu</code></p>
-<p>在这个例子中，我们添加了选项”-type&#x3D;NS”和域名”mit.edu”。这将使得<em>nslookup</em>将NS记录发送到默认的本地DNS服务器。换句话说，“请给我发送mit.edu的权威DNS的主机名” （当不使用-type选项时，<em>nslookup</em>使用默认值，即查询A类记录。）上述屏幕截图中，首先显示了提供响应的DNS服务器（这是默认本地DNS服务器）以及三个MIT域名服务器。这些服务器中的每一个确实都是麻省理工学院校园主机的权威DNS服务器。然而，<em>nslookup</em>也表明该响应是非权威的，这意味着这个响应来自某个服务器的缓存，而不是来自权威MIT DNS服务器。最后，响应结果还显示了麻省理工学院权威DNS服务器的IP地址。 （即使<em>nslookup</em>生成的NS类型查询没有明确要求IP地址，本地DNS服务器依然”免费“返回了这些信息，然后被<em>nslookup</em>显示出来。）</p>
+<p>在这个例子中，我们添加了选项&quot;-type=NS&quot;和域名&quot;<a target="_blank" rel="noopener" href="http://mit.edu">mit.edu</a>&quot;。这将使得<em>nslookup</em>将NS记录发送到默认的本地DNS服务器。换句话说，“请给我发送mit.edu的权威DNS的主机名” （当不使用-type选项时，<em>nslookup</em>使用默认值，即查询A类记录。）上述屏幕截图中，首先显示了提供响应的DNS服务器（这是默认本地DNS服务器）以及三个MIT域名服务器。这些服务器中的每一个确实都是麻省理工学院校园主机的权威DNS服务器。然而，<em>nslookup</em>也表明该响应是非权威的，这意味着这个响应来自某个服务器的缓存，而不是来自权威MIT DNS服务器。最后，响应结果还显示了麻省理工学院权威DNS服务器的IP地址。 （即使<em>nslookup</em>生成的NS类型查询没有明确要求IP地址，本地DNS服务器依然”免费“返回了这些信息，然后被<em>nslookup</em>显示出来。）</p>
 <p>最后来看第三个命令：</p>
 <p><code>nslookup www.aiit.or.kr bitsy.mit.edu</code></p>
-<p>在这个例子中，我们希望将查询请求发送到DNS服务器 bitsy.mit.edu ，而不是默认的DNS服务器（dns-prime.poly.edu）。因此，查询和响应事务直接发生在我们的主机和 bitsy.mit.edu 之间。在这个例子中，DNS服务器 bitsy.mit.edu 提供主机 <a target="_blank" rel="noopener" href="http://www.aiit.or.kr/">www.aiit.or.kr</a> 的IP地址，它是高级信息技术研究所（韩国）的Web服务器。</p>
+<p>在这个例子中，我们希望将查询请求发送到DNS服务器 <a target="_blank" rel="noopener" href="http://bitsy.mit.edu">bitsy.mit.edu</a> ，而不是默认的DNS服务器（<a target="_blank" rel="noopener" href="http://dns-prime.poly.edu">dns-prime.poly.edu</a>）。因此，查询和响应事务直接发生在我们的主机和 <a target="_blank" rel="noopener" href="http://bitsy.mit.edu">bitsy.mit.edu</a> 之间。在这个例子中，DNS服务器 <a target="_blank" rel="noopener" href="http://bitsy.mit.edu">bitsy.mit.edu</a> 提供主机 <a target="_blank" rel="noopener" href="http://www.aiit.or.kr">www.aiit.or.kr</a> 的IP地址，它是高级信息技术研究所（韩国）的Web服务器。</p>
 <p>现在我们了解了一些示例，您现在可能想知道<em>nslookup</em>命令的一般语法。语法是：</p>
 <p><code>nslookup -option1 -option2 host-to-find dns-server</code></p>
 <p>一般来说，<em>nslookup</em>可以不添加选项，或者添加一两个甚至更多选项。正如我们在上面的示例中看到的，dns-server也是可选的；如果这项没有提供，查询将发送到默认的本地DNS服务器。</p>
 <p>现在我们提供了总览了<em>nslookup</em>，现在是你自己驾驭它的时候了。执行以下操作（并记下结果）：</p>
 <ol>
-<li><p>运行<em>nslookup</em>以获取一个亚洲的Web服务器的IP地址。该服务器的IP地址是什么？</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421210837297.png" alt="image-20230421210837297"></p>
+<li>
+<p>运行<em>nslookup</em>以获取一个亚洲的Web服务器的IP地址。该服务器的IP地址是什么？</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421210837297.png" alt="image-20230421210837297"></p>
 <p>查询了哈尔滨理工大学的ip地址, 通过得到的信息可以知道, 该服务器的IP地址为202.118.201.1</p>
-<p>可以发现这是一个来自DNS服务器182.254.116.116的应答, 搜索发现, 这是腾讯的备用域名服务器. </p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421210846142.png" alt="image-20230421210846142"></p>
+<p>可以发现这是一个来自DNS服务器182.254.116.116的应答, 搜索发现, 这是腾讯的备用域名服务器.</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421210846142.png" alt="image-20230421210846142"></p>
 <p>继续查询权威名字服务器, 得到的是非权威的, 这是因为腾讯的DNS服务器不知道哈尔滨理工大学的权威名字服务器, 只能向根DNS→TLD(顶级域DNS)(.cn)→edu.cnDNS→hrbust.edu.cnDNS, 迭代查询获得</p>
 <p>如果我们之间对这个DNS服务器发起DNS查询:</p>
-<p> <img src="/Wireshark-Lab-DNS/image-20230421210900650.png" alt="image-20230421210900650"></p>
-<p>可以发现, 这样一条来自权威名字服务器的应答. </p>
+<p><img src="Wireshark-Lab-DNS/image-20230421210900650.png" alt="image-20230421210900650"></p>
+<p>可以发现, 这样一条来自权威名字服务器的应答.</p>
 </li>
-<li><p>运行<em>nslookup</em>来确定一个欧洲的大学的权威DNS服务器。</p>
+<li>
+<p>运行<em>nslookup</em>来确定一个欧洲的大学的权威DNS服务器。</p>
 <p>查询了苏黎世联邦理工大学的权威DNS</p>
 </li>
 </ol>
-<p><img src="/Wireshark-Lab-DNS/image-20230421210910755.png" alt="image-20230421210910755"></p>
-<p>可以发现权威名字服务器为: ns1.ethz.ch</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421210910755.png" alt="image-20230421210910755"></p>
+<p>可以发现权威名字服务器为: <a target="_blank" rel="noopener" href="http://ns1.ethz.ch">ns1.ethz.ch</a></p>
 <ol>
 <li>运行<em>nslookup</em>，使用问题2中一个已获得的DNS服务器，来查询Yahoo!邮箱的邮件服务器。它的IP地址是什么？</li>
 </ol>
-<p><img src="/Wireshark-Lab-DNS/image-20230421210921960.png" alt="image-20230421210921960"></p>
-<p>查不到好吧….人家是大学的权威DNS, 没有雅虎的邮件服务器地址, 只维护了大学的IP地址查询, 不当然公共DNS的指责, 即不去迭代的查询(个人猜测)</p>
-<p>又到了问聪明的chatGPT的时间了: </p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211212041.png" alt="image-20230421211212041"></p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421210930573.png" alt="image-20230421210930573"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421210921960.png" alt="image-20230421210921960"></p>
+<p>查不到好吧…人家是大学的权威DNS, 没有雅虎的邮件服务器地址, 只维护了大学的IP地址查询, 不当然公共DNS的指责, 即不去迭代的查询(个人猜测)</p>
+<p>又到了问聪明的chatGPT的时间了:</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211212041.png" alt="image-20230421211212041"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421210930573.png" alt="image-20230421210930573"></p>
 <p>使用腾讯的公共DNS服务器我们可以得到Yahoo的邮件服务器地址.</p>
 <p>同时为发现查询<code>www.mail.yahoo.com</code>和mail.yahoo.com的结果不同</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211245869.png" alt="image-20230421211245869"></p>
-<p>查询chatGPT得到以下回复: </p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211255078.png" alt="image-20230421211255078"></p>
-<h3 id="2-ipconfig"><a href="#2-ipconfig" class="headerlink" title="2. ipconfig"></a>2. ipconfig</h3><p><em>ipconfig</em>（对于Windows）和<em>ifconfig</em>（对于Linux &#x2F; Unix）是主机中最实用的程序，尤其是用于调试网络问题时。这里我们只讨论<em>ipconfig</em>，尽管Linux &#x2F; Unix的<em>ifconfig</em>与其非常相似。 <em>ipconfig</em>可用于显示您当前的TCP&#x2F;IP信息，包括您的地址，DNS服务器地址，适配器类型等。例如，您只需进入命令提示符，输入</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211245869.png" alt="image-20230421211245869"></p>
+<p>查询chatGPT得到以下回复:</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211255078.png" alt="image-20230421211255078"></p>
+<h3 id="2-ipconfig">2. ipconfig</h3>
+<p><em>ipconfig</em>（对于Windows）和<em>ifconfig</em>（对于Linux / Unix）是主机中最实用的程序，尤其是用于调试网络问题时。这里我们只讨论<em>ipconfig</em>，尽管Linux / Unix的<em>ifconfig</em>与其非常相似。 <em>ipconfig</em>可用于显示您当前的TCP/IP信息，包括您的地址，DNS服务器地址，适配器类型等。例如，您只需进入命令提示符，输入</p>
 <p><code>ipconfig /all</code></p>
 <p><em>ipconfig</em>对于管理主机中存储的DNS信息也非常有用。在第2.5节中，我们了解到主机可以缓存最近获得的DNS记录。要查看这些缓存记录，在 C:\&gt; 提示符后输入以下命令：</p>
 <p><code>ipconfig /displaydns</code></p>
 <p>每个条目显示剩余的生存时间（TTL）（秒）。要清除缓存，请输入</p>
 <p><code>ipconfig /flushdns</code></p>
 <p>清除了所有条目并从hosts文件重新加载条目。</p>
-<h3 id="3-使用Wireshark追踪DNS"><a href="#3-使用Wireshark追踪DNS" class="headerlink" title="3. 使用Wireshark追踪DNS"></a>3. 使用Wireshark追踪DNS</h3><p>现在，我们熟悉<code>nslookup</code>和<code>ipconfig</code>，我们准备好了一些正经的事情。首先让我们捕获一些由常规上网活动生成的DNS数据包。</p>
+<h3 id="3-使用Wireshark追踪DNS">3. 使用Wireshark追踪DNS</h3>
+<p>现在，我们熟悉<code>nslookup</code>和<code>ipconfig</code>，我们准备好了一些正经的事情。首先让我们捕获一些由常规上网活动生成的DNS数据包。</p>
 <ul>
 <li>使用<em>ipconfig</em>清空主机中的DNS缓存。</li>
 <li>打开浏览器并清空浏览器缓存。 （若使用Internet Explorer，转到<strong>工具</strong>菜单并选择<strong>Internet选项</strong>；然后在<strong>常规</strong>选项卡中选择删除文件。）</li>
-<li>打开Wireshark，然后在过滤器中输入“ip.addr&#x3D;&#x3D;your_IP_address”，您可以先使用<em>ipconfig</em>获取你的IP地址。此过滤器将删除既从你主机不发出也不发往你主机的所有数据包。</li>
+<li>打开Wireshark，然后在过滤器中输入“ip.addr==your_IP_address”，您可以先使用<em>ipconfig</em>获取你的IP地址。此过滤器将删除既从你主机不发出也不发往你主机的所有数据包。</li>
 <li>在Wireshark中启动数据包捕获。</li>
-<li>使用浏览器访问网页： <a target="_blank" rel="noopener" href="http://www.ietf.org/">http://www.ietf.org</a></li>
+<li>使用浏览器访问网页： <a target="_blank" rel="noopener" href="http://www.ietf.org">http://www.ietf.org</a></li>
 <li>停止数据包捕获。</li>
 </ul>
 <p>如果您无法在你的网络连接上运行Wireshark，则可以下载一个捕获了数据包的文件，这个文件是本书作者在自己计算机上 按照上述步骤捕获的（原文注：Download the zip file <a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu/wireshark-labs/wireshark-traces.zip">http://gaia.cs.umass.edu/wireshark-labs/wireshark-traces.zip</a> and extract the file dnsethereal-trace-1. The traces in this zip file were collected by Wireshark running on one of the author’s computers, while performing the steps indicated in the Wireshark lab. Once you have downloaded the trace, you can load it into Wireshark and view the trace using the File pull down menu, choosing Open, and then selecting the dns-ethereal-trace-1 trace file. ）。回答下列问题。您应该在解答中尽可能展示你使用了哪些你捕获到的数据包，并注释出来（原文注：What do we mean by “annotate”? If you hand in a paper copy, please highlight where in the printout you’ve found the answer and add some text (preferably with a colored pen) noting what you found in what you ‘ve highlight. If you hand in an electronic copy, it would be great if you could also highlight and annotate. ）。若要打印数据包，请使用<em>文件</em>-&gt;<em>打印</em>，只勾选<em>仅选中分组</em>，和<em>概要行</em>，并选中你所需要用于解答问题的数据包。</p>
 <ol start="4">
-<li><p>找到DNS查询和响应消息。它们是否通过UDP或TCP发送？</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211313407.png" alt="image-20230421211313407"></p>
+<li>
+<p>找到DNS查询和响应消息。它们是否通过UDP或TCP发送？</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211313407.png" alt="image-20230421211313407"></p>
 <p>通过UDP发送</p>
 </li>
-<li><p>DNS查询消息的目标端口是什么？ DNS响应消息的源端口是什么？</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211321920.png" alt="image-20230421211321920"></p>
+<li>
+<p>DNS查询消息的目标端口是什么？ DNS响应消息的源端口是什么？</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211321920.png" alt="image-20230421211321920"></p>
 <p>目标端口通过上一问的图片可以得到为: 53, 响应DNS到源端口也是53</p>
 </li>
-<li><p>DNS查询消息发送到哪个IP地址？使用ipconfig来确定本地DNS服务器的IP地址。这两个IP地址是否相同？</p>
+<li>
+<p>DNS查询消息发送到哪个IP地址？使用ipconfig来确定本地DNS服务器的IP地址。这两个IP地址是否相同？</p>
 <p>本地IP 地址: 10.51.172.226</p>
 <p>DNS服务器IP地址: 182.254.116.116</p>
-<p>相同 </p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211341608.png" alt="image-20230421211341608"></p>
+<p>相同</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211341608.png" alt="image-20230421211341608"></p>
 </li>
-<li><p>检查DNS查询消息。DNS查询是什么”Type”的？查询消息是否包含任何”answers”？</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211351099.png" alt="image-20230421211351099"></p>
+<li>
+<p>检查DNS查询消息。DNS查询是什么&quot;Type&quot;的？查询消息是否包含任何&quot;answers&quot;？</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211351099.png" alt="image-20230421211351099"></p>
 <p>TYPE: A</p>
 <p>不包含</p>
 </li>
-<li><p>检查DNS响应消息。提供了多少个”answers”？这些答案具体包含什么？</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211359997.png" alt="image-20230421211359997"></p>
+<li>
+<p>检查DNS响应消息。提供了多少个&quot;answers&quot;？这些答案具体包含什么？</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211359997.png" alt="image-20230421211359997"></p>
 <p>三个answer</p>
 <p>第一个answer: TYPE CNAME, 主机别名到规范主机名的对应关系</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211409785.png" alt="image-20230421211409785"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211409785.png" alt="image-20230421211409785"></p>
 <p>包含NAME(域名),TYPE, Class, TTL, Data. CNAME(规范主机名)</p>
 <p>第二个answer: TYPE A, 域名和IP地址</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211422241.png" alt="image-20230421211422241"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211422241.png" alt="image-20230421211422241"></p>
 <p>得到了规范主机名的IP地址</p>
-<p>第三个answer: </p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211431684.png" alt="image-20230421211431684"></p>
+<p>第三个answer:</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211431684.png" alt="image-20230421211431684"></p>
 <p>另一个规范主机名的IP地址</p>
 </li>
-<li><p>考虑从您主机发送的后续TCP SYN数据包。 SYN数据包的目的IP地址是否与DNS响应消息中提供的任何IP地址相对应？</p>
-<p>直接过滤ip.addr&#x3D;&#x3D;104.16.44.99</p>
-<p>结果如下: </p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211445058.png" alt="image-20230421211445058"></p>
+<li>
+<p>考虑从您主机发送的后续TCP SYN数据包。 SYN数据包的目的IP地址是否与DNS响应消息中提供的任何IP地址相对应？</p>
+<p>直接过滤ip.addr==104.16.44.99</p>
+<p>结果如下:</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211445058.png" alt="image-20230421211445058"></p>
 <p>可以发现我的主机向这个IP地址发起了TCP的链接请求</p>
 </li>
-<li><p>这个网页包含一些图片。在获取每个图片前，您的主机是否都发出了新的DNS查询？</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211456062.png" alt="image-20230421211456062"></p>
-<p>有一个对r3.o.lencr.org的DNS查询, 搜索发现这是一个恶意的软件发起的, 目的是给浏览器带来广告(服了….)</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211504325.png" alt="image-20230421211504325"></p>
+<li>
+<p>这个网页包含一些图片。在获取每个图片前，您的主机是否都发出了新的DNS查询？</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211456062.png" alt="image-20230421211456062"></p>
+<p>有一个对r3.o.lencr.org的DNS查询, 搜索发现这是一个恶意的软件发起的, 目的是给浏览器带来广告(服了…)</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211504325.png" alt="image-20230421211504325"></p>
 </li>
 </ol>
 <p>现在让我们玩玩<em>nslookup</em>（原文注：If you are unable to run Wireshark and capture a trace file, use the trace file dns-ethereal-trace-2 in the zip file <a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu/wireshark-labs/wireshark-traces.zip">http://gaia.cs.umass.edu/wireshark-labs/wireshark-traces.zip</a>  ）。</p>
 <ul>
 <li>启动数据包捕获。</li>
-<li>使用nslookup查询 <a target="_blank" rel="noopener" href="http://www.mit.edu/">www.mit.edu</a> </li>
+<li>使用nslookup查询 <a target="_blank" rel="noopener" href="http://www.mit.edu">www.mit.edu</a></li>
 <li>停止数据包捕获。</li>
 </ul>
-<p>我们从上面的屏幕截图看到，<em>nslookup</em>实际上发送了三个DNS查询，并收到了三个DNS响应。只考虑本次实验相关结果，在回答以下问题时，请忽略前两组查询&#x2F;响应，因为<em>nslookup</em>的一些特殊性，这些查询通常不是由标准网络应用程序生成的。您应该专注于最后一个查询和响应消息。</p>
+<p>我们从上面的屏幕截图看到，<em>nslookup</em>实际上发送了三个DNS查询，并收到了三个DNS响应。只考虑本次实验相关结果，在回答以下问题时，请忽略前两组查询/响应，因为<em>nslookup</em>的一些特殊性，这些查询通常不是由标准网络应用程序生成的。您应该专注于最后一个查询和响应消息。</p>
 <ol start="11">
-<li><p>DNS查询消息的目标端口是什么？ DNS响应消息的源端口是什么？</p>
+<li>
+<p>DNS查询消息的目标端口是什么？ DNS响应消息的源端口是什么？</p>
 <p>查询:</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211516046.png" alt="image-20230421211516046"></p>
-<p>响应: </p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211522148.png" alt="image-20230421211522148"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211516046.png" alt="image-20230421211516046"></p>
+<p>响应:</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211522148.png" alt="image-20230421211522148"></p>
 </li>
-<li><p>DNS查询消息的目标IP地址是什么？这是你的默认本地DNS服务器的IP地址吗？</p>
+<li>
+<p>DNS查询消息的目标IP地址是什么？这是你的默认本地DNS服务器的IP地址吗？</p>
 <p>是的</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211532903.png" alt="image-20230421211532903"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211532903.png" alt="image-20230421211532903"></p>
 </li>
-<li><p>检查DNS查询消息。DNS查询是什么”Type”的？查询消息是否包含任何”answers”？</p>
+<li>
+<p>检查DNS查询消息。DNS查询是什么&quot;Type&quot;的？查询消息是否包含任何&quot;answers&quot;？</p>
 </li>
-<li><p>TYPE A, 不包含</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211545749.png" alt="image-20230421211545749"></p>
+<li>
+<p>TYPE A, 不包含</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211545749.png" alt="image-20230421211545749"></p>
 </li>
-<li><p>检查DNS响应消息。提供了多少个”answers”？这些答案包含什么？</p>
+<li>
+<p>检查DNS响应消息。提供了多少个&quot;answers&quot;？这些答案包含什么？</p>
 <p>三个</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211557865.png" alt="image-20230421211557865"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211557865.png" alt="image-20230421211557865"></p>
 <p>包含主机别名到规范主机名的转化关系(TYPE:CNAME)</p>
 <p>规范主机名到IP地址到转换关系</p>
 </li>
@@ -417,17 +435,20 @@
 <p><code>nslookup -type=NS mit.edu</code></p>
 <p>回答下列问题：</p>
 <ol start="16">
-<li><p>DNS查询消息发送到的IP地址是什么？这是您的默认本地DNS服务器的IP地址吗？</p>
+<li>
+<p>DNS查询消息发送到的IP地址是什么？这是您的默认本地DNS服务器的IP地址吗？</p>
 <p>是的</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211610171.png" alt="image-20230421211610171"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211610171.png" alt="image-20230421211610171"></p>
 </li>
-<li><p>检查DNS查询消息。DNS查询是什么”Type”的？查询消息是否包含任何”answers”？</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211621477.png" alt="image-20230421211621477"></p>
+<li>
+<p>检查DNS查询消息。DNS查询是什么&quot;Type&quot;的？查询消息是否包含任何&quot;answers&quot;？</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211621477.png" alt="image-20230421211621477"></p>
 <p>Type: NS</p>
 <p>不包含</p>
 </li>
-<li><p>检查DNS响应消息。响应消息提供的MIT域名服务器是什么？此响应消息还提供了MIT域名服务器的IP地址吗？</p>
-<p>![image-20230416184356921](&#x2F;Users&#x2F;trevorwu&#x2F;Library&#x2F;Application Support&#x2F;typora-user-images&#x2F;image-20230416184356921.png)</p>
+<li>
+<p>检查DNS响应消息。响应消息提供的MIT域名服务器是什么？此响应消息还提供了MIT域名服务器的IP地址吗？</p>
+<p>![image-20230416184356921](/Users/trevorwu/Library/Application Support/typora-user-images/image-20230416184356921.png)</p>
 </li>
 </ol>
 <p>现在重复上一个实验，但换成以下命令：</p>
@@ -435,31 +456,34 @@
 <p><strong>该DNS服务器已停用</strong>, 使用作者提供的抓包结果dns-ethereal-trace-4</p>
 <p>回答下列问题：</p>
 <ol start="20">
-<li><p>DNS查询消息发送到的IP地址是什么？这是您的默认本地DNS服务器的IP地址吗？如果不是，这个IP地址是什么？</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211639835.png" alt="image-20230421211639835"></p>
+<li>
+<p>DNS查询消息发送到的IP地址是什么？这是您的默认本地DNS服务器的IP地址吗？如果不是，这个IP地址是什么？</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211639835.png" alt="image-20230421211639835"></p>
 <p>理论上不是, 因为已经指定了对应的DNS服务器,目标IP地址应该是DNS服务器名字<code>bitsy.mit.edu</code> 的IP地址</p>
 </li>
-<li><p>检查DNS查询消息。DNS查询是什么”Type”的？查询消息是否包含任何”answers”？</p>
+<li>
+<p>检查DNS查询消息。DNS查询是什么&quot;Type&quot;的？查询消息是否包含任何&quot;answers&quot;？</p>
 <p>第一个查询:</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211649155.png" alt="image-20230421211649155"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211649155.png" alt="image-20230421211649155"></p>
 <p>TYPE: PTR 通过IP反向查询域名</p>
 <p>第二个查询: TYPE A, 查询<code>www.aiit.or.kr.poly.edu</code>的IP地址, 目标IP地址是18.72.0.3</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211656347.png" alt="image-20230421211656347"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211656347.png" alt="image-20230421211656347"></p>
 <p>第三个查询: TYPE A, 查询<code>www.aiit.or.kr</code>的IP地址, 目标IP和上一个查询相同.</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211702635.png" alt="image-20230421211702635"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211702635.png" alt="image-20230421211702635"></p>
 </li>
-<li><p>检查DNS响应消息。提供了多少个”answers”？这些答案包含什么？</p>
+<li>
+<p>检查DNS响应消息。提供了多少个&quot;answers&quot;？这些答案包含什么？</p>
 <p>第一个响应: 提供了一个answer</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211713117.png" alt="image-20230421211713117"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211713117.png" alt="image-20230421211713117"></p>
 <p>TYPE:PTR</p>
 <p>回答里包含IP地址3.0.72.18对应的域名</p>
-<p>第二个响应: </p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211730365.png" alt="image-20230421211730365"></p>
+<p>第二个响应:</p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211730365.png" alt="image-20230421211730365"></p>
 <p>TYPE: SOA(Start Of a zone of Authority)</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211748643.png" alt="image-20230421211748643"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211748643.png" alt="image-20230421211748643"></p>
 <p>响应结果为找不到:</p>
 <p>第三个响应:</p>
-<p><img src="/Wireshark-Lab-DNS/image-20230421211757311.png" alt="image-20230421211757311"></p>
+<p><img src="Wireshark-Lab-DNS/image-20230421211757311.png" alt="image-20230421211757311"></p>
 <p>ansewer为目标域名的IP地址.</p>
 </li>
 </ol>
@@ -643,14 +667,23 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">83k</span>
+    <span title="Symbols count total">81k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:19</span>
+    <span title="Reading time total">2:15</span>
 </div>
+<script src="https://cdn.bootcss.com/jquery/3.4.0/jquery.min.js"></script>
+<%- js('js/prettify.js') %>
 
+# 高亮设置
+<script type="text/javascript">
+$(window).on('load', function(){ 
+  $('pre').addClass('prettyprint linenums');
+  prettyPrint();
+});
+</script>
         
 
 

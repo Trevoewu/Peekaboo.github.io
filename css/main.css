@@ -205,7 +205,7 @@ body {
 body {
   background: var(--body-bg-color);
   color: var(--text-color);
-  font-family: 'Ysabeau', "PingFang SC", "Noto Serif SC", sans-serif;
+  font-family: 'Cantarell', "Noto Serif SC", "PingFang SC", , sans-serif;
   font-size: 1em;
   line-height: 2;
 }
@@ -221,7 +221,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Ysabeau', "PingFang SC", "Noto Serif SC", sans-serif;
+  font-family: 'Cantarell', "Noto Serif SC", "PingFang SC", , sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 20px 0 15px;
@@ -410,16 +410,41 @@ td {
   transform: rotate(45deg);
   top: -5px;
 }
+.highlight-container {
+  position: relative;
+}
+.highlight-container:hover .copy-btn,
+.highlight-container .copy-btn:focus {
+  opacity: 1;
+}
+.copy-btn {
+  color: #333;
+  cursor: pointer;
+  line-height: 1.6;
+  opacity: 0;
+  padding: 2px 6px;
+  position: absolute;
+  transition-delay: 0s;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  background-color: #eee;
+  background-image: linear-gradient(#fcfcfc, #eee);
+  border: 1px solid #d5d5d5;
+  border-radius: 3px;
+  font-size: 0.8125em;
+  right: 4px;
+  top: 8px;
+}
 .highlight,
 pre {
-  background: #2d2d2d;
-  color: #ccc;
+  background: #262626;
+  color: #9e9e9e;
   line-height: 1.6;
   margin: 0 auto 20px;
 }
 pre,
 code {
-  font-family: 'Ysabeau', consolas, Menlo, monospace, "PingFang SC", "Noto Serif SC";
+  font-family: 'Roboto Mono', consolas, Menlo, monospace, "Noto Serif SC", "PingFang SC",;
 }
 code {
   background: #eee;
@@ -430,7 +455,7 @@ code {
   word-wrap: break-word;
 }
 .highlight *::selection {
-  background: #515151;
+  background: #303030;
 }
 .highlight pre {
   border: 0;
@@ -447,8 +472,8 @@ code {
   padding: 0;
 }
 .highlight figcaption {
-  background: #1b1b1b;
-  color: #ccc;
+  background: #262626;
+  color: #9e9e9e;
   display: flex;
   font-size: 0.875em;
   justify-content: space-between;
@@ -456,10 +481,10 @@ code {
   padding: 0.5em;
 }
 .highlight figcaption a {
-  color: #ccc;
+  color: #9e9e9e;
 }
 .highlight figcaption a:hover {
-  border-bottom-color: #ccc;
+  border-bottom-color: #9e9e9e;
 }
 .highlight .gutter {
   -moz-user-select: none;
@@ -468,14 +493,14 @@ code {
   user-select: none;
 }
 .highlight .gutter pre {
-  background: #1b1b1b;
-  color: #999;
+  background: #262626;
+  color: #6a6a6a;
   padding-left: 10px;
   padding-right: 10px;
   text-align: right;
 }
 .highlight .code pre {
-  background: #2d2d2d;
+  background: #262626;
   padding-left: 10px;
   width: 100%;
 }
@@ -491,7 +516,7 @@ pre {
 }
 pre code {
   background: none;
-  color: #ccc;
+  color: #9e9e9e;
   font-size: 0.875em;
   padding: 0;
   text-shadow: none;
@@ -503,14 +528,14 @@ pre .addition {
   background: #008000;
 }
 pre .meta {
-  color: #fc6;
+  color: #a68f01;
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-user-select: none;
   user-select: none;
 }
 pre .comment {
-  color: #999;
+  color: #6a6a6a;
 }
 pre .variable,
 pre .attribute,
@@ -525,7 +550,7 @@ pre .html .doctype,
 pre .css .id,
 pre .css .class,
 pre .css .pseudo {
-  color: #f2777a;
+  color: #ff511a;
 }
 pre .number,
 pre .preprocessor,
@@ -535,7 +560,7 @@ pre .literal,
 pre .params,
 pre .constant,
 pre .command {
-  color: #f99157;
+  color: #dd7202;
 }
 pre .ruby .class .title,
 pre .css .rules .attribute,
@@ -548,11 +573,11 @@ pre .ruby .symbol,
 pre .xml .cdata,
 pre .special,
 pre .formula {
-  color: #9c9;
+  color: #4ca340;
 }
 pre .title,
 pre .css .hexcolor {
-  color: #6cc;
+  color: #07a38f;
 }
 pre .function,
 pre .python .decorator,
@@ -562,11 +587,11 @@ pre .ruby .title .keyword,
 pre .perl .sub,
 pre .javascript .title,
 pre .coffeescript .title {
-  color: #69c;
+  color: #3294ff;
 }
 pre .keyword,
 pre .javascript .function {
-  color: #c9c;
+  color: #cc62fe;
 }
 .blockquote-center {
   border-left: none;
@@ -1013,7 +1038,7 @@ pre .javascript .function {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: 'Liu Jian Mao Cao', 'Ysabeau', "PingFang SC", "Noto Serif SC", sans-serif;
+  font-family: 'Liu Jian Mao Cao', 'Cantarell', "Noto Serif SC", "PingFang SC", , sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   margin: 0;
@@ -1192,7 +1217,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #94a8a8;
+  background: #a281a6;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1535,7 +1560,7 @@ pre .javascript .function {
   }
 }
 .post-body {
-  font-family: 'Ysabeau', "PingFang SC", "Noto Serif SC", sans-serif;
+  font-family: 'Cantarell', "Noto Serif SC", "PingFang SC", , sans-serif;
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -1833,7 +1858,7 @@ pre .javascript .function {
 }
 .posts-expand .post-meta {
   color: #999;
-  font-family: 'Ysabeau', "PingFang SC", "Noto Serif SC", sans-serif;
+  font-family: 'Cantarell', "Noto Serif SC", "PingFang SC", , sans-serif;
   font-size: 0.75em;
   margin: 3px 0 60px 0;
   text-align: center;
@@ -2518,4 +2543,20 @@ ul.breadcrumb li + li:last-child {
 }
 .links-of-blogroll-item {
   padding: 0;
+}
+* {
+  color: #3a4749;
+}
+.post-block {
+  opacity: 0.9;
+}
+.sidebar {
+  background-color: transparent;
+  opacity: 0.9;
+}
+.header-inner {
+  background: rgba(255,255,255,0.9);
+}
+.popup {
+  opacity: 0.9;
 }

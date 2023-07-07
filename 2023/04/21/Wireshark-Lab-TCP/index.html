@@ -5,7 +5,7 @@
 }
 document.addEventListener("DOMContentLoaded", initScrollReveal);
 document.addEventListener("pjax:success", initScrollReveal);
-</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+</script><link rel="icon" type="image/png" href="/icon/avatar.png"><link rel="mask-icon" href="/icon/avatar.png" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
     window.Yun = {}
     window.CONFIG = {"hostname":"trevoewu.github.io","root":"/","title":"楼兰的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
   </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="楼兰" type="application/atom+xml"><meta name="description" content="在本实验中，我们将详细研究著名的 TCP 协议的行为。 我们将通过从您的电脑向 远程服务器传输一份 150KB 的文件，并分析 TCP 传输内容的发送和接收过程来实现。 我们将研究 TCP 对序列和 确认号的使用，以提供可靠的数据传输;我们将看到 TCP 的拥塞控制算法 – 慢启 动和拥塞避免 – 在过程中，我们将看看 TCP 的接收器发送流量控制的机制。 我们还将简要地观察 TCP 连线的设置，">
@@ -15,47 +15,47 @@ document.addEventListener("pjax:success", initScrollReveal);
 <meta property="og:site_name" content="楼兰">
 <meta property="og:description" content="在本实验中，我们将详细研究著名的 TCP 协议的行为。 我们将通过从您的电脑向 远程服务器传输一份 150KB 的文件，并分析 TCP 传输内容的发送和接收过程来实现。 我们将研究 TCP 对序列和 确认号的使用，以提供可靠的数据传输;我们将看到 TCP 的拥塞控制算法 – 慢启 动和拥塞避免 – 在过程中，我们将看看 TCP 的接收器发送流量控制的机制。 我们还将简要地观察 TCP 连线的设置，">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205628132.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205643562.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205702461.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205716096.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205729437.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205757558.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205811084.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205823688.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205838620.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205848826.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205858659.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205911880.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205924206.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205931912.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205941895.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210002459.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210012633.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210034300.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210044526.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210050923.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210058078.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210120044.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210135957.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210144892.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210152513.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210204402.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210221963.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210234982.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210252350.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210304585.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210315184.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210352640.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210406967.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210418067.png">
-<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421210435578.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205628132.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205643562.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205702461.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205716096.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205729437.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205757558.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205811084.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205823688.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205838620.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205848826.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205858659.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205911880.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205924206.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205931912.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205941895.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210002459.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210012633.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210034300.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210044526.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210050923.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210058078.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210120044.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210135957.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210144892.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210152513.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210204402.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210221963.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210234982.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210252350.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210304585.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210315184.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210352640.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210406967.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210418067.png">
+<meta property="og:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421210435578.png">
 <meta property="article:published_time" content="2023-04-21T12:48:28.000Z">
 <meta property="article:modified_time" content="2023-04-21T13:04:35.920Z">
 <meta property="article:author" content="楼兰">
 <meta property="article:tag" content="computer network">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/Wireshark-Lab-TCP/image-20230421205628132.png"><script>(function() {
+<meta name="twitter:image" content="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/image-20230421205628132.png"><script>(function() {
   if (CONFIG.mode !== 'auto') return
   const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   const setting = localStorage.getItem('darken-mode') || 'auto'
@@ -72,7 +72,7 @@ IconifyProviders = {
     // Wait for 1 second before switching API hosts
     rotate: 1000,
   },
-};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="Table of Contents"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="Overview"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="楼兰"><img width="96" loading="lazy" src="/icon/avatar.png" alt="楼兰"></a><div class="site-author-name"><a href="/about/">楼兰</a></div><span class="site-name">楼兰</span><sub class="site-subtitle"></sub><div class="site-description">楼兰的Blog</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="Home"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">20</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">12</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">28</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#A-first-look-at-the-captured-trace"><span class="toc-number">1.</span> <span class="toc-text">A first look at the captured trace</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AE%B5Frame1"><span class="toc-number">1.1.</span> <span class="toc-text">第一段Frame1:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AE%B5"><span class="toc-number">1.2.</span> <span class="toc-text">第二段:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AE%B5"><span class="toc-number">1.3.</span> <span class="toc-text">第三段:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AE%B5"><span class="toc-number">1.4.</span> <span class="toc-text">第四段:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AE%B5"><span class="toc-number">1.5.</span> <span class="toc-text">第五段:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E6%AE%B5"><span class="toc-number">1.6.</span> <span class="toc-text">第六段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-congestion-control-in-action-TCP-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="toc-number">2.</span> <span class="toc-text">TCP congestion control in action (TCP 拥塞控制)</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="楼兰"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="楼兰"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Wireshark Lab: TCP</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="Created: 2023-04-21 20:48:28" itemprop="dateCreated datePublished" datetime="2023-04-21T20:48:28+08:00">2023-04-21</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E5%AD%A6%E4%B9%A0/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">学习</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/computer-network/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">computer network</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="Table of Contents"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="Overview"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="楼兰"><img width="96" loading="lazy" src="/icon/avatar.png" alt="楼兰"></a><div class="site-author-name"><a href="/about/">楼兰</a></div><span class="site-name">楼兰</span><sub class="site-subtitle"></sub><div class="site-description">楼兰的Blog</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="Home"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">20</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">12</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">28</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/Trevoewu" title="GitHub" target="_blank" style="color:#181717"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:littletrevorwu@gmail.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/34666744" title="哔哩哔哩动画" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#A-first-look-at-the-captured-trace"><span class="toc-number">1.</span> <span class="toc-text">A first look at the captured trace</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AE%B5Frame1"><span class="toc-number">1.1.</span> <span class="toc-text">第一段Frame1:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AE%B5"><span class="toc-number">1.2.</span> <span class="toc-text">第二段:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AE%B5"><span class="toc-number">1.3.</span> <span class="toc-text">第三段:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E6%AE%B5"><span class="toc-number">1.4.</span> <span class="toc-text">第四段:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E6%AE%B5"><span class="toc-number">1.5.</span> <span class="toc-text">第五段:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E6%AE%B5"><span class="toc-number">1.6.</span> <span class="toc-text">第六段</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-congestion-control-in-action-TCP-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6"><span class="toc-number">2.</span> <span class="toc-text">TCP congestion control in action (TCP 拥塞控制)</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://trevoewu.github.io/2023/04/21/Wireshark-Lab-TCP/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="楼兰"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="楼兰"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Wireshark Lab: TCP</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="Created: 2023-04-21 20:48:28" itemprop="dateCreated datePublished" datetime="2023-04-21T20:48:28+08:00">2023-04-21</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E5%AD%A6%E4%B9%A0/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">学习</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/computer-network/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">computer network</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><blockquote>
 <p>在本实验中，我们将详细研究著名的 TCP 协议的行为。 我们将通过从您的电脑向 远程服务器传输一份 150KB 的文件(一份 Lewis Carrol 的“爱丽丝梦游仙境”文本)，并分析 TCP 传输内容的发送和接收过程来实现。 我们将研究 TCP 对序列和 确认号的使用，以提供可靠的数据传输;我们将看到 TCP 的拥塞控制算法 – 慢启 动和拥塞避免 – 在过程中，我们将看看 TCP 的接收器发送流量控制的机制。 我们还将简要地观察 TCP 连线的设置，我们还会研究计算机和服务器之间 TCP 连线的性能(吞吐量和往返时间)。</p>
 </blockquote>
 <h2 id="A-first-look-at-the-captured-trace">A first look at the captured trace</h2>
@@ -84,60 +84,60 @@ IconifyProviders = {
 <p><a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu">gaia.cs.umass.edu</a> 的 IP 地址是什么? 在哪个端口号上发送和接收此连接的 TCP 段?</p>
 </li>
 </ul>
-<p><img src="Wireshark-Lab-TCP/image-20230421205628132.png" alt="image-20230421205628132" loading="lazy"></p>
+<p><img src="image-20230421205628132.png" alt="image-20230421205628132" loading="lazy"></p>
 <p>Client IP Addressee: 10.51.172.226 Client Port: 61084<br>
 <a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu">gaia.cs.umass.edu</a> IP Address: 128.119.245.12</p>
 <ul>
 <li>客户端计算机将文件传输到 <a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu">gaia.cs.umass.edu</a> 所使用的 IP 地址和 TCP 端口号是多少?</li>
 </ul>
-<p><img src="Wireshark-Lab-TCP/image-20230421205643562.png" alt="image-20230421205643562" loading="lazy"></p>
+<p><img src="image-20230421205643562.png" alt="image-20230421205643562" loading="lazy"></p>
 <p>Client IP Addressee: 10.51.172.226 Client Port: 61084</p>
 <ul>
 <li>用于在客户端计算机和 <a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu">gaia.cs.umass.edu</a> 之间启动 TCP 连接的 TCP SYN 段的序列号是什么? 标识为 SYN 段的段有什么功能?</li>
 </ul>
-<p><img src="Wireshark-Lab-TCP/image-20230421205702461.png" alt="image-20230421205702461" loading="lazy"></p>
+<p><img src="image-20230421205702461.png" alt="image-20230421205702461" loading="lazy"></p>
 <p>如图, SYN序列号为<code>4095602682</code>, 标识为SYN的segment用于建立TCP链接</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu">gaia.cs.umass.edu</a> 发送给客户端计算机以回复 SYN 的 SYNACK 段的序列号是多少?</li>
 </ul>
 <p><code>2017202044</code></p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205716096.png" alt="image-20230421205716096" loading="lazy"></p>
+<p><img src="image-20230421205716096.png" alt="image-20230421205716096" loading="lazy"></p>
 <p>SYNACK 段中的 Acknowledgment 栏位的值是多少?</p>
 <p>为<code>4095602683</code></p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205729437.png" alt="image-20230421205729437" loading="lazy"></p>
+<p><img src="image-20230421205729437.png" alt="image-20230421205729437" loading="lazy"></p>
 <p><strong>观察到除了 SYN 标志位，ACK(Acknoledment)标志位也设 1，意思服务器接收到我约连按请求并且发 SYN-ACIK 确认，这是三次握手的第二步。</strong></p>
 <p><a target="_blank" rel="noopener" href="http://Gaia.cs.umass.edu">Gaia.cs.umass.edu</a> 是如何确定此 Acknowledgment 的数值的?</p>
 <p>收到的$$seqence number + Len.$$</p>
 <p>在将段标识 为 SYNACK 段的段在连线中有什么功能?</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205757558.png" alt="image-20230421205757558" loading="lazy"></p>
+<p><img src="image-20230421205757558.png" alt="image-20230421205757558" loading="lazy"></p>
 <p><strong>用于建立链接, 是三次握手的第二次, 表示同样连接请求</strong></p>
 <ul>
 <li>包含 HTTP POST 命令的 TCP 区段的序列号是多少?</li>
 </ul>
-<p><img src="Wireshark-Lab-TCP/image-20230421205811084.png" alt="image-20230421205811084" loading="lazy"></p>
+<p><img src="image-20230421205811084.png" alt="image-20230421205811084" loading="lazy"></p>
 <p>如图为<code>4095602683</code>,TCP PSH 字段设为1表示要传送数据.  HTTP的POST方法借助于TCP提供的服务实现, 在TCP中表现为TCP的PUSH字段设为1.</p>
 <ul>
 <li>将包含 HTTP POST 的 TCP 区段视为 TCP 连接中的第一个区段。在这个 TCP 连线中前六个 TCP 区段的序列号是什么(包括包含 HTTP POST的段 每区段发送的时间是什么时候? 收到的每个区段的 ACK 是什么时候?</li>
 </ul>
 <p>鉴于发送每个 TCP 区段的时间与收到确认的时间之间的差异，六个区段中每个区段的 RTT 值是多少?</p>
 <p>如图是前6段的信息:</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205823688.png" alt="image-20230421205823688" loading="lazy"></p>
+<p><img src="image-20230421205823688.png" alt="image-20230421205823688" loading="lazy"></p>
 <h3 id="第一段Frame1">第一段Frame1:</h3>
 <p>(发送第一个frame,在 Wireshark中序号为frame69,这是Wireshark捕获到的序号, 由于这是发送数据的第一帧记frame1)</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205838620.png" alt="image-20230421205838620" loading="lazy"></p>
+<p><img src="image-20230421205838620.png" alt="image-20230421205838620" loading="lazy"></p>
 <p>RTT:</p>
 <p><em>note: 这里的Timestamps是Wireshark提供的额外的功能, 和TCP段Optionfields 里的Timestamps不同.</em></p>
 <p>通过Wireshark的分析, 可以知道IRTT(initial RTT 表示握手阶段的RTT)为0.39900200s</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205848826.png" alt="image-20230421205848826" loading="lazy"></p>
+<p><img src="image-20230421205848826.png" alt="image-20230421205848826" loading="lazy"></p>
 <p>ACK(对第一个frame)的ACK</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205858659.png" alt="image-20230421205858659" loading="lazy"></p>
+<p><img src="image-20230421205858659.png" alt="image-20230421205858659" loading="lazy"></p>
 <p>发现这里的ACK number = 4095603435, 而seq1 的Next sequence = 4095603298, 而恰好, frame2的Next sequence = 4095603435</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205911880.png" alt="image-20230415112704099" loading="lazy"></p>
+<p><img src="image-20230421205911880.png" alt="image-20230415112704099" loading="lazy"></p>
 <p><strong>所以这是对frame1和frame2的累计确认, 这是因为TCP 采用了延迟到ACK(delay ACK), 具有所期望的序号报文到达时, 等待一段时间(通常为40ms), 如果下一个按序报文到达, 立即发送单个累计ACK, 以确认两个按序到达的报文段. 如果下一个按序报文段没有在这个时间内到达, 则发送一个ACK.</strong></p>
 <p>我们继续观察第一个报文段段Timestamps字段的值:</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205924206.png" alt="image-20230421205924206" loading="lazy"></p>
+<p><img src="image-20230421205924206.png" alt="image-20230421205924206" loading="lazy"></p>
 <p>对比ACK1的Timestamps:</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205931912.png" alt="image-20230421205931912" loading="lazy"></p>
+<p><img src="image-20230421205931912.png" alt="image-20230421205931912" loading="lazy"></p>
 <p>可以发现, 第一个报文段的TSval和ACK1的TimestampsTSerc相等, 进一步验证了之前的说法, 当接受到连续两个按序到达的报文时, 用于回复的ACK报文段段TSerc值的最早接受到的报文段的TSval, 这是为了对方更够更好的估算RTT.</p>
 <p><strong>时间戳选项主要的功能有两个</strong>：</p>
 <ul>
@@ -152,35 +152,35 @@ IconifyProviders = {
 <p>我们知道序列号只有32位，而每增加2^32个序列号后就会重复使用原来用过的序列号。假设我们有一条高速网络，通信的主机双方有足够大的带宽用来快速的传输数据。例如1Gb/s（<strong>TCP 的窗口经过窗口缩放可以最高到 1GB（2^30)</strong>）的速率发送报文段，则不到35秒钟数据字节的序列号就会重复。这样对TCP传输带来混乱的情况。这种情况之出现在高速链路上。<strong>而采用时间戳选项，可以很容易的分辨出相同序列号的数据报，哪个是最近发送，哪个是以前发送的。</strong></p>
 <p>参考文章<a target="_blank" rel="noopener" href="https://switch-router.gitee.io/blog/tcp-timestamp/">TCP timestamp 选项那点事</a></p>
 <p>接着我们观察ACK1报文的ACK分析(由wireshark提供), RTT为: 0.40989700s</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421205941895.png" alt="image-20230421205941895" loading="lazy"></p>
+<p><img src="image-20230421205941895.png" alt="image-20230421205941895" loading="lazy"></p>
 <h3 id="第二段"><strong>第二段:</strong></h3>
 <p>我们直接去找, 收到的第二个ACK报文</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210002459.png" alt="image-20230421210002459" loading="lazy"></p>
+<p><img src="image-20230421210002459.png" alt="image-20230421210002459" loading="lazy"></p>
 <p>对比sequence的值, 可以发现, 这是对frame75的ACK, 也就是, 收到了对第七个报文段的ACK. 说明服务器已经收到了第七个报文段以及之前的报文.</p>
 <p>我们还发现, 收到了一条[Windows Update]的报文, 这是TCP的流量控制, 用来告诉发送端根据这个值适当的调节发送速率.</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210012633.png" alt="image-20230421210012633" loading="lazy"></p>
+<p><img src="image-20230421210012633.png" alt="image-20230421210012633" loading="lazy"></p>
 <p>根据wireshark的分析, 可以知道, RTT为0.409390000s</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210034300.png" alt="image-20230421210034300" loading="lazy"></p>
+<p><img src="image-20230421210034300.png" alt="image-20230421210034300" loading="lazy"></p>
 <h3 id="第三段">第三段:</h3>
-<p><img src="Wireshark-Lab-TCP/image-20230421210044526.png" alt="image-20230415135344532" loading="lazy"></p>
+<p><img src="image-20230421210044526.png" alt="image-20230415135344532" loading="lazy"></p>
 <h3 id="第四段">第四段:</h3>
-<p><img src="Wireshark-Lab-TCP/image-20230421210050923.png" alt="image-20230421210050923" loading="lazy"></p>
+<p><img src="image-20230421210050923.png" alt="image-20230421210050923" loading="lazy"></p>
 <h3 id="第五段">第五段:</h3>
-<p><img src="Wireshark-Lab-TCP/image-20230421210058078.png" alt="image-20230421210058078" loading="lazy"></p>
+<p><img src="image-20230421210058078.png" alt="image-20230421210058078" loading="lazy"></p>
 <h3 id="第六段">第六段</h3>
-<p><img src="Wireshark-Lab-TCP/image-20230421210120044.png" alt="image-20230421210120044" loading="lazy"></p>
+<p><img src="image-20230421210120044.png" alt="image-20230421210120044" loading="lazy"></p>
 <p>收到每个 ACK 后，EstimatedRTT 值(参 见本节中的第 3.5.3 节，第 242 页)是什么?</p>
 <p>假设第一个 EstimatedRTT 的 值等于第一个区段的测量 RTT，然后使用课本第 242 页的 EstimatedRTT 公式计算所有后续区段。</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210135957.png" alt="image-20230421210135957" loading="lazy"></p>
+<p><img src="image-20230421210135957.png" alt="image-20230421210135957" loading="lazy"></p>
 <ul>
 <li>
 <p>What is the length of each of the first six TCP segments?4 前六个 TCP 区段的长度是多少?</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210144892.png" alt="image-20230421210144892" loading="lazy"></p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210152513.png" alt="image-20230421210152513" loading="lazy"></p>
+<p><img src="image-20230421210144892.png" alt="image-20230421210144892" loading="lazy"></p>
+<p><img src="image-20230421210152513.png" alt="image-20230421210152513" loading="lazy"></p>
 </li>
 <li>
 <p>What is the minimum amount of available buffer space advertised at the received for the entire trace? Does the lack of receiver buffer space ever throttle the sender? 对于整个跟踪包，收到的最小可用缓冲区空间量是多少? 缺少接收缓冲区空间是否会限制发送方传送 TCP 区段?</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210204402.png" alt="image-20230421210204402" loading="lazy"></p>
+<p><img src="image-20230421210204402.png" alt="image-20230421210204402" loading="lazy"></p>
 <p>大部分Win都是很大的值, 太多包了, 懒得分析了.通过检查此跟踪，发送器永远不会因为接收器缓冲区空间不足而受到抑制。</p>
 </li>
 <li>
@@ -188,32 +188,32 @@ IconifyProviders = {
 在跟踪文件中是否有重传的段? 为了回答这个问题，您检查了什么(在跟踪包中)?</p>
 <p>观察序列号的变化:</p>
 <p>可以发现, 序列号一直在增加, 所以没有重传的段.</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210221963.png" alt="image-20230421210221963" loading="lazy"></p>
+<p><img src="image-20230421210221963.png" alt="image-20230421210221963" loading="lazy"></p>
 <p>通常到收到了不同的两个冗余ACK, 但这不一定意味着丢包, 这是因为分组乱序到达接受方导致的.</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210234982.png" alt="image-20230421210234982" loading="lazy"></p>
+<p><img src="image-20230421210234982.png" alt="image-20230421210234982" loading="lazy"></p>
 </li>
 <li>
 <p>How much data does the receiver typically acknowledge in an ACK? Can you identify cases where the receiver is ACKing every other received segment (see Table 3.2 on page 250 in the text).<br>
 接收方通常在 ACK 中确认多少数据? 您是否可以识别接收方每隔一个接收到的区段才发送确认的情况(参见本文第 250 页的表 3.2)</p>
 <p>按照表3-2的说明, 接受方最多确认两个段, 但是观察了捕获结果, 发现很多事确认了超过两个段段情况, 比如在下图中, 收到的第一个ACK确认了69,70两段. 这是一次典型的delay ACK</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210252350.png" alt="image-20230421210252350" loading="lazy"></p>
+<p><img src="image-20230421210252350.png" alt="image-20230421210252350" loading="lazy"></p>
 <p>但是观察收到的第二个ACK, 是对75段及之前段的累积确认, 这同时累积确认了71,72,73,74,75这五个段. 且观察后续的ACK, 除了在上一问题上出现的冗余ACK外, 无其他冗余ACK.</p>
 <p>如果严格按照表3-2的叙述来看, 这只可能是部分ACK丢失导致的, 这就意味着网络拥塞, 但很明显这是不可能的, 因为没有发现任何一个重传的段, 网络很通畅.</p>
 <p>让我们问问万能的chatGPT吧:</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210304585.png" alt="image-20230421210304585" loading="lazy"></p>
+<p><img src="image-20230421210304585.png" alt="image-20230421210304585" loading="lazy"></p>
 <p><strong>最多可以合并2~5个报文段哦!!! chatGPT yyds!</strong></p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210315184.png" alt="image-20230421210315184" loading="lazy"></p>
+<p><img src="image-20230421210315184.png" alt="image-20230421210315184" loading="lazy"></p>
 </li>
 <li>
 <p>What is the throughput (bytes transferred per unit time) for the TCP connection? Explain how you calculated this value.TCP 连接的吞吐量(每单位时间传输的节数)是多少? 解释你如何计算 这个值。</p>
 <p>TCP吞吐量的计算在很大程度上取决于平均时间段的选择。作为一种常见的吞吐量计算，在本问题中，我们选择平均时间周期作为整个连接时间。然后，该TCP连接的平均吞吐量被计算为总数据量与总传输时间之间的比率。可以通过第一个TCP数据段的序列号和最后一个确认确认的序列号之间的差来计算发送的总数据量。</p>
 <p>最后一个由我发给服务器的最后一个ACK的seqence numerber为4095755619, 我发送的报文段第一个序列号为: 4095602682</p>
 <p>所以接受方的接受到的总数据为: 4095755619- 4095602682   =  152936Byte</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210352640.png" alt="image-20230421210352640" loading="lazy"></p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210406967.png" alt="image-20230421210406967" loading="lazy"></p>
+<p><img src="image-20230421210352640.png" alt="image-20230421210352640" loading="lazy"></p>
+<p><img src="image-20230421210406967.png" alt="image-20230421210406967" loading="lazy"></p>
 <p>总传输时间为5.455830-0.026477=2.50933秒。</p>
 <p>因此，tcp连接的吞吐量计算为152936/2.50933=60946.945997537191202B/s = 60KB/s。</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210418067.png" alt="image-20230421210418067" loading="lazy"></p>
+<p><img src="image-20230421210418067.png" alt="image-20230421210418067" loading="lazy"></p>
 </li>
 </ul>
 <p><em>图由wireshark产生</em></p>
@@ -227,7 +227,7 @@ IconifyProviders = {
 <ul>
 <li>
 <p>使用时序图(Stevens)绘图工具查看从客户端发送到 <a target="_blank" rel="noopener" href="http://gaia.cs.umass.edu">gaia.cs.umass.edu</a> 服务 器的区段的序列号与时间关系图。您能否确定 TCP 的慢启动阶段的开始和 结束位置，以及拥塞避免接管的位置? 评论测量数据与我们在文本中研究 的 TCP 的理想化行为的不同之处。</p>
-<p><img src="Wireshark-Lab-TCP/image-20230421210435578.png" alt="image-20230421210435578" loading="lazy"></p>
+<p><img src="image-20230421210435578.png" alt="image-20230421210435578" loading="lazy"></p>
 </li>
 </ul>
 <p>计算每轮发送的段数量分别为: 12,17,36,87 呈指数增长, 一只在慢启动阶段.</p>

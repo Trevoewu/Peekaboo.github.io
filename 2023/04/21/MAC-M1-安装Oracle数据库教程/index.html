@@ -1,27 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/icon/avatar.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/icon/avatar.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/icon/avatar.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cantarell:300,300italic,400,400italic,700,700italic|Liu Jian Mao Cao:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-
-<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"trevoewu.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-  <meta name="description" content="oracle目前还没有支持M1的版本, 本教程使用SSH来远程登录oracle服务器">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="楼兰"><meta name="copyright" content="楼兰"><meta name="generator" content="Hexo 6.3.0"><meta name="theme" content="hexo-theme-yun"><title>MAC M1 安装Oracle数据库教程 | 楼兰</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"trevoewu.github.io","root":"/","title":"楼兰的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="楼兰" type="application/atom+xml"><meta name="description" content="oracle目前还没有支持M1的版本, 本教程使用SSH来远程登录oracle服务器">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MAC M1 安装Oracle数据库教程">
 <meta property="og:url" content="https://trevoewu.github.io/2023/04/21/MAC-M1-%E5%AE%89%E8%A3%85Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%99%E7%A8%8B/index.html">
@@ -37,205 +24,24 @@
 <meta property="article:tag" content="oracle">
 <meta property="article:tag" content="教程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://trevoewu.github.io/Users/trevorwu/Library/Application%20Support/typora-user-images/image-20220929221736551.png">
-
-<link rel="canonical" href="https://trevoewu.github.io/2023/04/21/MAC-M1-%E5%AE%89%E8%A3%85Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%99%E7%A8%8B/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
-</script>
-
-  <title>MAC M1 安装Oracle数据库教程 | 楼兰</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-<link rel="alternate" href="/atom.xml" title="楼兰" type="application/atom+xml">
-<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">楼兰</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://trevoewu.github.io/2023/04/21/MAC-M1-%E5%AE%89%E8%A3%85Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%99%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/icon/avatar.png">
-      <meta itemprop="name" content="楼兰">
-      <meta itemprop="description" content="楼兰的Blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="楼兰">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          MAC M1 安装Oracle数据库教程
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-04-21 20:35:34 / Modified: 20:37:22" itemprop="dateCreated datePublished" datetime="2023-04-21T20:35:34+08:00">2023-04-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mac%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" itemprop="url" rel="index"><span itemprop="name">mac使用指南</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>5 mins.</span>
-            </span>
-            <div class="post-description">oracle目前还没有支持M1的版本, 本教程使用SSH来远程登录oracle服务器</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h1>MAC M1 安装Oracle数据库教程</h1>
+<meta name="twitter:image" content="https://trevoewu.github.io/Users/trevorwu/Library/Application%20Support/typora-user-images/image-20220929221736551.png"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script><style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script>// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="Table of Contents"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="Overview"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="楼兰"><img width="96" loading="lazy" src="/icon/avatar.png" alt="楼兰"></a><div class="site-author-name"><a href="/about/">楼兰</a></div><span class="site-name">楼兰</span><sub class="site-subtitle"></sub><div class="site-description">楼兰的Blog</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="Home"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">20</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">12</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">28</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">MAC M1 安装Oracle数据库教程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85OpenSSH%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.1.</span> <span class="toc-text">安装OpenSSH服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8windous%E8%AE%BE%E7%BD%AE%E5%AE%89%E8%A3%85OpenSSSH"><span class="toc-number">1.1.1.</span> <span class="toc-text">使用windous设置安装OpenSSSH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8PowerShell%E5%AE%89%E8%A3%85OpenSSH"><span class="toc-number">1.1.2.</span> <span class="toc-text">使用PowerShell安装OpenSSH</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%B9%B6%E9%85%8D%E7%BD%AE-OpenSSH-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">启动并配置 OpenSSH 服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E5%88%B0-OpenSSH-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.3.</span> <span class="toc-text">连接到 OpenSSH 服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95Oracle%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.4.</span> <span class="toc-text">用户登录Oracle数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8Navicat%E8%BF%9C%E7%A8%8B%E7%99%BB%E9%99%86Oracle%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.5.</span> <span class="toc-text">用Navicat远程登陆Oracle数据库</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://trevoewu.github.io/2023/04/21/MAC-M1-%E5%AE%89%E8%A3%85Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%99%E7%A8%8B/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="楼兰"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="楼兰"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">MAC M1 安装Oracle数据库教程</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="Created: 2023-04-21 20:35:34" itemprop="dateCreated datePublished" datetime="2023-04-21T20:35:34+08:00">2023-04-21</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/mac%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">mac使用指南</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/mac%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">mac使用指南</span></a><a class="tag-item" href="/tags/oracle/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">oracle</span></a><a class="tag-item" href="/tags/%E6%95%99%E7%A8%8B/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">教程</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h1>MAC M1 安装Oracle数据库教程</h1>
 <p><strong>oracle目前还没有支持M1的版本, 本教程使用SSH来远程登录oracle服务器</strong></p>
 <ol>
 <li>在开始之前, 请确保你的mac安装了parallels Desktop, 并安装windows系统</li>
@@ -263,344 +69,77 @@
 <p><em>安装 OpenSSH 服务器将创建并启用一个名为 <code>OpenSSH-Server-In-TCP</code> 的防火墙规则。 这允许端口 22 上的入站 SSH 流量。 如果未启用此规则且未打开此端口，那么连接将被拒绝或重置。</em></p>
 <h3 id="使用PowerShell安装OpenSSH">使用PowerShell安装OpenSSH</h3>
 <p>若要使用 PowerShell 安装 OpenSSH，请先以管理员身份运行 PowerShell。 为了确保 OpenSSH 可用，请运行以下 cmdlet：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-WindowsCapability -Online | Where-Object Name -like &#x27;OpenSSH*&#x27;</span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell">Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH*'
+</code></pre>
 <p>如果两者均尚未安装，则此操作应返回以下输出：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Name  : OpenSSH.Client~~~~0.0.1.0</span><br><span class="line">State : NotPresent</span><br><span class="line"></span><br><span class="line">Name  : OpenSSH.Server~~~~0.0.1.0</span><br><span class="line">State : NotPresent</span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell">Name  : OpenSSH.Client~~~~0.0.1.0
+State : NotPresent
+
+Name  : OpenSSH.Server~~~~0.0.1.0
+State : NotPresent
+</code></pre>
 <p>然后，根据需要安装服务器或客户端组件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Install the OpenSSH Client</span></span><br><span class="line">Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Install the OpenSSH Server</span></span><br><span class="line">Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0</span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell"># Install the OpenSSH Client
+Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
+
+# Install the OpenSSH Server
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+</code></pre>
 <p>这两者应该都会返回以下输出：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Path          :</span><br><span class="line">Online        : True</span><br><span class="line">RestartNeeded : False</span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell">Path          :
+Online        : True
+RestartNeeded : False
+</code></pre>
 <h2 id="启动并配置-OpenSSH-服务器">启动并配置 OpenSSH 服务器</h2>
 <p>若要启动并配置 OpenSSH 服务器来开启使用，请以管理员身份打开 PowerShell，然后运行以下命令来启动 <code>sshd service</code>：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Start the sshd service</span></span><br><span class="line">Start-Service sshd</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">OPTIONAL but recommended:</span></span><br><span class="line">Set-Service -Name sshd -StartupType &#x27;Automatic&#x27;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Confirm the Firewall rule is configured. It should be created automatically by setup. Run the following to verify</span></span><br><span class="line">if (!(Get-NetFirewallRule -Name &quot;OpenSSH-Server-In-TCP&quot; -ErrorAction SilentlyContinue | Select-Object Name, Enabled)) &#123;</span><br><span class="line">    Write-Output &quot;Firewall Rule &#x27;OpenSSH-Server-In-TCP&#x27; does not exist, creating it...&quot;</span><br><span class="line">    New-NetFirewallRule -Name &#x27;OpenSSH-Server-In-TCP&#x27; -DisplayName &#x27;OpenSSH Server (sshd)&#x27; -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    Write-Output &quot;Firewall rule &#x27;OpenSSH-Server-In-TCP&#x27; has been created and exists.&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell"># Start the sshd service
+Start-Service sshd
+
+# OPTIONAL but recommended:
+Set-Service -Name sshd -StartupType 'Automatic'
+
+# Confirm the Firewall rule is configured. It should be created automatically by setup. Run the following to verify
+if (!(Get-NetFirewallRule -Name &quot;OpenSSH-Server-In-TCP&quot; -ErrorAction SilentlyContinue | Select-Object Name, Enabled)) &#123;
+    Write-Output &quot;Firewall Rule 'OpenSSH-Server-In-TCP' does not exist, creating it...&quot;
+    New-NetFirewallRule -Name 'OpenSSH-Server-In-TCP' -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
+&#125; else &#123;
+    Write-Output &quot;Firewall rule 'OpenSSH-Server-In-TCP' has been created and exists.&quot;
+&#125;
+</code></pre>
 <h2 id="连接到-OpenSSH-服务器">连接到 OpenSSH 服务器</h2>
 <p>mac自带SSH服务, 所以安装后，可以使用MAC连接到 OpenSSH 服务器, 在终端中运行一下命令:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh username@ipadress #username是安装了Oracle的windows电脑的用户名</span><br><span class="line">											#ipaddress是该电脑的ip地址</span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell">ssh username@ipadress #username是安装了Oracle的windows电脑的用户名
+											#ipaddress是该电脑的ip地址
+</code></pre>
 <p>可以通过在windows的PowerShell中运行以下命令来查看ip地址:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig</span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell">ipconfig
+</code></pre>
 <p>安装要求输入密码, 注意是微软用户的密码, 不是电脑的开机密码</p>
 <p>连接后，你将看到 Windows 命令行界面提示符：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">domain\username@SERVERNAME C:\Users\username&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell">domain\username@SERVERNAME C:\Users\username&gt;
+</code></pre>
 <h2 id="用户登录Oracle数据库">用户登录Oracle数据库</h2>
 <p>c成功链接后, 在终端输入:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlplus / as sysdba</span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell">sqlplus / as sysdba
+</code></pre>
 <p>按照提示输入用户名:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys as sysdba </span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell">sys as sysdba 
+</code></pre>
 <p>并按照提示输入口令, 这个口令是在你安装Orecle软件的过程中设置的.</p>
 <p>产生一下输出则链接成功</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">连接到: </span><br><span class="line">Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production</span><br><span class="line">With the Partitioning, OLAP, Data Mining and Real Application Testing options</span><br></pre></td></tr></table></figure>
+<pre><code class="language-shell">连接到: 
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, OLAP, Data Mining and Real Application Testing options
+</code></pre>
 <p>使用<code>ctrl</code>+<code>c</code>退出sql服务, 输入<code>exit</code>退出ssh链接</p>
 <h2 id="用Navicat远程登陆Oracle数据库">用Navicat远程登陆Oracle数据库</h2>
 <p>打开Navicat, 左上角选择, 之后选择Oracle.</p>
 <p>链接名请随意填写, 主机位置填入localhost, 端口默认为1521</p>
 <p>服务名默认为ORCL, 如果你在安装Oracle中没有更改, 则保持不变, 我的改为了ORACLE</p>
 <p>角色选择SYSDBA,用户名为sys, 密码就是之前提到的口令.</p>
-<img src="/Users/trevorwu/Library/Application Support/typora-user-images/image-20220929221736551.png" alt="image-20220929221736551" style="zoom:50%;" />
+<img src="/Users/trevorwu/Library/Application Support/typora-user-images/image-20220929221736551.png" alt="image-20220929221736551" style="zoom:50%;" / loading="lazy">
 <p>点击SSH选项</p>
-<img src="/Users/trevorwu/Library/Application Support/typora-user-images/image-20220929221807569.png" alt="image-20220929221807569" style="zoom:50%;" />
+<img src="/Users/trevorwu/Library/Application Support/typora-user-images/image-20220929221807569.png" alt="image-20220929221807569" style="zoom:50%;" / loading="lazy">
 <p>主机填入windows主机的IP地址, 端口默认22, 用户名是windows账户的用户名, 密码是该账户的密码</p>
 <p>点击链接测试, 成功链接后点击保存即可.</p>
-
-    </div>
-
-    
-    
-    
-      
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/mac%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" rel="tag"># mac使用指南</a>
-              <a href="/tags/oracle/" rel="tag"># oracle</a>
-              <a href="/tags/%E6%95%99%E7%A8%8B/" rel="tag"># 教程</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2023/04/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/" rel="prev" title="计算机系统漫游">
-      <i class="fa fa-chevron-left"></i> 计算机系统漫游
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/04/21/Wireshark-Lab-TCP/" rel="next" title="Wireshark Lab: TCP">
-      Wireshark Lab: TCP <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">MAC M1 安装Oracle数据库教程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85OpenSSH%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text">安装OpenSSH服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8windous%E8%AE%BE%E7%BD%AE%E5%AE%89%E8%A3%85OpenSSSH"><span class="nav-number">1.1.1.</span> <span class="nav-text">使用windous设置安装OpenSSSH</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8PowerShell%E5%AE%89%E8%A3%85OpenSSH"><span class="nav-number">1.1.2.</span> <span class="nav-text">使用PowerShell安装OpenSSH</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%B9%B6%E9%85%8D%E7%BD%AE-OpenSSH-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">启动并配置 OpenSSH 服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%88%B0-OpenSSH-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.3.</span> <span class="nav-text">连接到 OpenSSH 服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95Oracle%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.4.</span> <span class="nav-text">用户登录Oracle数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8Navicat%E8%BF%9C%E7%A8%8B%E7%99%BB%E9%99%86Oracle%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">1.5.</span> <span class="nav-text">用Navicat远程登陆Oracle数据库</span></a></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="楼兰"
-      src="/icon/avatar.png">
-  <p class="site-author-name" itemprop="name">楼兰</p>
-  <div class="site-description" itemprop="description">楼兰的Blog</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">18</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">11</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">24</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Trevoewu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Trevoewu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:littletrevorwu@gmail.com" title="E-Mail → mailto:littletrevorwu@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.youtube.com/channel/UCUq2pPd5uGDITzu2GP7CqRA" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCUq2pPd5uGDITzu2GP7CqRA" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">楼兰</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="Symbols count total">249k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="Reading time total">6:55</span>
-</div>
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '.languages',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.dataset.pjax !== undefined) {
-      script.dataset.pjax = '';
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div id="pjax">
-  
-
-  
-
-    </div>
-</body>
-</html>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="Donate" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author: </strong>楼兰</li><li class="post-copyright-link"><strong>Post link: </strong><a href="https://trevoewu.github.io/2023/04/21/MAC-M1-%E5%AE%89%E8%A3%85Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%99%E7%A8%8B/" title="MAC M1 安装Oracle数据库教程">https://trevoewu.github.io/2023/04/21/MAC-M1-%E5%AE%89%E8%A3%85Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E6%95%99%E7%A8%8B/</a></li><li class="post-copyright-license"><strong>Copyright Notice: </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> unless otherwise stated.</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2023/04/21/Wireshark-Lab-TCP/" rel="prev" title="Wireshark Lab: TCP"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">Wireshark Lab: TCP</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2023/04/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/" rel="next" title="计算机系统漫游"><span class="post-nav-text">计算机系统漫游</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2023 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> 楼兰</span></div><div class="powered"><span>Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v6.3.0</span><span class="footer-separator">|</span><span>Theme - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.9</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></body></html>

@@ -1,27 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/icon/avatar.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/icon/avatar.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/icon/avatar.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cantarell:300,300italic,400,400italic,700,700italic|Liu Jian Mao Cao:300,300italic,400,400italic,700,700italic|Roboto Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-
-<link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"trevoewu.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":240,"display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
-  </script>
-  <meta name="description" content="在实例化一个对象时，我们通过&#96;ClassPathXmlApplicationContext()&#96;，传入我们的配置文件，拿到一个&#96;ApplicationContext&#96;对象，通过&#96;ApplicationContext&#96;对象调用&#96;getBean（）&#96;方法来获取对象, 最终调用对象发方法，来使用Bean。">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="楼兰"><meta name="copyright" content="楼兰"><meta name="generator" content="Hexo 6.3.0"><meta name="theme" content="hexo-theme-yun"><title>手写简易Spring框架 | 楼兰</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/svg+xml" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"trevoewu.github.io","root":"/","title":"楼兰的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="楼兰" type="application/atom+xml"><meta name="description" content="在实例化一个对象时，我们通过&#96;ClassPathXmlApplicationContext()&#96;，传入我们的配置文件，拿到一个&#96;ApplicationContext&#96;对象，通过&#96;ApplicationContext&#96;对象调用&#96;getBean（）&#96;方法来获取对象, 最终调用对象发方法，来使用Bean。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="手写简易Spring框架">
 <meta property="og:url" content="https://trevoewu.github.io/2023/06/09/%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/index.html">
@@ -35,221 +22,53 @@
 <meta property="article:author" content="楼兰">
 <meta property="article:tag" content="spring">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://trevoewu.github.io/2023/06/09/%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/image-20230609140316257.png">
-
-<link rel="canonical" href="https://trevoewu.github.io/2023/06/09/%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
-</script>
-
-  <title>手写简易Spring框架 | 楼兰</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-<link rel="alternate" href="/atom.xml" title="楼兰" type="application/atom+xml">
-<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">楼兰</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://trevoewu.github.io/2023/06/09/%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/icon/avatar.png">
-      <meta itemprop="name" content="楼兰">
-      <meta itemprop="description" content="楼兰的Blog">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="楼兰">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          手写简易Spring框架
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2023-06-09 14:10:22 / Modified: 14:11:33" itemprop="dateCreated datePublished" datetime="2023-06-09T14:10:22+08:00">2023-06-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index"><span itemprop="name">spring</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/spring/java/javaweb/" itemprop="url" rel="index"><span itemprop="name">javaweb</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>12k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>21 mins.</span>
-            </span>
-            <div class="post-description">在实例化一个对象时，我们通过`ClassPathXmlApplicationContext()`，传入我们的配置文件，拿到一个`ApplicationContext`对象，通过`ApplicationContext`对象调用`getBean（）`方法来获取对象, 最终调用对象发方法，来使用Bean。</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h2 id="手写Spring框架">手写Spring框架</h2>
+<meta name="twitter:image" content="https://trevoewu.github.io/2023/06/09/%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/image-20230609140316257.png"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script><style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script>// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="Table of Contents"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="Overview"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="楼兰"><img width="96" loading="lazy" src="/icon/avatar.png" alt="楼兰"></a><div class="site-author-name"><a href="/about/">楼兰</a></div><span class="site-name">楼兰</span><sub class="site-subtitle"></sub><div class="site-description">楼兰的Blog</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="Home"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:home-4-line"></span></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:archive-line"></span></span><span class="site-state-item-count">20</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:folder-2-line"></span></span><span class="site-state-item-count">12</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="site-state-item-count">28</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://yun.yunyoujun.cn" title="文档"><span class="site-state-item-icon"><span class="icon iconify" data-icon="ri:settings-line"></span></span></a></nav><hr style="margin-bottom:0.5rem"><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E5%86%99Spring%E6%A1%86%E6%9E%B6"><span class="toc-number">1.</span> <span class="toc-text">手写Spring框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E8%87%AA%E5%B7%B1%E7%9A%84Spring%E6%A1%86%E6%9E%B6"><span class="toc-number">1.1.</span> <span class="toc-text">测试自己的Spring框架</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://trevoewu.github.io/2023/06/09/%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="楼兰"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="楼兰"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">手写简易Spring框架</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="Created: 2023-06-09 14:10:22" itemprop="dateCreated datePublished" datetime="2023-06-09T14:10:22+08:00">2023-06-09</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/spring/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">spring</span></a></span> > <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/spring/java/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">java</span></a></span> > <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/spring/java/javaweb/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">javaweb</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/spring/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">spring</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h2 id="手写Spring框架">手写Spring框架</h2>
 <p>Spring底层是通过反射机制来实例化对象，以及属性注入的，在手写Spring框架之前，我们需要了解反射机制。</p>
 <blockquote>
 <p>JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为java语言的反射机制。Java反射机制在框架设计中极为广泛，需要深入理解。</p>
 </blockquote>
 <p>通过反射，我们可以拿到类的属性，方法。 回顾Spring框架，我们需要编写一个spring的配置文件例如：spring.xml，在这个配置文件中，我们注册一个类，并注入属性值。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;user&quot;</span> <span class="attr">class</span>=<span class="string">&quot;bean.User&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;id&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;username&quot;</span> <span class="attr">value</span>=<span class="string">&quot;sonetto&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;password&quot;</span> <span class="attr">value</span>=<span class="string">&quot;123456&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;points&quot;</span> <span class="attr">value</span>=<span class="string">&quot;12.3&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;isActive&quot;</span> <span class="attr">value</span>=<span class="string">&quot;true&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;userDao&quot;</span> <span class="attr">class</span>=<span class="string">&quot;bean.UserDao&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">&quot;userService&quot;</span> <span class="attr">class</span>=<span class="string">&quot;bean.UserService&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;userDao&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;userDao&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans&gt;
+    &lt;beans&gt;
+        &lt;bean name=&quot;user&quot; class=&quot;bean.User&quot;&gt;
+            &lt;property name=&quot;id&quot; value=&quot;1&quot;/&gt;
+            &lt;property name=&quot;username&quot; value=&quot;sonetto&quot;/&gt;
+            &lt;property name=&quot;password&quot; value=&quot;123456&quot;/&gt;
+            &lt;property name=&quot;points&quot; value=&quot;12.3&quot;/&gt;
+            &lt;property name=&quot;isActive&quot; value=&quot;true&quot;/&gt;
+        &lt;/bean&gt;
+        &lt;bean name=&quot;userDao&quot; class=&quot;bean.UserDao&quot;/&gt;
+        &lt;bean name=&quot;userService&quot; class=&quot;bean.UserService&quot;&gt;
+            &lt;property name=&quot;userDao&quot; ref=&quot;userDao&quot;/&gt;
+        &lt;/bean&gt;
+    &lt;/beans&gt;
+&lt;/beans&gt;
+</code></pre>
 <p>在实例化一个对象时，我们通过<code>ClassPathXmlApplicationContext()</code>，传入我们的配置文件，拿到一个<code>ApplicationContext</code>对象，通过<code>ApplicationContext</code>对象调用<code>getBean（）</code>方法来获取对象, 最终调用对象发方法，来使用Bean。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;mySpring.xml&quot;</span>);</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> (User) context.getBean(<span class="string">&quot;user&quot;</span>);</span><br><span class="line">        System.out.println(user);</span><br><span class="line">        <span class="type">UserService</span> <span class="variable">userService</span> <span class="operator">=</span> (UserService) context.getBean(<span class="string">&quot;userService&quot;</span>);</span><br><span class="line">        userService.createUser();</span><br></pre></td></tr></table></figure>
+<pre><code class="language-java">ApplicationContext context = new ClassPathXmlApplicationContext(&quot;mySpring.xml&quot;);
+        User user = (User) context.getBean(&quot;user&quot;);
+        System.out.println(user);
+        UserService userService = (UserService) context.getBean(&quot;userService&quot;);
+        userService.createUser();
+</code></pre>
 <p>我们的最终目的就是调用对象的方法，而一个指定一个方法需要四要素： 什么对象（对象的全限定类名是什么？）什么方法（方法名），什么参数（参数的类型和数量），返回什么值。</p>
 <p>指定来这方法的四个要素，我们就可以唯一的确定一个方法，然后调用该方法。</p>
 <p>在spring的配置文件中，注册一个Bean时，我们需要提供这个Bean的全限定类名，也就是Bean标签内的class属性的内容。有了全限定类名，我们就可以通过反射机制调用<code>class.forName()</code>拿到这个对象的类。更进一步，通过这个类拿到构造方法，实例化对象。拿到我们需要的目标方法，最终调用这个目标方法。</p>
@@ -257,17 +76,147 @@
 <ol>
 <li>首先，让我们先编写一个<code>ApplicationContext</code> 接口类，这个类定义了<code>getBean()</code>方法</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.loulan.spring;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ApplicationContext</span> &#123;</span><br><span class="line">    Object <span class="title function_">getBean</span><span class="params">(String name)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="language-java">package org.loulan.spring;
+
+
+public interface ApplicationContext &#123;
+    Object getBean(String name);
+&#125;
+</code></pre>
 <ol start="2">
 <li>然后编写该接口的实现类<code>ClassPathXmlApplicationContext</code> 我们正是通过这个类来实例化一个<code>ApplicationContext</code> 对象。回顾<code>ApplicationContext context = new ClassPathXmlApplicationContext(&quot;mySpring.xml&quot;);</code> 这段代码，实例化这个类时，我们需要一个参数——Spring配置文件，这个参数对应一个构造方法，所以我们的<code>ClassPathXmlApplicationContext</code>也需要提供这个构造方法。</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">ClassPathXmlApplicationContext</span><span class="params">(String resource)</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="language-java">public ClassPathXmlApplicationContext(String resource) &#123;&#125;
+</code></pre>
 <ol start="3">
 <li>
 <p>我们需要读取使用这个框架的配置文件，并拿到所有的Bean标签。要拿到这个xml文件并读取里面的标签已经属性，我们可以借助<code>SAXReader</code> 这个类来完成。通过Maven我们可以轻松的引入这个jar包。同时，我们还需要解析这个xml文件，通过<code>Document</code> 来完成。所以我还需要dom4j的依赖。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--        dom4j依赖--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.dom4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>dom4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!--        jaxen的依赖，因为要使用它解析XML文件--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jaxen<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jaxen<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="language-xml">&lt;!--        dom4j依赖--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.dom4j&lt;/groupId&gt;
+            &lt;artifactId&gt;dom4j&lt;/artifactId&gt;
+            &lt;version&gt;2.1.4&lt;/version&gt;
+        &lt;/dependency&gt;
+&lt;!--        jaxen的依赖，因为要使用它解析XML文件--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;jaxen&lt;/groupId&gt;
+            &lt;artifactId&gt;jaxen&lt;/artifactId&gt;
+            &lt;version&gt;2.0.0&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
 <p>接下来就是愉快的编写代码啦！</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.loulan.spring;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.dom4j.Document;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.DocumentException;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.Element;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.Node;</span><br><span class="line"><span class="keyword">import</span> org.dom4j.io.SAXReader;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Method;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClassPathXmlApplicationContext</span> <span class="keyword">implements</span> <span class="title class_">ApplicationContext</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Map&lt;String,Object&gt;beans = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String,Object&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(ClassPathXmlApplicationContext.class);</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ClassPathXmlApplicationContext</span><span class="params">(String resource)</span> &#123;</span><br><span class="line">        <span class="comment">//1. 拿到这个xml配置文件</span></span><br><span class="line">        <span class="type">SAXReader</span> <span class="variable">reader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SAXReader</span>();</span><br><span class="line">        <span class="type">Document</span> <span class="variable">document</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            document = reader.read(ClassLoader.getSystemClassLoader().getResourceAsStream(resource));</span><br><span class="line">            <span class="comment">// 获取所有的bean标签</span></span><br><span class="line">            List&lt;Node&gt; beanNodes = document.selectNodes(<span class="string">&quot;//bean&quot;</span>);</span><br><span class="line">            <span class="comment">// 遍历集合</span></span><br><span class="line">            beanNodes.forEach(beanNode -&gt; &#123;</span><br><span class="line">                <span class="type">Element</span> <span class="variable">beanElt</span> <span class="operator">=</span> (Element) beanNode;</span><br><span class="line">                <span class="comment">// 获取id</span></span><br><span class="line">                <span class="type">String</span> <span class="variable">id</span> <span class="operator">=</span> beanElt.attributeValue(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">                <span class="comment">// 获取className</span></span><br><span class="line">                <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> beanElt.attributeValue(<span class="string">&quot;class&quot;</span>);</span><br><span class="line">                logger.info(<span class="string">&quot;id-&gt;&quot;</span>+id+<span class="string">&quot; className-&gt;&quot;</span>+className);</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">//通过反射拿到class</span></span><br><span class="line">                    Class&lt;?&gt; clazz = Class.forName(className);</span><br><span class="line">                    <span class="comment">// 获得class的构造器</span></span><br><span class="line">                    Constructor&lt;?&gt; constructor = clazz.getConstructor();</span><br><span class="line">                    <span class="comment">// 实例化对象</span></span><br><span class="line">                    <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> constructor.newInstance();</span><br><span class="line">                    logger.info(<span class="string">&quot;实例化对象-&gt;&quot;</span>+o);</span><br><span class="line">                    <span class="comment">// 暴露bean，放在map（缓存）</span></span><br><span class="line">                    beans.put(id,o);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="comment">//再次遍历bean，给属性赋值（DI）</span></span><br><span class="line">            beanNodes.forEach(beanNode -&gt; &#123;</span><br><span class="line">                <span class="type">Element</span> <span class="variable">beanElt</span> <span class="operator">=</span> (Element) beanNode;</span><br><span class="line">                <span class="comment">// 获取id</span></span><br><span class="line">                <span class="type">String</span> <span class="variable">id</span> <span class="operator">=</span> beanElt.attributeValue(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">                <span class="comment">// 获取className</span></span><br><span class="line">                <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> beanElt.attributeValue(<span class="string">&quot;class&quot;</span>);</span><br><span class="line">                <span class="comment">// 获取实例化对象</span></span><br><span class="line">                <span class="type">Object</span> <span class="variable">bean</span> <span class="operator">=</span> beans.get(id);</span><br><span class="line">                logger.info(<span class="string">&quot;获取实例化对象&quot;</span>+bean.toString());</span><br><span class="line">                <span class="comment">//拿到properties</span></span><br><span class="line">                List&lt;Node&gt; properties = beanElt.selectNodes(<span class="string">&quot;property&quot;</span>);</span><br><span class="line">                properties.forEach(property -&gt;&#123;</span><br><span class="line">                    logger.info(<span class="string">&quot;获取property-&gt; &quot;</span> + property);</span><br><span class="line">                    <span class="type">Element</span> <span class="variable">element</span> <span class="operator">=</span> (Element) property;</span><br><span class="line">                    <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> element.attributeValue(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">                    <span class="type">String</span> <span class="variable">arg</span> <span class="operator">=</span> element.attributeValue(<span class="string">&quot;value&quot;</span>);</span><br><span class="line">                    <span class="type">String</span> <span class="variable">ref</span> <span class="operator">=</span> element.attributeValue(<span class="string">&quot;ref&quot;</span>);</span><br><span class="line">                    <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> <span class="string">&quot;set&quot;</span>+name.toUpperCase().charAt(<span class="number">0</span>)+name.substring(<span class="number">1</span>);</span><br><span class="line">                    logger.info(<span class="string">&quot;methodName=&quot;</span>+methodName+<span class="string">&quot; arg=&quot;</span>+arg);</span><br><span class="line">                    <span class="type">Object</span> <span class="variable">actualValue</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        <span class="comment">//获得属性</span></span><br><span class="line">                        <span class="type">Field</span> <span class="variable">field</span> <span class="operator">=</span> bean.getClass().getDeclaredField(name);</span><br><span class="line">                        <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> bean.getClass().getMethod(methodName, field.getType());</span><br><span class="line">                        logger.info(<span class="string">&quot;参数类型-&gt;&quot;</span>+field.getType().getSimpleName());</span><br><span class="line">                        <span class="keyword">if</span>(ref != <span class="literal">null</span>)&#123;</span><br><span class="line">                            <span class="comment">//如果参数是引用数据类型</span></span><br><span class="line">                            method.invoke(bean,beans.get(ref));</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span>( arg != <span class="literal">null</span>)&#123;</span><br><span class="line">                            <span class="comment">//参数是简单数据类型</span></span><br><span class="line">                            <span class="keyword">switch</span> (field.getType().getSimpleName())&#123;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&quot;boolean&quot;</span>,<span class="string">&quot;Boolean&quot;</span>: actualValue = Boolean.parseBoolean(arg); <span class="keyword">break</span>;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&quot;byte&quot;</span>,<span class="string">&quot;Byte&quot;</span>: actualValue = Byte.parseByte(arg); <span class="keyword">break</span>;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&quot;short&quot;</span>,<span class="string">&quot;Short&quot;</span>: actualValue = Short.parseShort(arg); <span class="keyword">break</span>;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&quot;int&quot;</span>,<span class="string">&quot;Integer&quot;</span>: actualValue = Integer.parseInt(arg); <span class="keyword">break</span>;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&quot;long&quot;</span>, <span class="string">&quot;Long&quot;</span>: actualValue = Long.parseLong(arg); <span class="keyword">break</span>;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&quot;float&quot;</span>,<span class="string">&quot;Float&quot;</span>: actualValue = Float.parseFloat(arg); <span class="keyword">break</span>;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&quot;double&quot;</span>,<span class="string">&quot;Double&quot;</span>: actualValue = Double.parseDouble(arg); <span class="keyword">break</span>;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&quot;char&quot;</span>,<span class="string">&quot;Character&quot;</span>: actualValue = arg.charAt(<span class="number">0</span>); <span class="keyword">break</span>;</span><br><span class="line">                                <span class="keyword">case</span> <span class="string">&quot;String&quot;</span>: actualValue = arg; <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                            method.invoke(bean,actualValue);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">getBean</span><span class="params">(String name)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> beans.get(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="language-java">package org.loulan.spring;
+
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class ClassPathXmlApplicationContext implements ApplicationContext&#123;
+    private Map&lt;String,Object&gt;beans = new HashMap&lt;String,Object&gt;();
+    private Logger logger = LoggerFactory.getLogger(ClassPathXmlApplicationContext.class);
+    public ClassPathXmlApplicationContext(String resource) &#123;
+        //1. 拿到这个xml配置文件
+        SAXReader reader = new SAXReader();
+        Document document = null;
+        try &#123;
+            document = reader.read(ClassLoader.getSystemClassLoader().getResourceAsStream(resource));
+            // 获取所有的bean标签
+            List&lt;Node&gt; beanNodes = document.selectNodes(&quot;//bean&quot;);
+            // 遍历集合
+            beanNodes.forEach(beanNode -&gt; &#123;
+                Element beanElt = (Element) beanNode;
+                // 获取id
+                String id = beanElt.attributeValue(&quot;name&quot;);
+                // 获取className
+                String className = beanElt.attributeValue(&quot;class&quot;);
+                logger.info(&quot;id-&gt;&quot;+id+&quot; className-&gt;&quot;+className);
+                try &#123;
+                    //通过反射拿到class
+                    Class&lt;?&gt; clazz = Class.forName(className);
+                    // 获得class的构造器
+                    Constructor&lt;?&gt; constructor = clazz.getConstructor();
+                    // 实例化对象
+                    Object o = constructor.newInstance();
+                    logger.info(&quot;实例化对象-&gt;&quot;+o);
+                    // 暴露bean，放在map（缓存）
+                    beans.put(id,o);
+                &#125; catch (Exception e) &#123;
+                    e.printStackTrace();
+                &#125;
+            &#125;);
+            //再次遍历bean，给属性赋值（DI）
+            beanNodes.forEach(beanNode -&gt; &#123;
+                Element beanElt = (Element) beanNode;
+                // 获取id
+                String id = beanElt.attributeValue(&quot;name&quot;);
+                // 获取className
+                String className = beanElt.attributeValue(&quot;class&quot;);
+                // 获取实例化对象
+                Object bean = beans.get(id);
+                logger.info(&quot;获取实例化对象&quot;+bean.toString());
+                //拿到properties
+                List&lt;Node&gt; properties = beanElt.selectNodes(&quot;property&quot;);
+                properties.forEach(property -&gt;&#123;
+                    logger.info(&quot;获取property-&gt; &quot; + property);
+                    Element element = (Element) property;
+                    String name = element.attributeValue(&quot;name&quot;);
+                    String arg = element.attributeValue(&quot;value&quot;);
+                    String ref = element.attributeValue(&quot;ref&quot;);
+                    String methodName = &quot;set&quot;+name.toUpperCase().charAt(0)+name.substring(1);
+                    logger.info(&quot;methodName=&quot;+methodName+&quot; arg=&quot;+arg);
+                    Object actualValue = null;
+                    try &#123;
+                        //获得属性
+                        Field field = bean.getClass().getDeclaredField(name);
+                        Method method = bean.getClass().getMethod(methodName, field.getType());
+                        logger.info(&quot;参数类型-&gt;&quot;+field.getType().getSimpleName());
+                        if(ref != null)&#123;
+                            //如果参数是引用数据类型
+                            method.invoke(bean,beans.get(ref));
+                        &#125; else if( arg != null)&#123;
+                            //参数是简单数据类型
+                            switch (field.getType().getSimpleName())&#123;
+                                case &quot;boolean&quot;,&quot;Boolean&quot;: actualValue = Boolean.parseBoolean(arg); break;
+                                case &quot;byte&quot;,&quot;Byte&quot;: actualValue = Byte.parseByte(arg); break;
+                                case &quot;short&quot;,&quot;Short&quot;: actualValue = Short.parseShort(arg); break;
+                                case &quot;int&quot;,&quot;Integer&quot;: actualValue = Integer.parseInt(arg); break;
+                                case &quot;long&quot;, &quot;Long&quot;: actualValue = Long.parseLong(arg); break;
+                                case &quot;float&quot;,&quot;Float&quot;: actualValue = Float.parseFloat(arg); break;
+                                case &quot;double&quot;,&quot;Double&quot;: actualValue = Double.parseDouble(arg); break;
+                                case &quot;char&quot;,&quot;Character&quot;: actualValue = arg.charAt(0); break;
+                                case &quot;String&quot;: actualValue = arg; break;
+                            &#125;
+                            method.invoke(bean,actualValue);
+                        &#125;
+                    &#125; catch (Exception e) &#123;
+                        e.printStackTrace();
+                    &#125;
+
+                &#125;);
+            &#125;);
+        &#125; catch (Exception e) &#123;
+            e.printStackTrace();
+        &#125;
+    &#125;
+
+    @Override
+    public Object getBean(String name) &#123;
+
+        return beans.get(name);
+    &#125;
+&#125;
+</code></pre>
 </li>
 </ol>
 <p>代码很长，别急我们一步步分析：</p>
@@ -284,7 +233,36 @@
 <p>这一步相当于把bean放入二级缓存中，提前暴露bean。map集合就是二级缓存，其中key存放对象的name或id，value存放这个实例化的对象。</p>
 </li>
 </ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1. 拿到这个xml配置文件</span></span><br><span class="line"><span class="type">SAXReader</span> <span class="variable">reader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SAXReader</span>();</span><br><span class="line"><span class="type">Document</span> <span class="variable">document</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    document = reader.read(ClassLoader.getSystemClassLoader().getResourceAsStream(resource));</span><br><span class="line">    <span class="comment">// 获取所有的bean标签</span></span><br><span class="line">    List&lt;Node&gt; beanNodes = document.selectNodes(<span class="string">&quot;//bean&quot;</span>);</span><br><span class="line">    <span class="comment">// 遍历集合</span></span><br><span class="line">    beanNodes.forEach(beanNode -&gt; &#123;</span><br><span class="line">        <span class="type">Element</span> <span class="variable">beanElt</span> <span class="operator">=</span> (Element) beanNode;</span><br><span class="line">        <span class="comment">// 获取id</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">id</span> <span class="operator">=</span> beanElt.attributeValue(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">        <span class="comment">// 获取className</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> beanElt.attributeValue(<span class="string">&quot;class&quot;</span>);</span><br><span class="line">        logger.info(<span class="string">&quot;id-&gt;&quot;</span>+id+<span class="string">&quot; className-&gt;&quot;</span>+className);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//通过反射拿到class</span></span><br><span class="line">            Class&lt;?&gt; clazz = Class.forName(className);</span><br><span class="line">            <span class="comment">// 获得class的构造器</span></span><br><span class="line">            Constructor&lt;?&gt; constructor = clazz.getConstructor();</span><br><span class="line">            <span class="comment">// 实例化对象</span></span><br><span class="line">            <span class="type">Object</span> <span class="variable">o</span> <span class="operator">=</span> constructor.newInstance();</span><br><span class="line">            logger.info(<span class="string">&quot;实例化对象-&gt;&quot;</span>+o);</span><br><span class="line">            <span class="comment">// 暴露bean，放在map（缓存）</span></span><br><span class="line">            beans.put(id,o);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+<pre><code class="language-java">//1. 拿到这个xml配置文件
+SAXReader reader = new SAXReader();
+Document document = null;
+try &#123;
+    document = reader.read(ClassLoader.getSystemClassLoader().getResourceAsStream(resource));
+    // 获取所有的bean标签
+    List&lt;Node&gt; beanNodes = document.selectNodes(&quot;//bean&quot;);
+    // 遍历集合
+    beanNodes.forEach(beanNode -&gt; &#123;
+        Element beanElt = (Element) beanNode;
+        // 获取id
+        String id = beanElt.attributeValue(&quot;name&quot;);
+        // 获取className
+        String className = beanElt.attributeValue(&quot;class&quot;);
+        logger.info(&quot;id-&gt;&quot;+id+&quot; className-&gt;&quot;+className);
+        try &#123;
+            //通过反射拿到class
+            Class&lt;?&gt; clazz = Class.forName(className);
+            // 获得class的构造器
+            Constructor&lt;?&gt; constructor = clazz.getConstructor();
+            // 实例化对象
+            Object o = constructor.newInstance();
+            logger.info(&quot;实例化对象-&gt;&quot;+o);
+            // 暴露bean，放在map（缓存）
+            beans.put(id,o);
+        &#125; catch (Exception e) &#123;
+            e.printStackTrace();
+        &#125;
+    &#125;);
+</code></pre>
 <p>实例化bean之后，接下里就是依赖注入了（Dependency Injection）。我们需要再次遍历每一个bean节点，一个bean节点相当于一个bean对象。对于每一个bean对象，再次遍历bean对象的<property>标签，这对于这些bena对象的属性值，对于这些属性值，我们需要通过set注入的方法给属性赋值。</p>
 <p>这时候就是调用对象的set方法了，还记得调用方法的四要素吗？没错，我们需要方法所属的对象，方法名，方法参数，以及返回值类型。</p>
 <p>其中，对象我们可以通过二级缓存拿到，也就是上一部分的map集合。方法参数也是属性值，在property标签的value属性值指明。返回值就更轻松了，set方法的返回值都是void。</p>
@@ -293,318 +271,125 @@
 <p>首先，普通类型太多，而我们从配置文件中拿到的数据都是字符串类型，如果目标属性是String类型的话很直接，直接调用set方法即可。但是如果属性类型是int类型，或者bool类型，我们就需要把String类型转换成对应的类型。</p>
 <p>好在这些普通类都有对应的包装类型，通包装类型我们可以轻松的实现字符串类型的转换，所以我们需要的就是匹配每一个普通类型，对这样的类型做类型转换即可。</p>
 <p>普通类型太多，出于学习的目的，假设我们的Spring框架只支持其中部分类型。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//再次遍历bean，给属性赋值（DI）</span></span><br><span class="line">beanNodes.forEach(beanNode -&gt; &#123;</span><br><span class="line">  <span class="type">Element</span> <span class="variable">beanElt</span> <span class="operator">=</span> (Element) beanNode;</span><br><span class="line">  <span class="comment">// 获取id</span></span><br><span class="line">  <span class="type">String</span> <span class="variable">id</span> <span class="operator">=</span> beanElt.attributeValue(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">  <span class="comment">// 获取className</span></span><br><span class="line">  <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> beanElt.attributeValue(<span class="string">&quot;class&quot;</span>);</span><br><span class="line">  <span class="comment">// 获取实例化对象</span></span><br><span class="line">  <span class="type">Object</span> <span class="variable">bean</span> <span class="operator">=</span> beans.get(id);</span><br><span class="line">  logger.info(<span class="string">&quot;获取实例化对象&quot;</span>+bean.toString());</span><br><span class="line">  <span class="comment">//拿到properties</span></span><br><span class="line">  List&lt;Node&gt; properties = beanElt.selectNodes(<span class="string">&quot;property&quot;</span>);</span><br><span class="line">  properties.forEach(property -&gt;&#123;</span><br><span class="line">      logger.info(<span class="string">&quot;获取property-&gt; &quot;</span> + property);</span><br><span class="line">      <span class="type">Element</span> <span class="variable">element</span> <span class="operator">=</span> (Element) property;</span><br><span class="line">      <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> element.attributeValue(<span class="string">&quot;name&quot;</span>);</span><br><span class="line">      <span class="type">String</span> <span class="variable">arg</span> <span class="operator">=</span> element.attributeValue(<span class="string">&quot;value&quot;</span>);</span><br><span class="line">      <span class="type">String</span> <span class="variable">ref</span> <span class="operator">=</span> element.attributeValue(<span class="string">&quot;ref&quot;</span>);</span><br><span class="line">      <span class="type">String</span> <span class="variable">methodName</span> <span class="operator">=</span> <span class="string">&quot;set&quot;</span>+name.toUpperCase().charAt(<span class="number">0</span>)+name.substring(<span class="number">1</span>);</span><br><span class="line">      logger.info(<span class="string">&quot;methodName=&quot;</span>+methodName+<span class="string">&quot; arg=&quot;</span>+arg);</span><br><span class="line">      <span class="type">Object</span> <span class="variable">actualValue</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="comment">//获得属性</span></span><br><span class="line">          <span class="type">Field</span> <span class="variable">field</span> <span class="operator">=</span> bean.getClass().getDeclaredField(name);</span><br><span class="line">          <span class="type">Method</span> <span class="variable">method</span> <span class="operator">=</span> bean.getClass().getMethod(methodName, field.getType());</span><br><span class="line">          logger.info(<span class="string">&quot;参数类型-&gt;&quot;</span>+field.getType().getSimpleName());</span><br><span class="line">          <span class="keyword">if</span>(ref != <span class="literal">null</span>)&#123;</span><br><span class="line">              <span class="comment">//如果参数是引用数据类型</span></span><br><span class="line">              method.invoke(bean,beans.get(ref));</span><br><span class="line">          &#125; <span class="keyword">else</span> <span class="keyword">if</span>( arg != <span class="literal">null</span>)&#123;</span><br><span class="line">              <span class="comment">//参数是简单数据类型</span></span><br><span class="line">              <span class="keyword">switch</span> (field.getType().getSimpleName())&#123;</span><br><span class="line">                  <span class="keyword">case</span> <span class="string">&quot;boolean&quot;</span>,<span class="string">&quot;Boolean&quot;</span>: actualValue = Boolean.parseBoolean(arg); <span class="keyword">break</span>;</span><br><span class="line">                  <span class="keyword">case</span> <span class="string">&quot;byte&quot;</span>,<span class="string">&quot;Byte&quot;</span>: actualValue = Byte.parseByte(arg); <span class="keyword">break</span>;</span><br><span class="line">                  <span class="keyword">case</span> <span class="string">&quot;short&quot;</span>,<span class="string">&quot;Short&quot;</span>: actualValue = Short.parseShort(arg); <span class="keyword">break</span>;</span><br><span class="line">                  <span class="keyword">case</span> <span class="string">&quot;int&quot;</span>,<span class="string">&quot;Integer&quot;</span>: actualValue = Integer.parseInt(arg); <span class="keyword">break</span>;</span><br><span class="line">                  <span class="keyword">case</span> <span class="string">&quot;long&quot;</span>, <span class="string">&quot;Long&quot;</span>: actualValue = Long.parseLong(arg); <span class="keyword">break</span>;</span><br><span class="line">                  <span class="keyword">case</span> <span class="string">&quot;float&quot;</span>,<span class="string">&quot;Float&quot;</span>: actualValue = Float.parseFloat(arg); <span class="keyword">break</span>;</span><br><span class="line">                  <span class="keyword">case</span> <span class="string">&quot;double&quot;</span>,<span class="string">&quot;Double&quot;</span>: actualValue = Double.parseDouble(arg); <span class="keyword">break</span>;</span><br><span class="line">                  <span class="keyword">case</span> <span class="string">&quot;char&quot;</span>,<span class="string">&quot;Character&quot;</span>: actualValue = arg.charAt(<span class="number">0</span>); <span class="keyword">break</span>;</span><br><span class="line">                  <span class="keyword">case</span> <span class="string">&quot;String&quot;</span>: actualValue = arg; <span class="keyword">break</span>;</span><br><span class="line">              &#125;</span><br><span class="line">              method.invoke(bean,actualValue);</span><br><span class="line">          &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="language-java">//再次遍历bean，给属性赋值（DI）
+beanNodes.forEach(beanNode -&gt; &#123;
+  Element beanElt = (Element) beanNode;
+  // 获取id
+  String id = beanElt.attributeValue(&quot;name&quot;);
+  // 获取className
+  String className = beanElt.attributeValue(&quot;class&quot;);
+  // 获取实例化对象
+  Object bean = beans.get(id);
+  logger.info(&quot;获取实例化对象&quot;+bean.toString());
+  //拿到properties
+  List&lt;Node&gt; properties = beanElt.selectNodes(&quot;property&quot;);
+  properties.forEach(property -&gt;&#123;
+      logger.info(&quot;获取property-&gt; &quot; + property);
+      Element element = (Element) property;
+      String name = element.attributeValue(&quot;name&quot;);
+      String arg = element.attributeValue(&quot;value&quot;);
+      String ref = element.attributeValue(&quot;ref&quot;);
+      String methodName = &quot;set&quot;+name.toUpperCase().charAt(0)+name.substring(1);
+      logger.info(&quot;methodName=&quot;+methodName+&quot; arg=&quot;+arg);
+      Object actualValue = null;
+      try &#123;
+          //获得属性
+          Field field = bean.getClass().getDeclaredField(name);
+          Method method = bean.getClass().getMethod(methodName, field.getType());
+          logger.info(&quot;参数类型-&gt;&quot;+field.getType().getSimpleName());
+          if(ref != null)&#123;
+              //如果参数是引用数据类型
+              method.invoke(bean,beans.get(ref));
+          &#125; else if( arg != null)&#123;
+              //参数是简单数据类型
+              switch (field.getType().getSimpleName())&#123;
+                  case &quot;boolean&quot;,&quot;Boolean&quot;: actualValue = Boolean.parseBoolean(arg); break;
+                  case &quot;byte&quot;,&quot;Byte&quot;: actualValue = Byte.parseByte(arg); break;
+                  case &quot;short&quot;,&quot;Short&quot;: actualValue = Short.parseShort(arg); break;
+                  case &quot;int&quot;,&quot;Integer&quot;: actualValue = Integer.parseInt(arg); break;
+                  case &quot;long&quot;, &quot;Long&quot;: actualValue = Long.parseLong(arg); break;
+                  case &quot;float&quot;,&quot;Float&quot;: actualValue = Float.parseFloat(arg); break;
+                  case &quot;double&quot;,&quot;Double&quot;: actualValue = Double.parseDouble(arg); break;
+                  case &quot;char&quot;,&quot;Character&quot;: actualValue = arg.charAt(0); break;
+                  case &quot;String&quot;: actualValue = arg; break;
+              &#125;
+              method.invoke(bean,actualValue);
+          &#125;
+      &#125; catch (Exception e) &#123;
+          e.printStackTrace();
+      &#125;
+</code></pre>
 <p>最后，提供一个getBean方法的接口，用于活动实例化的bean</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Object <span class="title function_">getBean</span><span class="params">(String name)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> beans.get(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="language-java">@Override
+public Object getBean(String name) &#123;
+    return beans.get(name);
+&#125;
+</code></pre>
 <p>到这里，我们的Spring框架就算编写完了，打包发布吧！</p>
-<img src="手写简易Spring框架/image-20230609140316257.png" alt="image-20230609140316257" style="zoom:30%;" />
+<img src="手写简易Spring框架/image-20230609140316257.png" alt="image-20230609140316257" style="zoom:30%;" / loading="lazy">
 <h3 id="测试自己的Spring框架">测试自己的Spring框架</h3>
 <p>创建一个Maven模块，并引入刚刚打包好的jar包吧</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.loulan<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>MySpring<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;cn.loulan&lt;/groupId&gt;
+    &lt;artifactId&gt;MySpring&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
 <p>首先，我们需要一个Bean类</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> bean;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">float</span> points;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> isActive;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setIsActive</span><span class="params">(<span class="type">boolean</span> active)</span> &#123;</span><br><span class="line">        isActive = active;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<pre><code class="language-java">package bean;
+
+import lombok.Data;
+
+@Data
+public class User &#123;
+    private int id;
+    private String username;
+    private String password;
+    private float points;
+    private boolean isActive;
+
+    public void setIsActive(boolean active) &#123;
+        isActive = active;
+    &#125;
+&#125;
+
+</code></pre>
 <p>然后是Spring配置文件</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="line">&lt;beans&gt;</span><br><span class="line">    &lt;beans&gt;</span><br><span class="line">        &lt;bean name=<span class="string">&quot;user&quot;</span> class=<span class="string">&quot;bean.User&quot;</span>&gt;</span><br><span class="line">            &lt;property name=<span class="string">&quot;id&quot;</span> value=<span class="string">&quot;1&quot;</span>/&gt;</span><br><span class="line">            &lt;property name=<span class="string">&quot;username&quot;</span> value=<span class="string">&quot;sonetto&quot;</span>/&gt;</span><br><span class="line">            &lt;property name=<span class="string">&quot;password&quot;</span> value=<span class="string">&quot;123456&quot;</span>/&gt;</span><br><span class="line">            &lt;property name=<span class="string">&quot;points&quot;</span> value=<span class="string">&quot;12.3&quot;</span>/&gt;</span><br><span class="line">            &lt;property name=<span class="string">&quot;isActive&quot;</span> value=<span class="string">&quot;true&quot;</span>/&gt;</span><br><span class="line">        &lt;/bean&gt;</span><br><span class="line">        &lt;bean name=<span class="string">&quot;userDao&quot;</span> class=<span class="string">&quot;bean.UserDao&quot;</span>/&gt;</span><br><span class="line">        &lt;bean name=<span class="string">&quot;userService&quot;</span> class=<span class="string">&quot;bean.UserService&quot;</span>&gt;</span><br><span class="line">            &lt;property name=<span class="string">&quot;userDao&quot;</span> ref=<span class="string">&quot;userDao&quot;</span>/&gt;</span><br><span class="line">        &lt;/bean&gt;</span><br><span class="line">    &lt;/beans&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<pre><code class="language-java">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans&gt;
+    &lt;beans&gt;
+        &lt;bean name=&quot;user&quot; class=&quot;bean.User&quot;&gt;
+            &lt;property name=&quot;id&quot; value=&quot;1&quot;/&gt;
+            &lt;property name=&quot;username&quot; value=&quot;sonetto&quot;/&gt;
+            &lt;property name=&quot;password&quot; value=&quot;123456&quot;/&gt;
+            &lt;property name=&quot;points&quot; value=&quot;12.3&quot;/&gt;
+            &lt;property name=&quot;isActive&quot; value=&quot;true&quot;/&gt;
+        &lt;/bean&gt;
+        &lt;bean name=&quot;userDao&quot; class=&quot;bean.UserDao&quot;/&gt;
+        &lt;bean name=&quot;userService&quot; class=&quot;bean.UserService&quot;&gt;
+            &lt;property name=&quot;userDao&quot; ref=&quot;userDao&quot;/&gt;
+        &lt;/bean&gt;
+    &lt;/beans&gt;
+&lt;/beans&gt;
+</code></pre>
 <p>编写测试类：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> bean;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.junit.Test;</span><br><span class="line"><span class="keyword">import</span> org.loulan.spring.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.loulan.spring.ClassPathXmlApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TestBean</span> &#123;</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;mySpring.xml&quot;</span>);</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> (User) context.getBean(<span class="string">&quot;user&quot;</span>);</span><br><span class="line">        System.out.println(user);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/image-20230609140900802.png" alt="image-20230609140900802"></p>
+<pre><code class="language-java">package bean;
+
+import org.junit.Test;
+import org.loulan.spring.ApplicationContext;
+import org.loulan.spring.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.support.DefaultSingletonBeanRegistry;
+
+public class TestBean &#123;
+    @Test
+    public void test()&#123;
+        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;mySpring.xml&quot;);
+        User user = (User) context.getBean(&quot;user&quot;);
+        System.out.println(user);
+
+    &#125;
+&#125;
+</code></pre>
+<p><img src="%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/image-20230609140900802.png" alt="image-20230609140900802" loading="lazy"></p>
 <p>跑起来了！</p>
-
-    </div>
-
-    
-    
-    
-      
-
-        
-
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/atom.xml">
-            <span class="icon">
-              <i class="fa fa-rss"></i>
-            </span>
-
-            <span class="label">RSS</span>
-          </a>
-        </div>
-    </div>
-  </div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/spring/" rel="tag"># spring</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2023/06/03/Spring-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="Spring 学习笔记">
-      <i class="fa fa-chevron-left"></i> Spring 学习笔记
-    </a></div>
-      <div class="post-nav-item"></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%86%99Spring%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">手写Spring框架</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%87%AA%E5%B7%B1%E7%9A%84Spring%E6%A1%86%E6%9E%B6"><span class="nav-number">1.1.</span> <span class="nav-text">测试自己的Spring框架</span></a></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="楼兰"
-      src="/icon/avatar.png">
-  <p class="site-author-name" itemprop="name">楼兰</p>
-  <div class="site-description" itemprop="description">楼兰的Blog</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">18</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">11</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">24</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Trevoewu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Trevoewu" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:littletrevorwu@gmail.com" title="E-Mail → mailto:littletrevorwu@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://www.youtube.com/channel/UCUq2pPd5uGDITzu2GP7CqRA" title="YouTube → https:&#x2F;&#x2F;www.youtube.com&#x2F;channel&#x2F;UCUq2pPd5uGDITzu2GP7CqRA" rel="noopener" target="_blank"><i class="fab fa-youtube fa-fw"></i>YouTube</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">楼兰</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="Symbols count total">249k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="Reading time total">6:55</span>
-</div>
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '.languages',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.dataset.pjax !== undefined) {
-      script.dataset.pjax = '';
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div id="pjax">
-  
-
-  
-
-    </div>
-</body>
-</html>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="Donate" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author: </strong>楼兰</li><li class="post-copyright-link"><strong>Post link: </strong><a href="https://trevoewu.github.io/2023/06/09/%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/" title="手写简易Spring框架">https://trevoewu.github.io/2023/06/09/%E6%89%8B%E5%86%99%E7%AE%80%E6%98%93Spring%E6%A1%86%E6%9E%B6/</a></li><li class="post-copyright-license"><strong>Copyright Notice: </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> unless otherwise stated.</li></ul></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2023/06/10/%E5%AD%A6%E4%B9%A0%E6%9D%82%E8%B0%88%EF%BC%9A%E6%8C%81%E4%B9%85%E5%B1%82%E6%A1%86%E6%9E%B6%E9%82%A3%E4%BA%9B%E9%93%BE%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%93%8D%E4%BD%9C/" rel="prev" title="学习杂谈：持久层框架那些链接数据库的操作"><span class="icon iconify" data-icon="ri:arrow-left-s-line"></span><span class="post-nav-text">学习杂谈：持久层框架那些链接数据库的操作</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2023/06/03/Spring-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="Spring 学习笔记"><span class="post-nav-text">Spring 学习笔记</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2023 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> 楼兰</span></div><div class="powered"><span>Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v6.3.0</span><span class="footer-separator">|</span><span>Theme - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.9</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></body></html>

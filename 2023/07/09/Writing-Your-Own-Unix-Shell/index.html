@@ -1,0 +1,204 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="楼兰"><meta name="copyright" content="楼兰"><meta name="generator" content="Hexo 6.3.0"><meta name="theme" content="hexo-theme-yun"><title>Writing Your Own Unix Shell | 楼兰</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/star-markdown-css@0.4.1/dist/yun/yun-markdown.min.css"><link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/prism-theme-vars/base.css"><script src="//at.alicdn.com/t/font_1140697_dxory92pb0h.js" async></script><script src="https://fastly.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>function initScrollReveal() {
+  [".post-card",".markdown-body img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+}
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+document.addEventListener("pjax:success", initScrollReveal);
+</script><link rel="icon" type="image/png" href="/icon/avatar.png"><link rel="mask-icon" href="/icon/avatar.png" color="#0078E7"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="preconnect" href="https://fastly.jsdelivr.net/npm/" crossorigin><script id="yun-config">
+    window.Yun = {}
+    window.CONFIG = {"hostname":"trevoewu.github.io","root":"/","title":"楼兰的小站","version":"1.10.9","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms"},"anonymous_image":"https://cdn.yunyoujun.cn/img/avatar/none.jpg","say":{"api":"https://el-bot-api.vercel.app/api/words/young"},"fireworks":{"colors":null},"vendors":{"host":"https://fastly.jsdelivr.net/npm/","darken":"https://fastly.jsdelivr.net/npm/darken@1.5.0"}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/hexo-theme-yun.js" type="module"></script><link rel="alternate" href="/atom.xml" title="楼兰" type="application/atom+xml"><meta name="description" content="Introduce 这个任务的目的是让你更加熟悉进程控制和信号传递的概念。你将通过编写一个简单的Unix shell程序来实现作业控制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Writing Your Own Unix Shell">
+<meta property="og:url" content="https://trevoewu.github.io/2023/07/09/Writing-Your-Own-Unix-Shell/index.html">
+<meta property="og:site_name" content="楼兰">
+<meta property="og:description" content="Introduce 这个任务的目的是让你更加熟悉进程控制和信号传递的概念。你将通过编写一个简单的Unix shell程序来实现作业控制。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-07-09T08:26:25.000Z">
+<meta property="article:modified_time" content="2023-07-11T11:14:23.397Z">
+<meta property="article:author" content="楼兰">
+<meta property="article:tag" content="lab">
+<meta property="article:tag" content="csapp">
+<meta name="twitter:card" content="summary"><script>(function() {
+  if (CONFIG.mode !== 'auto') return
+  const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+  const setting = localStorage.getItem('darken-mode') || 'auto'
+  if (setting === 'dark' || (prefersDark && setting !== 'light'))
+    document.documentElement.classList.toggle('dark', true)
+})()</script><style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head><body><script src="https://code.iconify.design/2/2.1.1/iconify.min.js"></script><script>// Define global variable
+IconifyProviders = {
+  // Empty prefix: overwrite default API provider configuration
+  '': {
+    // Use custom API first, use Iconify public API as backup
+    resources: [
+        'https://api.iconify.design',
+    ],
+    // Wait for 1 second before switching API hosts
+    rotate: 1000,
+  },
+};</script><script defer src="https://fastly.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js" type="module"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js" type="module"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="Table of Contents"><span class="icon iconify" data-icon="ri:list-ordered"></span></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="Overview"><span class="icon iconify" data-icon="ri:passport-line"></span></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="楼兰"><img width="96" loading="lazy" src="/icon/avatar.png" alt="楼兰"></a><div class="site-author-name"><a href="/about/">楼兰</a></div><span class="site-name">楼兰</span><sub class="site-subtitle"></sub><div class="site-description">楼兰的Blog</div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="Home"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">19</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">13</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">28</span></a></div><a class="site-state-item hty-icon-button" href="/about" title="文档"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><div class="links-of-author"><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://github.com/Trevoewu" title="GitHub" target="_blank" style="color:#181717"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-github-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="mailto:littletrevorwu@gmail.com" title="E-Mail" target="_blank" style="color:#8E71C1"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mail-line"></use></svg></a><a class="links-of-author-item hty-icon-button" rel="noopener" href="https://space.bilibili.com/34666744" title="哔哩哔哩动画" target="_blank" style="color:#FF8EB3"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-bilibili-line"></use></svg></a></div><hr style="margin:0.5rem 1rem"><div class="links"><a class="links-item hty-icon-button" href="/links/" title="我的小伙伴们" style="color:dodgerblue"><span class="icon iconify" data-icon="ri:genderless-line"></span></a></div><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><span class="icon iconify" data-icon="ri:contrast-2-line"></span></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduce"><span class="toc-number">1.</span> <span class="toc-text">Introduce</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">使用说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tsh-%E8%A7%84%E8%8C%83"><span class="toc-number">3.</span> <span class="toc-text">tsh 规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E4%BD%A0%E7%9A%84%E7%A8%8B%E5%BA%8F"><span class="toc-number">4.</span> <span class="toc-text">检查你的程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E7%A4%BA%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">提示：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0"><span class="toc-number">6.</span> <span class="toc-text">评估</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article" style="--smc-primary:#0078E7;"><link itemprop="mainEntityOfPage" href="https://trevoewu.github.io/2023/07/09/Writing-Your-Own-Unix-Shell/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="楼兰"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name" content="楼兰"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Writing Your Own Unix Shell</h1><div class="post-meta"><div class="post-time"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-line"></span></span> <time title="Created: 2023-07-09 16:26:25" itemprop="dateCreated datePublished" datetime="2023-07-09T16:26:25+08:00">2023-07-09</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:calendar-2-line"></span></span> <time title="Modified: 2023-07-11 19:14:23" itemprop="dateModified" datetime="2023-07-11T19:14:23+08:00">2023-07-11</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><span class="icon iconify" data-icon="ri:folder-line"></span></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/csapp/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">csapp</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/lab/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">lab</span></a><a class="tag-item" href="/tags/csapp/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><span class="icon iconify" data-icon="ri:price-tag-3-line"></span></span><span class="tag-name">csapp</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body"><h2 id="Introduce">Introduce</h2>
+<p>这个任务的目的是让你更加熟悉进程控制和信号传递的概念。你将通过编写一个简单的Unix shell程序来实现作业控制。</p>
+<span id="more"></span>
+<h2 id="使用说明">使用说明</h2>
+<ol>
+<li>
+<p>输入命令 <code>tar xvf shlab-handout.tar</code> 解压 tarfile文件。</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">tar</span> xvf shlab-handout.tar</code></pre>
+</li>
+<li>
+<p>键入 make 命令以编译和链接一些测试例程。</p>
+</li>
+<li>
+<p>查看 tsh.c 文件，它包含一个简单 Unix shell 的函数框架。为了帮助你入门，我们已经实现了一些不那么有趣的函数。你的任务就是完成下列函数。为了让你进行一次合理性检查，我们列出了我们参考解决方案中每个函数的大致代码行数（包括大量注释）。</p>
+<ol>
+<li>eval: 解析和解释命令行的 Main 例程. [70 行]</li>
+<li>builtin cmd: 识别和解释内置命令: quit，fg，bg，and jobs [25 行]</li>
+<li>do_bgfg: Implements the bg and fg built-in commands. [50 lines]</li>
+<li>waitfg: 等待前台作业完成。[20 行]</li>
+<li>sigchld handler: 捕捉 SIGCHILD 信号。[80 行]</li>
+<li>sigint handler: 捕获SIGINT（ctrl-c）信号。[15行]</li>
+<li>sigtstp handler: 捕捉 SIGTSTP (ctrl-z)信号。[15 行]</li>
+</ol>
+</li>
+<li>
+<p>每次修改 tsh.c 文件时，输入 make 重新编译它。要运行 shell，在命令行中输入 <code>./tsh</code>:</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">unix<span class="token operator">></span> ./tsh</code></pre>
+</li>
+</ol>
+<h2 id="tsh-规范">tsh 规范</h2>
+<p>您的 tsh shell 应该具有以下特性:</p>
+<ul>
+<li>提示符应该是字符串“ tsh &gt;”。</li>
+<li>用户输入的命令行应该包含一个名称，零个或多个参数，所有参数都由一个或多个空格分隔。 如果 name 是一个内置命令，那么 tsh 应该立即处理它并等待下一个命令行。否则，tsh 应该 假定 name 是一个可执行文件的路径，它在一个初始子进程的上下文中加载并运行该文件(在这个上下文中，术语 job 指的是这个初始子进程)。</li>
+<li>tsh 不需要支持管道(|)或 i/o 重定向(&lt; 和 &gt;)。</li>
+<li>键入 ctrl-c (ctrl-z)应该导致将 SIGINT (SIGTSTP)信号发送到前台作业，以及该作业的任何后代(例如，它分叉的任何子进程)。如果没有前台作业，那么该信号应该没有作用。</li>
+<li>如果命令行以 &amp; 结尾，那么 tsh 应该在后台运行作业。否则，它应该在前台运行作业。</li>
+<li>每个作业可以由进程 ID (PID)或作业 ID (JID)标识，后者是由 tsh 分配的一个正整数。Jid 应该 在命令行中用前缀“%”表示。例如，“% 5”表示 JID 5，“5”表示 PID 5。(我们已经为您提供了 操纵工作列表所需的所有例程）</li>
+<li>tsh 应该支持以下内置命令:
+<ul>
+<li>Quit 命令终止 shell。</li>
+<li>Jobs 命令列出了所有的后台工作。</li>
+<li>Bg &lt; job &gt; 命令通过发送 SIGCONT 信号重启 &lt; job &gt; ，然后在后台运行。参数 &lt; job &gt; 可以是 PID 或 JID。</li>
+<li>fg &lt; job &gt; 命令通过发送 SIGCONT 信号重新启动 &lt; job &gt; ，然后在前台运行它。参数 &lt; job &gt; 可以是 PID 或 JID。</li>
+<li>tsh 应该回收所有的僵尸子进程。如果有任何作业因接收到未捕获的信号而终止，那么 tsh 应该识别此事件，并打印一条包含作业的 PID 和触发信号描述的消息。</li>
+</ul>
+</li>
+</ul>
+<h2 id="检查你的程序">检查你的程序</h2>
+<p>我们提供了一些工具来帮助你检查你的程序。</p>
+<p><strong>参考解决方案。</strong></p>
+<p>Linux 可执行文件 tshref 是该 Shell 的参考解决方案。运行此程序以解答您对您的 Shell 应如何行为的任何疑问。您的 Shell 应生成与参考解决方案完全相同的输出（当然，除了进程ID，因为它们在每次运行时会变化）。</p>
+<p><strong>Shell 驱动程序</strong></p>
+<p>sdriver.pl程序将shell作为子进程执行，根据跟踪文件的指示发送命令和信号，并捕获并显示shell的输出。</p>
+<p><strong>使用 -h 参数查找 <a target="_blank" rel="noopener" href="http://sdriver.pl">sdriver.pl</a> 的用法:</strong></p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">-<span class="token operator">></span> ./sdriver.pl <span class="token parameter variable">-h</span>
+
+Usage: ./sdriver.pl <span class="token punctuation">[</span>-hv<span class="token punctuation">]</span> <span class="token parameter variable">-t</span> <span class="token operator">&lt;</span>trace<span class="token operator">></span> <span class="token parameter variable">-s</span> <span class="token operator">&lt;</span>shellprog<span class="token operator">></span> <span class="token parameter variable">-a</span> <span class="token operator">&lt;</span>args<span class="token operator">></span>
+Options:
+  <span class="token parameter variable">-h</span>            Print this message
+  <span class="token parameter variable">-v</span>            Be <span class="token function">more</span> verbose
+  <span class="token parameter variable">-t</span> <span class="token operator">&lt;</span>trace<span class="token operator">></span>    Trace <span class="token function">file</span>
+  <span class="token parameter variable">-s</span> <span class="token operator">&lt;</span>shell<span class="token operator">></span>    Shell program to <span class="token builtin class-name">test</span>
+  <span class="token parameter variable">-a</span> <span class="token operator">&lt;</span>args<span class="token operator">></span>     Shell arguments
+  <span class="token parameter variable">-g</span>            Generate output <span class="token keyword">for</span> autograder</code></pre>
+<p>我们还提供了16个跟踪文件（trace{01-16}.txt），您将与Shell驱动程序一起使用这些文件来测试您的Shell的正确性。较低编号的跟踪文件执行非常简单的测试，而较高编号的测试执行更复杂的测试。</p>
+<p>您可以通过输入以下命令，在您的Shell上使用trace文件trace01.txt来运行Shell驱动程序：</p>
+<p>- a“-p”参数告诉你的 shell 忽略提示信息</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">unix<span class="token operator">></span> ./sdriver.pl <span class="token parameter variable">-t</span> trace01.txt <span class="token parameter variable">-s</span> ./tsh <span class="token parameter variable">-a</span> <span class="token string">"-p"</span> </code></pre>
+<p>或者</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">unix<span class="token operator">></span> <span class="token function">make</span> test01</code></pre>
+<p>类似地，您可以通过输入以下命令来运行跟踪驱动程序，并将其应用于参考Shell，以将结果与参考Shell进行比较：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">./sdriver.pl <span class="token parameter variable">-t</span> trace01.txt <span class="token parameter variable">-s</span> ./tshref <span class="token parameter variable">-a</span> <span class="token string">"-p"</span></code></pre>
+<p>或者</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token function">make</span> rtest01</code></pre>
+<p>tshref.out提供了参考解决方案在所有跟踪文件上的输出。这可能比您手动在所有跟踪文件上运行Shell驱动程序更方便。</p>
+<p>跟踪文件的好处在于，它们生成的输出与您以交互方式运行Shell时获得的输出相同（除了一个标识跟踪的初始注释）。</p>
+<p>例如：</p>
+<pre class="language-bash" data-language="bash"><code class="language-bash">bass<span class="token operator">></span> <span class="token function">make</span> test15
+./sdriver.pl <span class="token parameter variable">-t</span> trace15.txt <span class="token parameter variable">-s</span> ./tsh <span class="token parameter variable">-a</span> <span class="token string">"-p"</span> <span class="token comment">#</span>
+<span class="token comment"># trace15.txt - Putting it all together</span>
+<span class="token comment">#</span>
+tsh<span class="token operator">></span> ./bogus
+./bogus: Command not found.
+tsh<span class="token operator">></span> ./myspin <span class="token number">10</span>
+Job <span class="token punctuation">(</span><span class="token number">9721</span><span class="token punctuation">)</span> terminated by signal <span class="token number">2</span>
+tsh<span class="token operator">></span> ./myspin <span class="token number">3</span> <span class="token operator">&amp;</span>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">9723</span><span class="token punctuation">)</span> ./myspin <span class="token number">3</span> <span class="token operator">&amp;</span>
+tsh<span class="token operator">></span> ./myspin <span class="token number">4</span> <span class="token operator">&amp;</span>
+<span class="token number">5</span>
+<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">9725</span><span class="token punctuation">)</span> ./myspin <span class="token number">4</span> <span class="token operator">&amp;</span>
+tsh<span class="token operator">></span> <span class="token function">jobs</span>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">9723</span><span class="token punctuation">)</span> Running ./myspin <span class="token number">3</span> <span class="token operator">&amp;</span> <span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">9725</span><span class="token punctuation">)</span> Running ./myspin <span class="token number">4</span> <span class="token operator">&amp;</span> tsh<span class="token operator">></span> <span class="token function">fg</span> %1
+Job <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">9723</span><span class="token punctuation">)</span> stopped by signal <span class="token number">20</span> tsh<span class="token operator">></span> <span class="token function">jobs</span>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">9723</span><span class="token punctuation">)</span> Stopped
+<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">9725</span><span class="token punctuation">)</span> Running
+tsh<span class="token operator">></span> <span class="token function">bg</span> %3
+%3: No such job
+tsh<span class="token operator">></span> <span class="token function">bg</span> %1
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">9723</span><span class="token punctuation">)</span> ./myspin <span class="token number">3</span> <span class="token operator">&amp;</span>
+tsh<span class="token operator">></span> <span class="token function">jobs</span>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">9723</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token punctuation">(</span><span class="token number">9725</span><span class="token punctuation">)</span>
+tsh<span class="token operator">></span> <span class="token function">fg</span> %1
+tsh<span class="token operator">></span> quit
+bass<span class="token operator">></span></code></pre>
+<h2 id="提示：">提示：</h2>
+<ul>
+<li>
+<p>仔细阅读教材第8章（异常控制流）的每一个词。</p>
+</li>
+<li>
+<p>使用跟踪文件指导您的Shell的开发。从trace01.txt开始，确保您的Shell产生与参考Shell完全相同的输出。然后继续处理trace02.txt，以此类推。</p>
+</li>
+<li>
+<p><code>waitpid</code>、<code>kill</code>、<code>fork</code>、<code>execve</code>、<code>setpgid</code>和<code>sigprocmask</code>函数将非常有用。<code>waitpid</code>的<code>WUNTRACED</code>和<code>WNOHANG</code>选项也很有用。</p>
+</li>
+<li>
+<p>在实现信号处理程序时，请确保使用<code>kill</code>函数的参数中的<code>&quot;-pid&quot;</code>而不是<code>&quot;pid&quot;</code>，向整个前台进程组发送<code>SIGINT</code>和<code>SIGTSTP</code>信号。<code>sdriver.pl</code>程序会检查此错误。</p>
+</li>
+<li>
+<p>任务的一个棘手部分是决定<code>waitfg</code>和<code>sigchld</code>处理函数之间的工作分配。我们推荐以下方法：</p>
+<ul>
+<li>
+<p>在<code>waitfg</code>中，使用<code>sleep</code>函数周围的忙等待循环。</p>
+</li>
+<li>
+<p>在<code>sigchld</code>处理程序中，只调用一次<code>waitpid</code>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>虽然还有其他可能的解决方案，比如在waitfg和sigchld处理程序中都调用waitpid，但这可能非常令人困惑。在处理程序中完成所有的收集工作更简单。</p>
+<ul>
+<li>
+<p>在<code>eval</code>中，父进程在<code>fork</code>子进程之前必须使用<code>sigprocmask</code>阻塞<code>SIGCHLD</code>信号，然后在将子进程添加到作业列表中时，通过调用<code>addjob</code>后再解除阻塞。由于子进程继承了其父进程的阻塞向量，因此子进程在执行新程序之前必须确保解除阻塞<code>SIGCHLD</code>信号。</p>
+<p>父进程以这种方式阻塞<code>SIGCHLD</code>信号，以避免在父进程调用<code>addjob</code>之前，子进程被<code>sigchld</code>处理程序收回（从而从作业列表中移除）的竞争条件。</p>
+</li>
+<li>
+<p>诸如<code>more</code>、<code>less</code>、<code>vi</code>和<code>emacs</code>之类的程序会对终端设置进行奇怪的操作。不要从您的Shell中运行这些程序。坚持使用简单的基于文本的程序，例如<code>/bin/ls</code>、<code>/bin/ps</code>和<code>/bin/echo</code>。</p>
+</li>
+<li>
+<p>当您从标准Unix Shell运行您的Shell时，您的Shell正在运行在前台进程组中。如果您的Shell创建了一个子进程，默认情况下，该子进程也将成为前台进程组的成员。由于键入ctrl-c会向前台组中的每个进程发送SIGINT信号，因此键入ctrl-c将向您的Shell发送SIGINT信号，以及您的Shell创建的每个进程，这显然是不正确的。</p>
+<p>以下是解决方法：</p>
+<p>在fork之后但在execve之前，子进程应调用setpgid(0, 0)，这将子进程放入一个新的进程组，其组ID与子进程的PID相同。这确保前台进程组中只有一个进程，即您的Shell。当您键入ctrl-c时，Shell应捕获生成的SIGINT信号，然后将其转发给相应的前台作业（更确切地说，包含前台作业的进程组）。</p>
+<h2 id="评估">评估</h2>
+<p>根据以下分配，您的得分将计为最高90分中的一部分：</p>
+<ol>
+<li>
+<p>80分 正确性：</p>
+</li>
+<li>
+<p>16个跟踪文件，每个文件5分。</p>
+</li>
+<li>
+<p>10分 风格分。</p>
+</li>
+</ol>
+<p>我们期望您有良好的注释（5分），并检查每个系统调用的返回值（5分）。</p>
+<p>您的解决方案将在Linux机器上进行正确性测试，使用与实验目录中包含的Shell驱动程序和跟踪文件相同的工具。您的Shell应在这些跟踪文件上产生与参考Shell完全相同的输出，只有两个例外：<br>
+• PID可能会不同（会变化）。<br>
+• trace11.txt、trace12.txt和trace13.txt中/bin/ps命令的输出会因每次运行而有所不同。然而，在/bin/ps命令的输出中，mysplit进程的运行状态应保持一致。</p>
+</li>
+</ul>
+</div></section><div id="reward-container"><span class="hty-icon-button button-glow" id="reward-button" title="Donate" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === &quot;none&quot;) ? &quot;block&quot; : &quot;none&quot;;"><span class="icon iconify" data-icon="ri:hand-coin-line"></span></span><div id="reward-comment">I'm so cute. Please give me money.</div></div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author: </strong>楼兰</li><li class="post-copyright-link"><strong>Post link: </strong><a href="https://trevoewu.github.io/2023/07/09/Writing-Your-Own-Unix-Shell/" title="Writing Your Own Unix Shell">https://trevoewu.github.io/2023/07/09/Writing-Your-Own-Unix-Shell/</a></li><li class="post-copyright-license"><strong>Copyright Notice: </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><span class="icon iconify" data-icon="ri:creative-commons-line"></span><span class="icon iconify" data-icon="ri:creative-commons-by-line"></span><span class="icon iconify" data-icon="ri:creative-commons-nc-line"></span><span class="icon iconify" data-icon="ri:creative-commons-sa-line"></span></a> unless otherwise stated.</li></ul></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/2023/06/10/%E5%AD%A6%E4%B9%A0%E6%9D%82%E8%B0%88%EF%BC%9A%E6%8C%81%E4%B9%85%E5%B1%82%E6%A1%86%E6%9E%B6%E9%82%A3%E4%BA%9B%E9%93%BE%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%93%8D%E4%BD%9C/" rel="next" title="学习杂谈：持久层框架那些链接数据库的操作"><span class="post-nav-text">学习杂谈：持久层框架那些链接数据库的操作</span><span class="icon iconify" data-icon="ri:arrow-right-s-line"></span></a></div></div></div><div class="hty-card" id="comment"></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2019 – 2023 </span><span class="with-love" id="animate"><span class="icon iconify" data-icon="ri:cloud-line"></span></span><span class="author"> 楼兰</span></div><div class="powered"><span>Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v6.3.0</span><span class="footer-separator">|</span><span>Theme - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.10.9</span></div></footer></div><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><span class="icon iconify" data-icon="ri:arrow-up-s-line"></span><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></body></html>
